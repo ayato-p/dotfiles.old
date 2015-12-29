@@ -1,0 +1,109 @@
+(source gnu)
+(source marmalade)
+(source melpa)
+(source melpa-stable)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; for Emacs
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Package manager
+(depends-on "use-package")
+(depends-on "bind-key")
+(depends-on "init-loader")
+(depends-on "e2wm")
+
+;; Window manager
+;; (depends-on "hc-zenburn-theme")
+;; (depends-on "gruvbox-theme")
+(depends-on "ample-theme")
+;; (depends-on "monokai-theme")
+;; (depends-on "cyberpunk-theme")
+;; (depends-on "grandshell-theme")
+
+;; Project manager
+(depends-on "projectile")
+(depends-on "helm-projectile")
+
+;; Scroll
+;; (depends-on "deferred")
+;; (depends-on "inertial-scroll" :git "https://github.com/kiwanami/emacs-inertial-scroll.git")
+(depends-on "smooth-scroll")
+
+;; Edit
+(depends-on "editorconfig")
+(depends-on "yasnippet")
+
+;; Search
+(depends-on "ag")
+(depends-on "helm-gtags")
+(depends-on "ace-isearch")
+(depends-on "helm-swoop")
+(depends-on "anzu")
+(depends-on "helm-migemo")
+;; (depends-on "wgrep")
+;; (depends-on "wgrep-ag")
+
+;; Misc
+(depends-on "auto-complete")
+(depends-on "fuzzy" :git "https://github.com/auto-complete/fuzzy-el.git")
+(depends-on "ac-helm" :git "git@github.com:yasuyk/ac-helm.git")
+(depends-on "helm")
+(depends-on "helm-ag")
+(depends-on "smartrep")
+(depends-on "mozc")
+(depends-on "multiple-cursors")
+(depends-on "exec-path-from-shell")
+(depends-on "expand-region")
+(depends-on "smart-newline")
+(depends-on "moz")
+(depends-on "nyan-mode")
+(depends-on "helm-wordnet")
+(depends-on "migemo")
+;; (depends-on "bm")
+
+;; Highlight
+(depends-on "auto-highlight-symbol")
+(depends-on "highlight-symbol")
+(depends-on "highlight-indentation")
+(depends-on "rainbow-mode")
+(depends-on "rainbow-delimiters")
+
+;; Git
+(depends-on "magit")
+(depends-on "git-gutter")
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; for Language
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; for web development
+(depends-on "web-mode")
+
+;; for Lisp
+(depends-on "paredit")
+
+;; for Clojure
+;; (depends-on "inf-clojure")
+(depends-on "cider")
+(depends-on "ac-cider")
+(depends-on "clj-refactor")
+(depends-on "clojure-mode-extra-font-locking")
+(depends-on "clojure-snippets")
+(depends-on "slamhound")
+(depends-on "midje-mode")
+;; (depends-on "kibit-mode")
+(depends-on "align-cljlet")
+
+;; for JavaScript
+(depends-on "js2-mode")
+(depends-on "ac-js2")
+(depends-on "js-doc")
+
+;; for CSS
+(depends-on "scss-mode")
+(depends-on "sass-mode")
+
+;; reST
+(depends-on "rst")
+(depends-on "auto-complete-rst")

@@ -4,6 +4,11 @@
 #------------------------------------------------------
 # use japan repo; http://pc.casey.jp/archives/153900744
 sudo sed -i".bak" -e 's/\/\/us.archive.ubuntu.com/\/\/ubuntutym.u-toyama.ac.jp/g' /etc/apt/sources.list
+
+# for google chrome
+sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+
 sudo apt-get update -y
 sudo apt-get upgrade -y
 
@@ -24,7 +29,8 @@ sudo apt-get install -y autoconf automake libcurl4-gnutls-dev
 sudo apt-get install -y emacs
 sudo apt-get install -y fonts-inconsolata fonts-takao-gothic
 sudo apt-get install -y openjdk-8-jdk sbcl
-
+sudo apt-get install -y google-chrome-stable
+sudo apt-get install -y fcitx libskk-dev skkdic fcitx-skk ddskk
 
 # language tools
 # zsh
@@ -71,6 +77,18 @@ git clone https://github.com/koron/cmigemo.git
 cd cmigemo && ./configure && make gcc && make gcc-dict && sudo make gcc-install && cd .. && rm -rf cmigemo
 # my emacs conf
 git clone https://ayato_p@bitbucket.org/ayato_p/dotemacs-for-clojure.git .emacs.d
+
+#------------------------------------------------------
+# deploy dotfiles
+#------------------------------------------------------
+
+for f in .??*
+do
+    [ "$f" = ".git" ] && continue
+    [ "$f" = ".gitignore" ] && continue
+
+    ln -snfv "$f" "$HOME"/"$f"
+done
 
 #------------------------------------------------------
 # change login shell to zsh

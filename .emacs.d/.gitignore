@@ -1,0 +1,8 @@
+auto-save-list
+.ac-comphist.dat
+.mc-lists.el
+.cask/
+*~
+*.elc
+/history
+/elpa
