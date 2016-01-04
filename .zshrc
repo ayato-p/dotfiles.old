@@ -130,3 +130,6 @@ export SASS_LIBSASS_PATH="$HOME/lib/libsass"
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# start vmware-user
+start-vmware-user

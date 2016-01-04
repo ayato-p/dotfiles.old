@@ -61,6 +61,7 @@
 (depends-on "nyan-mode")
 (depends-on "helm-wordnet")
 (depends-on "migemo")
+(depends-on "slack")
 ;; (depends-on "bm")
 
 ;; Highlight

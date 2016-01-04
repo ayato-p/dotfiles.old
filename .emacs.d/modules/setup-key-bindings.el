@@ -69,7 +69,11 @@
       :config
       (bind-keys :map global-map
                  ("C-x C-r" . helm-projectile-recentf)
-                 ("C-x b" . helm-projectile-switch-to-buffer)
+                 ("C-x b" . (lambda (arg)
+                              (interactive "p")
+                              (case arg
+                                (4 (call-interactively 'switch-to-buffer))
+                                (t (helm-projectile-switch-to-buffer)))))
                  ("C-x C-f" . (lambda (arg)
                                 (interactive "p")
                                 (case arg

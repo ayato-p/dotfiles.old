@@ -6,3 +6,5 @@ auto-save-list
 *.elc
 /history
 /elpa
+/resentf
+/modules/setup-slack.el

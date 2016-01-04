@@ -57,7 +57,7 @@ wget -O golang.tar.gz https://storage.googleapis.com/golang/go1.5.2.linux-amd64.
 sudo tar -C /usr/local -xzf golang.tar.gz && rm golang.tar.gz
 # some useful tools written in go lang
 /usr/local/go/bin/go get github.com/peco/peco/cmd/peco
-/usr/local/go/bin/go get github.com/pranavraja/tlrd
+/usr/local/go/bin/go get github.com/pranavraja/tldr
 # common lisp
 git clone -b release https://github.com/snmsts/roswell.git
 cd roswell && sh bootstrap && ./configure && make && sudo make install && cd .. && rm -rf roswell
@@ -87,12 +87,23 @@ git clone https://ayato_p@bitbucket.org/ayato_p/dotemacs-for-clojure.git .emacs.
 # deploy dotfiles
 #------------------------------------------------------
 
-for f in .??*
-do
-    [ "$f" = ".git" ] && continue
-    [ "$f" = ".gitignore" ] && continue
+SYMLINK_LIST="
+.emacs.d
+.tmux.conf
+.xcolors
+.Xresources
+.xsessionrc
+.zshrc
+.stumpwm
+bin
+"
+BASE_DIR=$(cd $(dirname $0); pwd)
+cd $BASE_DIR
 
-    ln -snfv "$f" "$HOME"/"$f"
+for f in $SYMLINK_LIST
+do
+    rm -rf ~/$f
+    ln -snfv "$BASE_DIR/$f" "$HOME"/"$f"
 done
 
 #------------------------------------------------------
