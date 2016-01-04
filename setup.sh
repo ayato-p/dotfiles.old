@@ -31,9 +31,11 @@ cd $BASE_DIR
 
 for f in $SYMLINK_LIST
 do
-    rm -rf ~/$f
-    ln -snfv "$BASE_DIR/$f" "$HOME"/"$f"
+    rm -rf "$HOME/$f"
+    ln -snfv "$BASE_DIR/$f" "$HOME/$f"
 done
+
+cd $HOME
 
 #------------------------------------------------------
 # create user dirs
@@ -80,9 +82,9 @@ git clone https://github.com/riywo/node-build.git $(ndenv root)/plugins/node-bui
 wget -O golang.tar.gz https://storage.googleapis.com/golang/go1.5.2.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf golang.tar.gz && rm golang.tar.gz
 # some useful tools written in go lang
-/usr/local/go/bin/go get github.com/peco/peco/cmd/peco
-/usr/local/go/bin/go get github.com/pranavraja/tldr
-# common lisp
+GOPATH=$HOME/go go get github.com/peco/peco/cmd/peco
+GOPATH=$HOME/go go get github.com/pranavraja/tldr
+# roswell for common lisp
 git clone -b release https://github.com/snmsts/roswell.git
 cd roswell && sh bootstrap && ./configure && make && sudo make install && cd .. && rm -rf roswell
 ros install sbcl-bin
@@ -92,11 +94,6 @@ sudo wget -O /usr/local/share/zsh/site-functions/_lein https://raw.githubusercon
 chmod a+x ~/bin/lein && lein
 
 #------------------------------------------------------
-# download my config files
-#------------------------------------------------------
-# wget https://gist.githubusercontent.com/ayato-p/9988b9385f41f348fbe5/raw/116274b4cb8c52d15fa3efafa2a2efc9d7ea5d68/.zshrc
-
-#------------------------------------------------------
 # for Emacs
 #------------------------------------------------------
 # cask
@@ -104,8 +101,6 @@ curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 # cmigemo
 git clone https://github.com/koron/cmigemo.git
 cd cmigemo && ./configure && make gcc && make gcc-dict && sudo make gcc-install && cd .. && rm -rf cmigemo
-# my emacs conf
-git clone https://ayato_p@bitbucket.org/ayato_p/dotemacs-for-clojure.git .emacs.d
 
 #------------------------------------------------------
 # change login shell to zsh
