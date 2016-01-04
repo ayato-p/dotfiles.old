@@ -57,6 +57,7 @@ wget -O golang.tar.gz https://storage.googleapis.com/golang/go1.5.2.linux-amd64.
 sudo tar -C /usr/local -xzf golang.tar.gz && rm golang.tar.gz
 # some useful tools written in go lang
 /usr/local/go/bin/go get github.com/peco/peco/cmd/peco
+/usr/local/go/bin/go get github.com/pranavraja/tlrd
 # common lisp
 git clone -b release https://github.com/snmsts/roswell.git
 cd roswell && sh bootstrap && ./configure && make && sudo make install && cd .. && rm -rf roswell
