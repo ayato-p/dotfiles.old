@@ -23,7 +23,7 @@ SYMLINK_LIST="
 .Xresources
 .xsessionrc
 .zshrc
-.stumpwm
+.stumpwmrc
 bin
 "
 BASE_DIR=$(cd $(dirname $0); pwd)
