@@ -85,9 +85,9 @@ sudo tar -C /usr/local -xzf golang.tar.gz && rm golang.tar.gz
 GOPATH=$HOME/go go get github.com/peco/peco/cmd/peco
 GOPATH=$HOME/go go get github.com/pranavraja/tldr
 # roswell for common lisp
-git clone -b release https://github.com/snmsts/roswell.git
-cd roswell && sh bootstrap && ./configure && make && sudo make install && cd .. && rm -rf roswell
-ros install sbcl-bin
+# git clone -b release https://github.com/snmsts/roswell.git
+# cd roswell && sh bootstrap && ./configure && make && sudo make install && cd .. && rm -rf roswell
+# ros install sbcl-bin
 # leiningen for clojure
 wget -O ~/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 sudo wget -O /usr/local/share/zsh/site-functions/_lein https://raw.githubusercontent.com/technomancy/leiningen/master/zsh_completion.zsh
