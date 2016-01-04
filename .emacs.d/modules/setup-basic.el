@@ -178,6 +178,12 @@
   (set-face-attribute 'mozc-cand-overlay-odd-face 'nil
                       :background "aquamarine" :foreground "black"))
 
+(use-package skk
+  :init
+  (global-set-key (kbd "C-x j") 'skk-auto-fill-mode)
+  (setq default-input-method "japanese-skk")
+  (use-package skk-study))
+
 ;; for whitespace
 (use-package whitespace
   :init
@@ -230,9 +236,9 @@
      '(git-gutter:added-sign "☀")
      '(git-gutter:deleted-sign "☂"))))
 
-(use-package server
-  :config (unless (server-running-p)
-            (server-start)))
+;; (use-package server
+;;   :config (unless (server-running-p)
+;;             (server-start)))
 
 (prefer-coding-system 'utf-8-unix)
 (setq ruby-insert-encoding-magic-comment nil)

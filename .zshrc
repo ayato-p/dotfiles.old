@@ -55,8 +55,10 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # User definition
 
 alias emacsd="emacs &"
+alias ekill='emacsclient -e "(kill-emacs)"'
+alias e="emacsclient -nw"
 
-export EDITOR=emacs
+export EDITOR='emacsclient -nw'
 export TERM=screen-256color
 
 export GOPATH=$HOME/go

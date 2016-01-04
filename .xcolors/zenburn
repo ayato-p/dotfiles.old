@@ -1,0 +1,41 @@
+! zenburn
+
+URxvt*background  : #313131
+URxvt*foreground  : #DCDCCC
+URxvt*cursorColor : #5E5E5E
+
+URxvt*colorBD     : #FFCFAF
+URxvt*colorUL     : #CCDC90
+URxvt*colorIT     : #80D4AA
+
+!black
+URxvt*color0      : #313131
+URxvt*color8      : #313131
+
+!red
+URxvt*color1      : #D9A0A0
+URxvt*color9      : #D9A0A0
+
+!green
+URxvt*color2      : #ACD2AC
+URxvt*color10     : #ACD2AC
+
+!yellow
+URxvt*color3      : #ECBC9C
+URxvt*color11     : #ECBC9C
+
+!blue
+URxvt*color4      : #89C5C8
+URxvt*color12     : #89C5C8
+
+!magenta
+URxvt*color5      : #E090C7
+URxvt*color13     : #E090C7
+
+!cyan
+URxvt*color6      : #A0EDF0
+URxvt*color14     : #A0EDF0
+
+!white
+URxvt*color7      : #DCDCCC
+URxvt*color15     : #DCDCCC

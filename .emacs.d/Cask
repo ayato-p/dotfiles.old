@@ -52,6 +52,7 @@
 (depends-on "helm-ag")
 (depends-on "smartrep")
 (depends-on "mozc")
+(depends-on "ddskk")
 (depends-on "multiple-cursors")
 (depends-on "exec-path-from-shell")
 (depends-on "expand-region")

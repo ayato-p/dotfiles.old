@@ -1,0 +1,35 @@
+!*******************************************************************************
+! rxvt config
+!*******************************************************************************
+
+! color
+#include ".xcolors/tango"
+
+! font
+URxvt.allow_bold: false
+URxvt*font: xft:Inconsolata:pixelsize=14:antialias=true
+URxvt*boldFont: xft:Inconsolata:pixelsize=14:antialias=true
+
+! fix font space
+URxvt*letterSpace: -1
+
+! scrollbar
+! URxvt.scrollStyle: rxvt
+! URxvt.scrollBar: false
+
+
+URxvt*dynamicColors:    true
+URxvt*utf8:             2
+URxvt*eightBitInput:    true
+URxvt*saveLines:        1024
+URxvt*scrollKey:        true
+URxvt*scrollTtyOutput:  false
+URxvt*scrollBar:        false
+URxvt*rightScrollBar:   false
+URxvt*jumpScroll:       true
+URxvt*multiScroll:      true
+URxvt*toolBar:          true
+URxvt*colorBDMode:      true
+URxvt*colorULMode:      true
+URxvt*borderLess:       false
+URxvt*urgentOnBell:     true

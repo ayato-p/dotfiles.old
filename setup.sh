@@ -17,20 +17,24 @@ sudo apt-get upgrade -y
 #------------------------------------------------------
 mkdir ~/bin
 mkdir ~/.zsh.d
+mkdir ~/screenshots
 
 #------------------------------------------------------
 # install some useful tools
 #------------------------------------------------------
-sudo apt-get install -y ssh tmux zsh
+sudo apt-get install -y ssh tmux zsh rxvt-unicode-256color stumpwm
 sudo apt-get install -y git silversearcher-ag
-sudo apt-get install -y curl tree nkf
+sudo apt-get install -y curl tree nkf ntpdate imagemagick xclip
 sudo apt-get install -y build-essential openssl
 sudo apt-get install -y autoconf automake libcurl4-gnutls-dev
 sudo apt-get install -y emacs
 sudo apt-get install -y fonts-inconsolata fonts-takao-gothic
-sudo apt-get install -y openjdk-8-jdk sbcl
+sudo apt-get install -y openjdk-8-jdk # sbcl
 sudo apt-get install -y google-chrome-stable
-sudo apt-get install -y fcitx libskk-dev skkdic fcitx-skk ddskk
+sudo apt-get install -y fcitx libskk-dev skkdic skkdic-extra fcitx-skk ddskk
+
+# tmux plugin manager
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # language tools
 # zsh
@@ -56,7 +60,7 @@ sudo tar -C /usr/local -xzf golang.tar.gz && rm golang.tar.gz
 # common lisp
 git clone -b release https://github.com/snmsts/roswell.git
 cd roswell && sh bootstrap && ./configure && make && sudo make install && cd .. && rm -rf roswell
-ros install sbcl
+ros install sbcl-bin
 # leiningen for clojure
 wget -O ~/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 sudo wget -O /usr/local/share/zsh/site-functions/_lein https://raw.githubusercontent.com/technomancy/leiningen/master/zsh_completion.zsh
@@ -65,7 +69,7 @@ chmod a+x ~/bin/lein && lein
 #------------------------------------------------------
 # download my config files
 #------------------------------------------------------
-wget https://gist.githubusercontent.com/ayato-p/9988b9385f41f348fbe5/raw/116274b4cb8c52d15fa3efafa2a2efc9d7ea5d68/.zshrc
+# wget https://gist.githubusercontent.com/ayato-p/9988b9385f41f348fbe5/raw/116274b4cb8c52d15fa3efafa2a2efc9d7ea5d68/.zshrc
 
 #------------------------------------------------------
 # for Emacs
