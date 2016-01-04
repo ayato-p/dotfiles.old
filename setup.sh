@@ -13,11 +13,34 @@ sudo apt-get update -y
 sudo apt-get upgrade -y
 
 #------------------------------------------------------
+# deploy dotfiles
+#------------------------------------------------------
+
+SYMLINK_LIST="
+.emacs.d
+.tmux.conf
+.xcolors
+.Xresources
+.xsessionrc
+.zshrc
+.stumpwm
+bin
+"
+BASE_DIR=$(cd $(dirname $0); pwd)
+cd $BASE_DIR
+
+for f in $SYMLINK_LIST
+do
+    rm -rf ~/$f
+    ln -snfv "$BASE_DIR/$f" "$HOME"/"$f"
+done
+
+#------------------------------------------------------
 # create user dirs
 #------------------------------------------------------
-mkdir ~/bin
 mkdir ~/.zsh.d
 mkdir ~/screenshots
+mkdir ~/projects
 
 #------------------------------------------------------
 # install some useful tools
@@ -82,29 +105,6 @@ git clone https://github.com/koron/cmigemo.git
 cd cmigemo && ./configure && make gcc && make gcc-dict && sudo make gcc-install && cd .. && rm -rf cmigemo
 # my emacs conf
 git clone https://ayato_p@bitbucket.org/ayato_p/dotemacs-for-clojure.git .emacs.d
-
-#------------------------------------------------------
-# deploy dotfiles
-#------------------------------------------------------
-
-SYMLINK_LIST="
-.emacs.d
-.tmux.conf
-.xcolors
-.Xresources
-.xsessionrc
-.zshrc
-.stumpwm
-bin
-"
-BASE_DIR=$(cd $(dirname $0); pwd)
-cd $BASE_DIR
-
-for f in $SYMLINK_LIST
-do
-    rm -rf ~/$f
-    ln -snfv "$BASE_DIR/$f" "$HOME"/"$f"
-done
 
 #------------------------------------------------------
 # change login shell to zsh

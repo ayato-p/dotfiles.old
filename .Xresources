@@ -3,7 +3,7 @@
 !*******************************************************************************
 
 ! color
-#include ".xcolors/tango"
+#include ".xcolors/zenburn"
 
 ! font
 URxvt.allow_bold: false

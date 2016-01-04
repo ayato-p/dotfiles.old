@@ -3,5 +3,5 @@ export GTK_IM_MODULE="xim"
 export QT_IM_MODULE="xim"
 urxvtd -q -f -o & fcitx
 
-exec xset r rate 200 25
-exec ssh-agent /usr/local/bin/stumpwm
+xset r rate 170 30
+exec ssh-agent /usr/bin/stumpwm

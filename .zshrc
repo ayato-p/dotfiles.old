@@ -25,7 +25,7 @@ zstyle ':vcs_info:*' actionformats '[%b|%a]'
 precmd () {
     vcs_info
 }
-RPROMPT='${vcs_info_msg_0_}'
+# RPROMPT='${vcs_info_msg_0_}'
 
 # for Completion
 autoload -Uz compinit
@@ -81,8 +81,8 @@ function peco-select-history() {
         tac="tail -r"
     fi
     BUFFER=$(history -n 1 | \
-        eval $tac | \
-        peco --query "$LBUFFER")
+                    eval $tac | \
+                    peco --query "$LBUFFER")
     CURSOR=$#BUFFER
     zle clear-screen
 }
@@ -133,3 +133,12 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 # start vmware-user
 start-vmware-user
+
+# tmux
+if [ -z $TMUX ] ; then
+    if [ -z `tmux ls` ] ; then
+        tmux
+    else
+        tmux attach
+    fi
+fi
