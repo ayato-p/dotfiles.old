@@ -1,0 +1,5 @@
+(quicklisp-quickstart:install)
+(ql:add-to-init-file)
+(ql:quickload "clx")
+(ql:quickload "cl-ppcre")
+(sb-ext:quit)

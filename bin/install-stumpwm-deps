@@ -1,0 +1,10 @@
+#!/bin/bash
+
+CUR_DIR=$(pwd)
+BASE_DIR=$(cd $(dirname $0); pwd)
+cd $HOME
+
+curl -O http://beta.quicklisp.org/quicklisp.lisp
+sbcl --load quicklisp.lisp --script $BASE_DIR/install-stumpwm-deps.lisp
+
+cd $CUR_DIR
