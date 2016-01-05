@@ -80,6 +80,9 @@ cd ~/.rbenv && src/configure && make -C src && cd ..
 # ndenv
 git clone https://github.com/riywo/ndenv ~/.ndenv
 git clone https://github.com/riywo/node-build.git $(ndenv root)/plugins/node-build
+# pyenv
+git clone https://github.com/yyuu/pyenv.git ~/.pyenv
+git clone https://github.com/yyuu/pyenv-pip-rehash.git ~/.pyenv/plugins/pyenv-pip-rehash
 # go
 wget -O golang.tar.gz https://storage.googleapis.com/golang/go1.5.2.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf golang.tar.gz && rm golang.tar.gz
@@ -87,9 +90,9 @@ sudo tar -C /usr/local -xzf golang.tar.gz && rm golang.tar.gz
 GOPATH=$HOME/go go get github.com/peco/peco/cmd/peco
 GOPATH=$HOME/go go get github.com/pranavraja/tldr
 # roswell for common lisp
-# git clone -b release https://github.com/snmsts/roswell.git
-# cd roswell && sh bootstrap && ./configure && make && sudo make install && cd .. && rm -rf roswell
-# ros install sbcl-bin
+git clone -b release https://github.com/roswell/roswell.git
+cd roswell && sh bootstrap && ./configure && make && sudo make install && cd .. && rm -rf roswell
+ros install sbcl-bin
 # leiningen for clojure
 wget -O ~/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 sudo wget -O /usr/local/share/zsh/site-functions/_lein https://raw.githubusercontent.com/technomancy/leiningen/master/zsh_completion.zsh

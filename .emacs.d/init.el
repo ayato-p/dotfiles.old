@@ -63,6 +63,9 @@
  '(helm-gtags-auto-update t)
  '(helm-gtags-fuzzy-match t)
  '(helm-gtags-ignore-case t)
+ '(safe-local-variable-values
+   (quote
+    ((cider-cljs-repl . "(zou.framework.repl/cljs-repl)"))))
  '(wakatime-api-key "5292f201-d960-4344-862e-a2a5aa404bab")
  '(wakatime-cli-path "/usr/local/bin/wakatime"))
 (custom-set-faces

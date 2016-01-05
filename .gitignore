@@ -1,2 +1,3 @@
 bin/lein
 .emacs.d/recentf
+.emacs.d/.nrepl-*
