@@ -21,6 +21,7 @@ SYMLINK_LIST="
 .tmux.conf
 .xcolors
 .Xresources
+.Xmodmap
 .xsessionrc
 .zshrc
 .stumpwmrc
