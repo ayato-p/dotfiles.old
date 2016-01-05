@@ -45,6 +45,7 @@ cd $HOME
 mkdir ~/.zsh.d
 mkdir ~/screenshots
 mkdir ~/projects
+mkdir ~/lib
 
 #------------------------------------------------------
 # install some useful tools
@@ -97,6 +98,14 @@ ros install sbcl-bin
 wget -O ~/bin/lein https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 sudo wget -O /usr/local/share/zsh/site-functions/_lein https://raw.githubusercontent.com/technomancy/leiningen/master/zsh_completion.zsh
 chmod a+x ~/bin/lein && lein
+# sassc
+cd lib
+git clone https://github.com/sass/sassc.git --branch 3.2.2 --depth 1
+git clone https://github.com/sass/libsass.git --branch 3.2.2 --depth 1
+cd sassc && SASS_LIBSASS_PATH="~/lib/libsass"; make && cd $HOME
+# docker
+wget -qO- https://get.docker.com/ | sh
+sudo usermod -aG docker ayato
 
 #------------------------------------------------------
 # for Emacs
