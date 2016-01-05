@@ -24,6 +24,7 @@ SYMLINK_LIST="
 .Xmodmap
 .xsessionrc
 .zshrc
+.zshenv
 .stumpwmrc
 bin
 "
@@ -48,10 +49,10 @@ mkdir ~/projects
 #------------------------------------------------------
 # install some useful tools
 #------------------------------------------------------
-sudo apt-get install -y ssh tmux zsh rxvt-unicode-256color stumpwm
+sudo apt-get install -y ssh tmux zsh rxvt-unicode-256color stumpwme
 sudo apt-get install -y git silversearcher-ag
 sudo apt-get install -y curl tree nkf ntpdate imagemagick xclip
-sudo apt-get install -y build-essential openssl
+sudo apt-get install -y build-essential openssl keychain
 sudo apt-get install -y autoconf automake libcurl4-gnutls-dev
 sudo apt-get install -y emacs
 sudo apt-get install -y fonts-inconsolata fonts-takao-gothic

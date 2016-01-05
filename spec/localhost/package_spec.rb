@@ -52,12 +52,16 @@ describe package('xclip') do
 end
 
 #-------------------------------------------------------------------------------
-# sudo apt-get install -y build-essential openssl
+
+# sudo apt-get install -y build-essential openssl keychain
 #-------------------------------------------------------------------------------
 describe package('build-essential') do
   it { should be_installed }
 end
 describe package('openssl') do
+  it { should be_installed }
+end
+describe package('keychain') do
   it { should be_installed }
 end
 
