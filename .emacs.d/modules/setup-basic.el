@@ -12,7 +12,7 @@
 (transient-mark-mode 1)
 
 ;; auto pair
-(electric-pair-mode t)
+;; (electric-pair-mode t)
 
 ;; Lines should be 80 characters wide, not 72
 (setq fill-column 80)
@@ -169,21 +169,20 @@
     (global-hl-line-mode 1)
     (set-face-background 'hl-line "#525252")))
 
-;; mozc
-(when (require 'mozc nil t)
-  (setq default-input-method "japanese-mozc")
-  (setq mozc-candidate-style 'overlay)
-  ;; faces
-  (set-face-attribute 'mozc-cand-overlay-even-face 'nil
-                      :background "aquamarine" :foreground "black")
-  (set-face-attribute 'mozc-cand-overlay-odd-face 'nil
-                      :background "aquamarine" :foreground "black"))
-
 (use-package skk
-  :init
-  (global-set-key (kbd "C-x j") 'skk-auto-fill-mode)
+  :config
   (setq default-input-method "japanese-skk")
-  (use-package skk-study))
+  :init
+  (global-set-key (kbd "C-x j") 'skk-mode)
+  (use-package skk-study)
+
+  ;; conflict skk && paredit
+  (defun paredit-newline\\skk-kakutei (origfun &rest arglist)
+    (apply (cond ((not skk-mode) origfun)
+                 (t #'skk-kakutei))
+           arglist))
+
+  (advice-add 'paredit-newline :around #'paredit-newline\\skk-kakutei))
 
 ;; for whitespace
 (use-package whitespace
