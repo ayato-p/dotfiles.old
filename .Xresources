@@ -7,16 +7,11 @@
 
 ! font
 URxvt.allow_bold: false
-URxvt*font: xft:Inconsolata:pixelsize=14:antialias=true
-URxvt*boldFont: xft:Inconsolata:pixelsize=14:antialias=true
+URxvt*font: xft:Inconsolata:pixelsize=12:antialias=true
+URxvt*boldFont: xft:Inconsolata:pixelsize=12:antialias=true
 
 ! fix font space
 URxvt*letterSpace: -1
-
-! scrollbar
-! URxvt.scrollStyle: rxvt
-! URxvt.scrollBar: false
-
 
 URxvt*dynamicColors:    true
 URxvt*utf8:             2
@@ -33,3 +28,18 @@ URxvt*colorBDMode:      true
 URxvt*colorULMode:      true
 URxvt*borderLess:       false
 URxvt*urgentOnBell:     true
+
+URxvt.iso14755: false
+URxvt.iso14755_52: false
+
+! extentions
+URxvt.perl-lib: .urxvt/ext
+URxvt.perl-ext-common: resize-font, xim-onthespot
+
+URxvt.inputMethod: fcitx
+URxvt.preeditType: OnTheSpot
+
+URxvt.resize-font.smaller: C-minus
+URxvt.resize-font.bigger: C-equal
+URxvt.resize-font.reset: C-0
+URxvt.resize-font.show: C-question

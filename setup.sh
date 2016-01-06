@@ -106,6 +106,8 @@ cd sassc && SASS_LIBSASS_PATH="~/lib/libsass"; make && cd $HOME && ln -s $HOME/l
 # docker
 wget -qO- https://get.docker.com/ | sh
 sudo usermod -aG docker ayato
+# urxvt
+wget -O .urxvt/ext/resize-font https://raw.githubusercontent.com/simmel/urxvt-resize-font/master/resize-font
 
 #------------------------------------------------------
 # for Emacs
