@@ -60,6 +60,13 @@
           helm-buffers-fuzzy-matching t
           helm-ff-transformer-show-only-basename nil)
 
+    (add-hook 'minibuffer-setup-hook
+              (lambda ()
+                (deactivate-input-method)))
+    (add-hook 'helm-minibuffer-set-up-hook
+              (lambda ()
+                (deactivate-input-method)))
+
     (bind-keys :map global-map
                ("M-x" . helm-M-x))
     (use-package helm-ag

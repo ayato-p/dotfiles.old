@@ -127,10 +127,17 @@
   (setq default-input-method "japanese-skk")
 
   :init
-  (global-set-key (kbd "C-x j") 'skk-mode)
+  (use-package skk-decor)
   (setq skk-kakutei-when-unique-candidate t)
   (setq skk-egg-like-newline t)
-  (setq skk-isearch-mode-enable 'always)
+  (setq skk-isearch-mode-enable nil)
+  (setq skk-show-inline 'vertical)
+
+  (add-to-list 'context-skk-programming-mode 'clojure-mode)
+
+  (add-hook 'skk-load-hook
+            (lambda ()
+              (require 'context-skk)))
 
   ;; conflict skk && paredit
   (defun paredit-newline\\skk-kakutei (origfun &rest arglist)
