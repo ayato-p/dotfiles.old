@@ -5,8 +5,9 @@
              ("C-x C-z" . nil)
              ("C-h" . delete-backward-char)
              ("C-x v =" . git-gutter:popup-diff)
-             ("C-;" . highlight-symbol-at-point)
-             ("C-M-;" . highlight-symbol-remove-all)))
+             ("C-:" . highlight-symbol-at-point)
+             ("C-M-:" . highlight-symbol-remove-all)
+             ("C-x g" . magit-status)))
 
 (use-package smartrep
   :config

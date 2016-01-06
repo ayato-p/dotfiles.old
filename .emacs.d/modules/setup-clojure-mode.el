@@ -26,6 +26,11 @@
                 (setq nrepl-log-messages t)
                 (setq nrepl-hide-special-buffers t)
                 (setq cider-repl-history-file (locate-user-emacs-file ".nrepl-history"))
+                (setq cider-eval-result-prefix "➫ ")
+
+                (custom-set-faces
+                 '(cider-result-overlay-face
+                   ((((class color) (background dark)) (:foreground "#DCDCCC"))))) ; same as zenburn-fg
 
                 (use-package cider-eldoc)
                 (use-package ac-cider
@@ -34,6 +39,9 @@
                     (eval-after-load "auto-complete"
                       '(progn (add-to-list 'ac-modes 'cider-mode)
                               (add-to-list 'ac-modes 'cider-repl-mode)))))
+
+                (bind-keys :map cider-mode-map
+                           ("C-x *" . my/zou-go))
 
                 (defun my/cider-mode-hook ()
                   (paredit-mode 1)
@@ -59,7 +67,17 @@
                 (defun my/cider-midje-run-autotest ()
                   (interactive)
                   (cider-interactive-eval
-                   "(require 'midje.repl)(midje.repl/autotest)"))))
+                   "(require 'midje.repl)(midje.repl/autotest)"))
+
+                (defun my/zou-go ()
+                  (interactive)
+                  (if current-prefix-arg
+                      (progn
+                        (save-some-buffers)
+                        (cider-interactive-eval
+                         "(zou.framework.repl/reset)"))
+                    (cider-interactive-eval
+                     "(zou.framework.repl/go)")))))
 
     (defun my/clojure-mode-hook ()
       (add-hook 'before-save-hook 'my/cleanup-buffer nil t)
