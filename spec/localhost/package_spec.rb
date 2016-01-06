@@ -140,3 +140,20 @@ end
 describe package('libreadline6-dev') do
   it { should be_installed }
 end
+
+#-------------------------------------------------------------------------------
+# sudo apt-get install libxml2-dev libxslt1-dev
+#-------------------------------------------------------------------------------
+describe package('libxml2-dev') do
+  it { should be_installed }
+end
+describe package('libxslt1-dev') do
+  it { should be_installed }
+end
+
+#-------------------------------------------------------------------------------
+# sudo apt-get install -y postgresql-9.4
+#-------------------------------------------------------------------------------
+describe package('postgresql-9.4') do
+  it { should be_installed }
+end

@@ -61,6 +61,8 @@ sudo apt-get install -y openjdk-8-jdk # sbcl
 sudo apt-get install -y google-chrome-stable
 sudo apt-get install -y fcitx libskk-dev skkdic skkdic-extra fcitx-skk ddskk
 sudo apt-get install -y libssl-dev libreadline6-dev # for ruby build
+sudo apt-get install -y libxml2-dev libxslt1-dev    # for tinkerer
+sudo apt-get install -y postgresql-9.4              # my favorite db
 
 # tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
