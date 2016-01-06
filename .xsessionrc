@@ -3,12 +3,12 @@ LANG=en_US.UTF-8
 export LANG
 
 # IME
-export XMODIFIERS="@im=fcitx"
+export XMODIFIERS=@im=ibus
 export GTK_IM_MODULE="xim"
 export QT_IM_MODULE="xim"
 
 urxvtd -q -f -o &
-fcitx -d &
+ibus-daemon -d -x &
 xset r rate 170 30
 
 exec ssh-agent /usr/bin/stumpwm

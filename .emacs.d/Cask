@@ -41,7 +41,7 @@
 (depends-on "ace-isearch")
 (depends-on "helm-swoop")
 (depends-on "anzu")
-(depends-on "helm-migemo")
+
 ;; (depends-on "wgrep")
 ;; (depends-on "wgrep-ag")
 
@@ -61,7 +61,6 @@
 (depends-on "moz")
 (depends-on "nyan-mode")
 (depends-on "helm-wordnet")
-(depends-on "migemo")
 (depends-on "slack")
 ;; (depends-on "bm")
 

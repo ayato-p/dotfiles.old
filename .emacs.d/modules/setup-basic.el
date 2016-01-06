@@ -53,37 +53,6 @@
 ;; (use-package helm-wordnet
 ;;   :config (setq helm-wordnet-wordnet-location "/usr/share/wordnet"))
 
-;; migemo
-(use-package migemo
-  :config
-  (progn
-    (setq migemo-command "cmigemo")
-    (setq migemo-dictionary "/usr/share/cmigemo/utf-8/migemo-dict")
-    (setq migemo-options '("-q" "--emacs"))
-    (setq migemo-user-dictionary nil)
-    (setq migemo-regex-dictionary nil)
-    (setq migemo-coding-system 'utf-8-unix)
-    (load-library "migemo")
-    (migemo-init)))
-
-(use-package helm-migemo
-  :config
-  (progn
-    (defun helm-compile-source--candidates-in-buffer (source)
-      (helm-aif (assoc 'candidates-in-buffer source)
-          (append source
-                  `((candidates
-                     . ,(or (cdr it)
-                            (lambda ()
-                              ;; Do not use `source' because other plugins
-                              ;; (such as helm-migemo) may change it
-                              (helm-candidates-in-buffer (helm-get-current-source)))))
-                    (volatile) (match identity)))
-        source))
-    ;; [2015-09-06 Sun]helm-match-plugin -> helm-multi-match変更の煽りを受けて
-    (defalias 'helm-mp-3-get-patterns 'helm-mm-3-get-patterns)
-    (defalias 'helm-mp-3-search-base 'helm-mm-3-search-base)))
-
 (use-package helm-swoop
   :config
   (progn
@@ -108,22 +77,6 @@
 
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
-(use-package smooth-scroll
-  :config
-  (progn
-    (smooth-scroll-mode t)
-    (setq smooth-scroll/vscroll-step-size 4)))
-;; (require 'inertial-scroll)
-;; (setq inertias-global-minor-mode-map
-;;       (inertias-define-keymap
-;;        '(
-;;          ("<next>"  . inertias-up)
-;;          ("<prior>" . inertias-down)
-;;          ("C-v"     . inertias-up)
-;;          ("M-v"     . inertias-down)
-;;          ) inertias-prefix-key))
-;; (inertias-global-minor-mode 1)
-
 (use-package paren
   :init (progn (setq show-paren-style 'parenthesis)
                (show-paren-mode 1)))
@@ -146,9 +99,9 @@
   (custom-set-faces
    '(e2wm:face-history-list-normal ((t (:foreground "LightGoldenrod1")))))
 
-  (setq default-frame-alist '((font . "Inconsolata-10")))
-  (set-default-font "Inconsolata-10")
-  (set-face-font 'variable-pitch "Inconsolata-10")
+  (setq default-frame-alist '((font . "Inconsolata-9")))
+  (set-default-font "Inconsolata-9")
+  (set-face-font 'variable-pitch "Inconsolata-9")
   (set-fontset-font (frame-parameter nil 'font)
                     'japanese-jisx0208
                     '("Takaoゴシック" . "unicode-bmp"))
@@ -172,9 +125,12 @@
 (use-package skk
   :config
   (setq default-input-method "japanese-skk")
+
   :init
   (global-set-key (kbd "C-x j") 'skk-mode)
-  (use-package skk-study)
+  (setq skk-kakutei-when-unique-candidate t)
+  (setq skk-egg-like-newline t)
+  (setq skk-isearch-mode-enable 'always)
 
   ;; conflict skk && paredit
   (defun paredit-newline\\skk-kakutei (origfun &rest arglist)

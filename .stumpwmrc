@@ -4,20 +4,9 @@
 ;;; stumpwm config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setf *shell-program* "/bin/zsh")
-
-;; turn on/off the mode line for the current head only.
-(toggle-mode-line (stumpwm:current-screen)
-                  (stumpwm:current-head))
-
-(setf *window-format* " %c ")
-(setf *screen-mode-line-format*
-      (list "%W | "
-            '(:eval (run-shell-command "TZ='Asia/Tokyo' date +\"%H:%M\" " t))))
-
+(setf *window-format* "%c")
 (set-prefix-key (kbd "C-q"))
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; some useful commands
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -49,3 +38,5 @@
 (define-key *root-map* (kbd "f") "firefox")
 (define-key *root-map* (kbd "t") "urxvt")
 (define-key *root-map* (kbd "l") "line")
+
+(urxvt)

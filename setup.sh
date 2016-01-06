@@ -28,6 +28,7 @@ SYMLINK_LIST="
 .stumpwmrc
 bin
 "
+
 BASE_DIR=$(cd $(dirname $0); pwd)
 cd $BASE_DIR
 
@@ -59,7 +60,8 @@ sudo apt-get install -y emacs
 sudo apt-get install -y fonts-inconsolata fonts-takao-gothic
 sudo apt-get install -y openjdk-8-jdk # sbcl
 sudo apt-get install -y google-chrome-stable
-sudo apt-get install -y fcitx libskk-dev skkdic skkdic-extra fcitx-skk ddskk
+sudo apt-get install -y libskk-dev skkdic skkdic-extra
+sudo apt-get install -y ibus ibus-skk skksearch skktools
 sudo apt-get install -y libssl-dev libreadline6-dev # for ruby build
 sudo apt-get install -y libxml2-dev libxslt1-dev    # for tinkerer
 sudo apt-get install -y postgresql-9.4              # my favorite db

@@ -110,11 +110,8 @@ describe package('google-chrome-stable') do
 end
 
 #-------------------------------------------------------------------------------
-# sudo apt-get install -y fcitx libskk-dev skkdic skkdic-extra fcitx-skk ddskk
+# sudo apt-get install -y libskk-dev skkdic skkdic-extra
 #-------------------------------------------------------------------------------
-describe package('fcitx') do
-  it { should be_installed }
-end
 describe package('libskk-dev') do
   it { should be_installed }
 end
@@ -124,10 +121,20 @@ end
 describe package('skkdic-extra') do
   it { should be_installed }
 end
-describe package('fcitx-skk') do
+
+#-------------------------------------------------------------------------------
+# sudo apt-get install -y ibus ibus-skk skksearch skktools
+#-------------------------------------------------------------------------------
+describe package('ibus') do
   it { should be_installed }
 end
-describe package('ddskk') do
+describe package('ibus-skk') do
+  it { should be_installed }
+end
+describe package('skksearch') do
+  it { should be_installed }
+end
+describe package('skktools') do
   it { should be_installed }
 end
 
