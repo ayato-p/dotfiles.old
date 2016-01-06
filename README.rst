@@ -22,6 +22,9 @@ Type shortcut key `C-t I`
 4. setup fcitx for skk
 $ fcitx-configtool
 
+5. config timezone
+$ sudo dpkg-reconfigure tzdata
+
 TODO
 ====
 
