@@ -136,7 +136,7 @@ start-vmware-user
 
 # tmux
 if [ -z $TMUX ] ; then
-    if [ -z `tmux ls` ] ; then
+    if [ -z `tmux ls 2> /dev/null` ] ; then
         tmux
     else
         tmux attach
