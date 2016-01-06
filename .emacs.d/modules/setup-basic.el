@@ -137,10 +137,11 @@
 
 (when window-system
   ;; (load-theme 'hc-zenburn t)
+  (load-theme 'zenburn t)
   ;; (load-theme 'gruvbox t)
-  (load-theme 'ample t t)
-  (load-theme 'ample-flat t t)
-  (enable-theme 'ample-flat)
+  ;; (load-theme 'ample t t)
+  ;; (load-theme 'ample-flat t t)
+  ;; (enable-theme 'ample-flat)
 
   (custom-set-faces
    '(e2wm:face-history-list-normal ((t (:foreground "LightGoldenrod1")))))

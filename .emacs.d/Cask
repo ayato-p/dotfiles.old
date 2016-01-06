@@ -14,7 +14,8 @@
 (depends-on "e2wm")
 
 ;; Window manager
-;; (depends-on "hc-zenburn-theme")
+(depends-on "hc-zenburn-theme")
+(depends-on "zenburn-theme")
 ;; (depends-on "gruvbox-theme")
 (depends-on "ample-theme")
 ;; (depends-on "monokai-theme")
