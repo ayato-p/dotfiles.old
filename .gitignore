@@ -1,3 +1,4 @@
 bin/lein
+bin/sassc
 .emacs.d/recentf
 .emacs.d/.nrepl-*

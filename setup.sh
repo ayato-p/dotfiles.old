@@ -102,7 +102,7 @@ chmod a+x ~/bin/lein && lein
 cd lib
 git clone https://github.com/sass/sassc.git --branch 3.2.2 --depth 1
 git clone https://github.com/sass/libsass.git --branch 3.2.2 --depth 1
-cd sassc && SASS_LIBSASS_PATH="~/lib/libsass"; make && cd $HOME
+cd sassc && SASS_LIBSASS_PATH="~/lib/libsass"; make && cd $HOME && ln -s $HOME/lib/sassc/bin/sassc $HOME/bin
 # docker
 wget -qO- https://get.docker.com/ | sh
 sudo usermod -aG docker ayato
