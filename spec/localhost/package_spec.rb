@@ -53,9 +53,12 @@ end
 
 #-------------------------------------------------------------------------------
 
-# sudo apt-get install -y build-essential openssl keychain
+# sudo apt-get install -y build-essential libxtst-dev openssl keychain
 #-------------------------------------------------------------------------------
 describe package('build-essential') do
+  it { should be_installed }
+end
+describe package('libxtst-dev') do
   it { should be_installed }
 end
 describe package('openssl') do

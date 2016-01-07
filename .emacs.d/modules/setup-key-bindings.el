@@ -73,6 +73,32 @@
       :config
       (bind-keys :map global-map
                  ("C-x C-g" . helm-projectile-ag)))
+    (use-package helm-ls-git
+      :config
+      (custom-set-faces
+       '(helm-ls-git-modified-not-staged-face ((t :foreground "#F0DFAF")))
+
+       '(helm-ls-git-modified-and-staged-face ((t :foreground "#DFAF8F")))
+
+       '(helm-ls-git-renamed-modified-face ((t :foreground "#DFAF8F")))
+
+       '(helm-ls-git-untracked-face ((t :foreground "#DCA3A3")))
+
+       '(helm-ls-git-added-copied-face ((t :foreground "#AFD8AF")))
+
+       '(helm-ls-git-added-modified-face ((t :foreground "#8CD0D3")))
+
+       '(helm-ls-git-deleted-not-staged-face ((t :foreground "#D0BF8F")))
+
+       '(helm-ls-git-deleted-and-staged-face ((t :foreground "#DCDCCC")))
+
+       '(helm-ls-git-conflict-face ((t :foreground "#DC8CC3"))))
+      (bind-keys :map global-map
+                 ("C-x C-f" . (lambda (arg)
+                                (interactive "p")
+                                (case arg
+                                  (4 (helm-ls-git-ls))
+                                  (t (call-interactively 'find-file)))))))
     (use-package helm-projectile
       :config
       (bind-keys :map global-map
@@ -81,9 +107,4 @@
                               (interactive "p")
                               (case arg
                                 (4 (call-interactively 'switch-to-buffer))
-                                (t (helm-projectile-switch-to-buffer)))))
-                 ("C-x C-f" . (lambda (arg)
-                                (interactive "p")
-                                (case arg
-                                  (4 (helm-projectile-find-file))
-                                  (t (call-interactively 'find-file)))))))))
+                                (t (helm-projectile-switch-to-buffer)))))))))

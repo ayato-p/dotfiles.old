@@ -1,6 +1,5 @@
+;; ref: http://www.mygooglest.com/fni/stumpwm.html
 (in-package :stumpwm)
-
-(message "Loading rc!")
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; stumpwm config
@@ -16,6 +15,7 @@
 (set-maxsize-gravity :center) ; center for floating X apps
 (set-transient-gravity :center) ; center for save-as/open popups
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; some useful commands
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -25,7 +25,7 @@
 
 (defcommand chrome () ()
   "Start google-chrome or switch to it, if it is already running."
-  (run-or-raise "google-chrome" '(:class "google-chrome")))
+  (run-or-raise "google-chrome-stable" '(:class "google-chrome")))
 
 (defcommand firefox () ()
   "Start Firefox or switch to it, if it is already running."
