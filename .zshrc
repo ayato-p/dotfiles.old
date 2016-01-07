@@ -15,6 +15,8 @@ autoload -U promptinit
 setopt prompt_subst
 promptinit
 
+PURE_PROMPT_SYMBOL="λ"
+
 prompt pure
 
 zstyle ':vcs_info:git:*' check-for-changes true

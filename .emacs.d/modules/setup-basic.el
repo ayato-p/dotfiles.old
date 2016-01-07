@@ -99,9 +99,9 @@
   (custom-set-faces
    '(e2wm:face-history-list-normal ((t (:foreground "LightGoldenrod1")))))
 
-  (setq default-frame-alist '((font . "Inconsolata-9")))
-  (set-default-font "Inconsolata-9")
-  (set-face-font 'variable-pitch "Inconsolata-9")
+  (setq default-frame-alist '((font . "Droid Sans Mono-8")))
+  (set-default-font "Droid Sans Mono-8")
+  (set-face-font 'variable-pitch "Droid Sans Mono-8")
   (set-fontset-font (frame-parameter nil 'font)
                     'japanese-jisx0208
                     '("Takaoゴシック" . "unicode-bmp"))

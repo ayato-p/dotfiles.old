@@ -3,12 +3,15 @@
 !*******************************************************************************
 
 ! color
-#include ".xcolors/zenburn"
+#include ".xcolors/tomorrow-night-eighties"
 
 ! font
 URxvt.allow_bold: false
-URxvt*font: xft:Inconsolata:pixelsize=12:antialias=true
-URxvt*boldFont: xft:Inconsolata:pixelsize=12:antialias=true
+
+! URxvt*font:     xft:Droid Sans Mono:size=9,xft:Ubuntu Mono:size=9:antialias=true:hinting=true
+! URxvt*boldFont: xft:Droid Sans Mono:size=9,xft:Ubuntu Mono:size=9:antialias=true:hinting=true
+URxvt*font:     xft:Droid Sans Mono:size=8:antialias=true:hinting=true
+URxvt*boldFont: xft:Droid Sans Mono:size=8:antialias=true:hinting=true
 
 ! fix font space
 URxvt*letterSpace: -1

@@ -1,11 +1,20 @@
 (in-package :stumpwm)
 
+(message "Loading rc!")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; stumpwm config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (setf *shell-program* "/bin/zsh")
 (setf *window-format* "%c")
+(setf *message-window-gravity* :top-left
+      *input-window-gravity*   :top-left)
 (set-prefix-key (kbd "C-q"))
+
+(set-normal-gravity :top) ; top for terminals
+(set-maxsize-gravity :center) ; center for floating X apps
+(set-transient-gravity :center) ; center for save-as/open popups
 
 ;;; some useful commands
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -38,5 +47,7 @@
 (define-key *root-map* (kbd "f") "firefox")
 (define-key *root-map* (kbd "t") "urxvt")
 (define-key *root-map* (kbd "l") "line")
+
+(define-key *top-map* (kbd "M-TAB") "pull-hidden-next")
 
 (urxvt)
