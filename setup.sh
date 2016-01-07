@@ -26,6 +26,7 @@ SYMLINK_LIST="
 .zshrc
 .zshenv
 .stumpwmrc
+.psqlrc
 bin
 "
 

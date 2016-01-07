@@ -1,0 +1,11 @@
+-- https://yakst.com/ja/posts/104
+
+\set PROMPT1 '%M %n@%/%R\nλ:%# '
+\set PROMPT2 '  >'
+
+\pset null '[null]'
+\x auto
+\set VERBOSITY verbose
+\set HISTFILE ~/.psql_history- :DBNAME
+\set HISTCONTROL ignoredups
+\set COMP_KEYWORD_CASE upper
