@@ -1,6 +1,8 @@
 ;; ref: http://www.mygooglest.com/fni/stumpwm.html
 (in-package :stumpwm)
 
+(run-shell-command "rm .xsession-errors")
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; stumpwm config
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

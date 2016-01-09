@@ -1,0 +1,3 @@
+#!/bin/bash
+
+emacs ${1:-project.clj} -e cider-jack-in &

@@ -1,4 +1,3 @@
 #!/bin/bash
 cd ~/projects/anpi
-firefox 'http://localhost:8080/cstap' & emacs ./project.clj -e "cider-jack-in" & tmux rename-window Anpi
-echo "Hello! This is your working space!!"
+firefox 'http://localhost:8080/cstap' & emacs ./project.clj -e "cider-jack-in" & tmux rename-window Anpi & echo "Hello! This is your working space!!"

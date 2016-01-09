@@ -1,0 +1,16 @@
+#!/bin/bash
+
+temp=OUTPUT
+dic_dir=/usr/share/skk
+
+touch $temp
+
+for f in $(find $dic_dir -name "SKK-JISYO*" | xargs)
+do
+    cat $f >> $temp
+done
+
+skkdic-expr2 $temp > $dic_dir/SKK-JISYO.LL
+skk2cdb $dic_dir/SKK-JISYO.LL $dic_dir/SKK-JISYO.LL.cdb
+
+rm $temp

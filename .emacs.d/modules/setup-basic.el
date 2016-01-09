@@ -128,11 +128,11 @@
 
   :init
   (use-package skk-decor)
-  (setq skk-kakutei-when-unique-candidate t)
+  (setq skk-kakutei-when-unique-candidate nil)
   (setq skk-egg-like-newline t)
   (setq skk-isearch-mode-enable nil)
   (setq skk-show-inline 'vertical)
-
+  (setq skk-cdb-large-jisyo "/usr/share/skk/SKK-JISYO.LL.cdb")
   (add-to-list 'context-skk-programming-mode 'clojure-mode)
 
   (add-hook 'skk-load-hook
@@ -145,7 +145,15 @@
                  (t #'skk-kakutei))
            arglist))
 
-  (advice-add 'paredit-newline :around #'paredit-newline\\skk-kakutei))
+  (advice-add 'paredit-newline :around #'paredit-newline\\skk-kakutei)
+
+  (defun paredit-newline\\skk-insert (origfun &rest arglist)
+    (apply (cond (skk-j-mode #'skk-insert)
+                 (t origfun))
+           arglist))
+
+  (advice-add 'cljr-slash :around #'paredit-newline\\skk-insert)
+  )
 
 ;; for whitespace
 (use-package whitespace
