@@ -70,6 +70,9 @@ sudo apt-get install -y postgresql-9.4              # my favorite db
 # tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+# zplug: zshell plugin manager
+curl -fLo ~/.zplug/zplug --create-dirs https://git.io/zplug
+
 # language tools
 # zsh
 # theme
@@ -82,6 +85,7 @@ cd ~/
 # fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --key-bindings --completion --no-update-rc --64
+
 
 # rbenv
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv

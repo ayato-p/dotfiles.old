@@ -89,12 +89,20 @@ export NO_AT_BRIDGE=1
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-# Start vmware-user
-start-vmware-user
-
 # For fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line"
+
+# zplug
+source ~/.zplug/zplug
+
+zplug "b4b4r07/enhancd", of:enhancd.sh
+export ENHANCD_FILTER=fzf-tmux:fzf
+
+zplug load
+
+# Start vmware-user
+start-vmware-user
 
 # tmux
 if [ -z $TMUX ] ; then
