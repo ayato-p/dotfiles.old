@@ -33,7 +33,9 @@
                            ("+" . 'text-scale-increase)))
     (smartrep-define-key
         global-map "C-z" '(("n" . (lambda () (scroll-other-window 1)))
+                           ("N" . (lambda () (scroll-other-window 10)))
                            ("p" . (lambda () (scroll-other-window -1)))
+                           ("P" . (lambda () (scroll-other-window -10)))
                            ("k" . 'flycheck-previous-error)
                            ("j" . 'flycheck-next-error)))))
 
