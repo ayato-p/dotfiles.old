@@ -31,3 +31,4 @@ TODO
 1. add skk jisyo?
 2. create makefile
 3. some tools can't install now via setup.sh (e.g. peco,tldr,leiningen)
+4. GPG key pairs?

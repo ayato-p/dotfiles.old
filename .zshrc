@@ -63,78 +63,38 @@ alias e="emacsclient -nw"
 export EDITOR='emacsclient -nw'
 export TERM=screen-256color
 
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.cask/bin:$PATH
-export PATH=$HOME/.ndenv/bin:$PATH
+
+# Language tools
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
+
+export PATH=$HOME/.ndenv/bin:$PATH
+eval "$(ndenv init -)"
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+export SASS_LIBSASS_PATH="$HOME/lib/libsass"
 
 # Stop warning with Emacs
 export NO_AT_BRIDGE=1
 
-eval "$(ndenv init -)"
-
-function peco-select-history() {
-    local tac
-    if which tac > /dev/null; then
-        tac="tac"
-    else
-        tac="tail -r"
-    fi
-    BUFFER=$(history -n 1 | \
-                    eval $tac | \
-                    peco --query "$LBUFFER")
-    CURSOR=$#BUFFER
-    zle clear-screen
-}
-zle -N peco-select-history
-bindkey '^r' peco-select-history
-
-typeset -U chpwd_functions
-CD_HISTORY_FILE=${HOME}/.cd_history_file
-function chpwd_record_history() {
-    echo $PWD >> ${CD_HISTORY_FILE}
-}
-chpwd_functions=($chpwd_functions chpwd_record_history)
-
-function peco_get_destination_from_history() {
-    sort ${CD_HISTORY_FILE} | uniq -c | sort -r | \
-        sed -e 's/^[ ]*[0-9]*[ ]*//' | \
-        sed -e s"/^${HOME//\//\\/}/~/" | \
-        peco | xargs echo
-}
-
-function peco_cd_history() {
-    local destination=$(peco_get_destination_from_history)
-    [ -n $destination ] && cd ${destination/#\~/${HOME}}
-    zle reset-prompt
-}
-zle -N peco_cd_history
-
-function peco_insert_history() {
-    local destination=$(peco_get_destination_from_history)
-    if [ $? -eq 0 ]; then
-        local new_left="${LBUFFER} ${destination} "
-        BUFFER=${new_left}${RBUFFER}
-        CURSOR=${#new_left}
-    fi
-    zle reset-prompt
-}
-zle -N peco_insert_history
-
-bindkey '^x;' peco_cd_history
-bindkey '^xi' peco_insert_history
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
-export SASS_LIBSASS_PATH="$HOME/lib/libsass"
-
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-# start vmware-user
+# Start vmware-user
 start-vmware-user
+
+# For fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line"
 
 # tmux
 if [ -z $TMUX ] ; then
@@ -144,6 +104,3 @@ if [ -z $TMUX ] ; then
         tmux attach
     fi
 fi
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
