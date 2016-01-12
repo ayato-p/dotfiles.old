@@ -91,7 +91,8 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 # For fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_OPTS="--bind=ctrl-k:kill-line"
+export FZF_DEFAULT_OPTS="--reverse --inline-info --bind=ctrl-k:kill-line"
+
 
 # zplug
 source ~/.zplug/zplug
@@ -111,4 +112,6 @@ if [ -z $TMUX ] ; then
     else
         tmux attach
     fi
+else
+    kuromadoushi
 fi
