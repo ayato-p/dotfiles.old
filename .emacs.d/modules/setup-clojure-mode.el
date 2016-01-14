@@ -10,9 +10,6 @@
   (progn
     (use-package smart-newline-mode)
     (use-package clojure-mode-extra-font-locking)
-    (use-package align-cljlet
-      :init (bind-keys :map clojure-mode-map
-                       ("C-c j a l" . align-cljlet)))
     (use-package midje-mode)
     (use-package clj-refactor
       :diminish clj-refactor-mode
@@ -78,6 +75,9 @@
                          "(zou.framework.repl/reset)"))
                     (cider-interactive-eval
                      "(zou.framework.repl/go)")))))
+
+    (bind-keys :map clojure-mode-map
+               ("C-c j a l" . clojure-align))
 
     (defun my/clojure-mode-hook ()
       (add-hook 'before-save-hook 'my/cleanup-buffer nil t)

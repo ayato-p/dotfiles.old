@@ -96,7 +96,6 @@
 (depends-on "slamhound")
 (depends-on "midje-mode")
 ;; (depends-on "kibit-mode")
-(depends-on "align-cljlet")
 
 ;; for JavaScript
 (depends-on "js2-mode")
