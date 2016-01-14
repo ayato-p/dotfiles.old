@@ -66,6 +66,7 @@ sudo apt-get install -y ibus ibus-skk skksearch skktools
 sudo apt-get install -y libssl-dev libreadline6-dev # for ruby build
 sudo apt-get install -y libxml2-dev libxslt1-dev    # for tinkerer
 sudo apt-get install -y postgresql-9.4              # my favorite db
+sudo apt-get install -y mecab libmecab-dev mecab-ipadic-utf8 xz-utils # for mecab
 
 # tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -86,11 +87,14 @@ cd ~/
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --key-bindings --completion --no-update-rc --64
 
+# mecab
+git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
+cd mecab-ipadic-neologd && ./bin/install-mecab-ipadic-neologd -n && cd ~/
 
 # rbenv
 git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-cd ~/.rbenv && src/configure && make -C src && cd ..
+cd ~/.rbenv && src/configure && make -C src && cd ~/
 # ndenv
 git clone https://github.com/riywo/ndenv ~/.ndenv
 git clone https://github.com/riywo/node-build.git $(ndenv root)/plugins/node-build
