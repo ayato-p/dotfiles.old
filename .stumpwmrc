@@ -13,6 +13,7 @@
       *input-window-gravity*   :top-left)
 (set-prefix-key (kbd "C-q"))
 
+(set-focus-color :cyan)
 (set-normal-gravity :top) ; top for terminals
 (set-maxsize-gravity :center) ; center for floating X apps
 (set-transient-gravity :center) ; center for save-as/open popups
