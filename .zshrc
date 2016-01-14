@@ -97,8 +97,11 @@ export FZF_DEFAULT_OPTS="--reverse --inline-info --bind=ctrl-k:kill-line"
 # zplug
 source ~/.zplug/zplug
 
+zplug "b4b4r07/zplug"
 zplug "b4b4r07/enhancd", of:enhancd.sh
 export ENHANCD_FILTER=fzf-tmux:fzf
+
+zplug "zsh-users/zsh-completions"
 
 zplug load
 
