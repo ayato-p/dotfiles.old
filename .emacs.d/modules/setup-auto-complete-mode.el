@@ -26,7 +26,7 @@
             (add-hook 'auto-complete-mode-hook 'ac-common-setup)
             (add-hook 'js2-mode-hook 'ac-js2-mode)
 
-            (global-auto-complete-mode t)
+            ;; (global-auto-complete-mode t)
 
             (setq ac-auto-start 1)
             (setq ac-auto-show-menu 0.0)

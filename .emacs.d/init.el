@@ -25,6 +25,7 @@
                   "setup-auto-complete-mode"
                   "setup-yasnippet"
                   "setup-web-mode"
+                  "setup-org-mode"
                   "utils"))
 
 (my/load-modules)

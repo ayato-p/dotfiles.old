@@ -30,12 +30,17 @@
                    ((((class color) (background dark)) (:foreground "#DCDCCC"))))) ; same as zenburn-fg
 
                 (use-package cider-eldoc)
-                (use-package ac-cider
+
+                (use-package company
                   :init
-                  (progn
-                    (eval-after-load "auto-complete"
-                      '(progn (add-to-list 'ac-modes 'cider-mode)
-                              (add-to-list 'ac-modes 'cider-repl-mode)))))
+                  (add-hook 'cider-repl-mode-hook #'company-mode)
+                  (add-hook 'cider-mode-hook #'company-mode))
+                ;; (use-package ac-cider
+                ;;   :init
+                ;;   (progn
+                ;;     (eval-after-load "auto-complete"
+                ;;       '(progn (add-to-list 'ac-modes 'cider-mode)
+                ;;               (add-to-list 'ac-modes 'cider-repl-mode)))))
 
                 (bind-keys :map cider-mode-map
                            ("C-x *" . my/zou-go))

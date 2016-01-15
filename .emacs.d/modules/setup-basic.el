@@ -134,6 +134,8 @@
   (setq skk-show-inline 'vertical)
   (setq skk-cdb-large-jisyo "/usr/share/skk/SKK-JISYO.LL.cdb")
   (add-to-list 'context-skk-programming-mode 'clojure-mode)
+  (bind-keys :map skk-j-mode-map ;; TODO create advice?
+             ("C-j" . nil))
 
   (add-hook 'skk-load-hook
             (lambda ()
