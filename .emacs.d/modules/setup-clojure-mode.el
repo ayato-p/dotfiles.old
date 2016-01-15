@@ -16,7 +16,8 @@
                 (cljr-add-keybindings-with-prefix "C-c j")
                 (setq cljr-eagerly-build-asts-on-startup nil)
                 (setq cljr-populate-artifact-cache-on-startup nil)
-                (setq cljr-magic-requires t)))
+                (setq cljr-magic-requires t)
+                (setq cljr-favor-prefix-notation nil)))
     (use-package cider
       :config (progn
                 (setq nrepl-log-messages t)
