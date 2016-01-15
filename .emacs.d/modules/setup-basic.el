@@ -29,6 +29,21 @@
 
 (setq next-screen-context-lines 5)
 
+(use-package smart-newline
+  :config
+  (add-hook 'clojure-mode-hook 'smart-newline-mode)
+  (add-hook 'org-mode-hook 'smart-newline-mode)
+  (defun my/smart-newline (of &rest arglist)
+    (apply (cond (current-prefix-arg #'newline)
+                 (t of))
+           arglist))
+  (advice-add 'smart-newline :around #'my/smart-newline))
+
+(defun display-prefix (arg)
+  "Display the value of the raw prefix arg."
+  (interactive "P")
+  (message "%s" arg))
+
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward)
 
@@ -89,8 +104,8 @@
                (add-hook 'emacs-lisp-mode 'rainbow-mode)))
 
 (when window-system
-  ;; (load-theme 'hc-zenburn t)
   (load-theme 'zenburn t)
+  ;; (load-theme 'hc-zenburn t)
   ;; (load-theme 'gruvbox t)
   ;; (load-theme 'ample t t)
   ;; (load-theme 'ample-flat t t)
@@ -106,15 +121,9 @@
                     'japanese-jisx0208
                     '("Takaoゴシック" . "unicode-bmp"))
 
-  ;; (set-frame-parameter nil 'fullscreen 'fullboth)
-
-  (defun toggle-fullscreen ()
-    (interactive)
-    (set-frame-parameter nil 'fullscreen
-                         (if (frame-parameter nil 'fullscreen)
-                             nil 'fullboth)))
-  (bind-keys :map global-map
-             ("<f11>" . toggle-fullscreen)))
+  (use-package server
+    :config (unless (server-running-p)
+              (server-start))))
 
 (use-package hl-line
   :init
@@ -134,8 +143,6 @@
   (setq skk-show-inline 'vertical)
   (setq skk-cdb-large-jisyo "/usr/share/skk/SKK-JISYO.LL.cdb")
   (add-to-list 'context-skk-programming-mode 'clojure-mode)
-  (bind-keys :map skk-j-mode-map ;; TODO create advice?
-             ("C-j" . nil))
 
   (add-hook 'skk-load-hook
             (lambda ()
@@ -209,11 +216,11 @@
      '(git-gutter:added-sign "☀")
      '(git-gutter:deleted-sign "☂"))))
 
-;; (use-package server
-;;   :config (unless (server-running-p)
-;;             (server-start)))
-
 (prefer-coding-system 'utf-8-unix)
 (setq ruby-insert-encoding-magic-comment nil)
 (set-file-name-coding-system 'cp932)
 (setq locale-coding-system 'utf-8-unix)
+
+(use-package edit-server
+  :config
+  (edit-server-start))

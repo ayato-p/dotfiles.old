@@ -67,6 +67,7 @@
 (depends-on "org")
 (depends-on "company")
 (depends-on "helm-company")
+(depends-on "edit-server")
 ;; (depends-on "bm")
 
 ;; Highlight

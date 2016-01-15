@@ -14,7 +14,8 @@
              ("C-i" . company-complete-selection)
              ("C-p" . company-select-previous-or-abort)
              ("C-n" . company-select-next-or-abort)
-             ("C-d" . company-show-doc-buffer))
+             ("C-d" . company-show-doc-buffer)
+             ("C-h" . nil))
 
   (use-package helm-company
     :config

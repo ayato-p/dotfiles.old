@@ -8,7 +8,6 @@
 (use-package clojure-mode
   :config
   (progn
-    (use-package smart-newline-mode)
     (use-package clojure-mode-extra-font-locking)
     (use-package midje-mode)
     (use-package clj-refactor
