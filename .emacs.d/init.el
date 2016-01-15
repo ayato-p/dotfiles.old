@@ -71,9 +71,7 @@
             (quote rainbow-mode)
             nil t)
            (rainbow-mode 1))
-     (cider-cljs-repl . "(zou.framework.repl/cljs-repl)"))))
- '(wakatime-api-key "5292f201-d960-4344-862e-a2a5aa404bab")
- '(wakatime-cli-path "/usr/local/bin/wakatime"))
+     (cider-cljs-repl . "(zou.framework.repl/cljs-repl)")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
