@@ -9,6 +9,7 @@ export QT_IM_MODULE="xim"
 
 urxvtd -q -f -o &
 ibus-daemon -d -x &
+bindkeys &
 xset r rate 170 30 &
 xcape -e "#50=Control_R|z;#62=Control_R|q;#65=space"
 

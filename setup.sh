@@ -23,6 +23,7 @@ SYMLINK_LIST="
 .Xresources
 .Xmodmap
 .xsessionrc
+.xbindkeysrc
 .zshrc
 .zshenv
 .stumpwmrc
@@ -52,6 +53,7 @@ mkdir ~/lib
 #------------------------------------------------------
 # install some useful tools
 #------------------------------------------------------
+sudo apt-get install -y xdotool xbindkeys
 sudo apt-get install -y ssh tmux zsh rxvt-unicode-256color stumpwme
 sudo apt-get install -y git silversearcher-ag
 sudo apt-get install -y curl tree nkf ntpdate imagemagick xclip
