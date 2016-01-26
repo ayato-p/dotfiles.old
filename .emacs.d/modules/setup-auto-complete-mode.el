@@ -11,6 +11,8 @@
             (require 'auto-complete-config)
 
             (add-to-list 'ac-modes 'scss-mode)
+            (add-to-list 'ac-modes 'rst-mode)
+
             (setq-default ac-sources '(ac-source-yasnippet
                                        ac-source-abbrev
                                        ac-source-dictionary

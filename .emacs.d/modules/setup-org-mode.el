@@ -7,6 +7,14 @@
 (use-package org
   :config
 
+  (setq org-directory "~/memo/junk")
+  (setq org-agenda-files (list org-directory))
+
+  (setq org-edit-src-content-indentation 0
+        org-src-tab-acts-natively t
+        org-src-fontify-natively t
+        org-confirm-babel-evaluate nil)
+
   (use-package company
     :init
     (add-hook 'org-mode-hook #'company-mode)
@@ -23,8 +31,16 @@
     :config
     (setq org-babel-clojure-backend 'cider))
 
-  (setq org-edit-src-content-indentation 0
-        org-src-tab-acts-natively t
-        org-src-fontify-natively t
-        org-confirm-babel-evaluate nil)
-  )
+
+  ;; my own functions
+  (defun my/org-list ()
+    (interactive)
+    (let ((of (helm :sources (helm-build-sync-source "Org files"
+                               :candidates (reverse (directory-files org-directory))
+                               :fuzzy-match t)
+                    :buffer "*org files list*")))
+      (when of
+        (find-file (concat org-directory "/" of)))))
+
+  (bind-keys :map global-map
+             ("C-x C-o" . my/org-list)))

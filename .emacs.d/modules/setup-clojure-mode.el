@@ -8,6 +8,13 @@
 (use-package clojure-mode
   :config
   (progn
+    (use-package cider-eval-sexp-fu
+      :config
+      (progn
+        (setq eval-sexp-fu-flash-duration 1)
+        (custom-set-faces
+         '(eval-sexp-fu-flash
+           ((((class color)) (:background "#F0DFAF" :foreground "#3F3F3F")))))))
     (use-package clojure-mode-extra-font-locking)
     (use-package midje-mode)
     (use-package clj-refactor
@@ -17,7 +24,8 @@
                 (setq cljr-eagerly-build-asts-on-startup nil)
                 (setq cljr-populate-artifact-cache-on-startup nil)
                 (setq cljr-magic-requires t)
-                (setq cljr-favor-prefix-notation nil)))
+                (setq cljr-favor-prefix-notation nil)
+                (setq cljr-warn-on-eval nil)))
     (use-package cider
       :config (progn
                 (setq nrepl-log-messages t)
@@ -90,6 +98,7 @@
       (paredit-mode 1)
       (rainbow-delimiters-mode 1))
 
+    (add-hook 'clojure-mode-hook #'yas-minor-mode)
     (add-hook 'clojure-mode-hook 'my/clojure-mode-hook)
 
     (define-clojure-indent

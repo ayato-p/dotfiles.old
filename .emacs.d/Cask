@@ -67,6 +67,7 @@
 (depends-on "org")
 (depends-on "company")
 (depends-on "helm-company")
+(depends-on "company-quickhelp")
 (depends-on "edit-server")
 ;; (depends-on "bm")
 
@@ -100,6 +101,7 @@
 (depends-on "clojure-snippets")
 (depends-on "slamhound")
 (depends-on "midje-mode")
+(depends-on "cider-eval-sexp-fu")
 ;; (depends-on "kibit-mode")
 
 ;; for JavaScript

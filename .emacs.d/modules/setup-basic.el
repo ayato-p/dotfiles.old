@@ -103,6 +103,10 @@
                (add-hook 'web-mode-hook 'rainbow-mode)
                (add-hook 'emacs-lisp-mode 'rainbow-mode)))
 
+(use-package eww
+  :init
+  (setq eww-search-prefix "https://www.google.co.jp/search?q="))
+
 (when window-system
   (load-theme 'zenburn t)
   ;; (load-theme 'hc-zenburn t)
@@ -142,11 +146,17 @@
   (setq skk-isearch-mode-enable nil)
   (setq skk-show-inline 'vertical)
   (setq skk-cdb-large-jisyo "/usr/share/skk/SKK-JISYO.LL.cdb")
+  (setq skk-sticky-key ":")
+  (setq skk-auto-insert-paren nil)
   (add-to-list 'context-skk-programming-mode 'clojure-mode)
 
   (add-hook 'skk-load-hook
             (lambda ()
               (require 'context-skk)))
+
+  (add-hook 'find-file-hook
+            (lambda ()
+              (skk-latin-mode t)))
 
   ;; conflict skk && paredit
   (defun paredit-newline\\skk-kakutei (origfun &rest arglist)

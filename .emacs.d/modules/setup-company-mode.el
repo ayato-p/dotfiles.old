@@ -5,19 +5,32 @@
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 2)
 
-  (add-to-list 'company-backends '(company-capf :with company-dabbrev-code))
+  (add-to-list 'company-backends
+               '(company-capf :with company-dabbrev-code
+                              :with company-yasnippet))
 
   (bind-keys :map global-map
              ("C-i" . company-complete))
 
   (bind-keys :map company-active-map
-             ("C-i" . company-complete-selection)
+             ("C-i" . company-complete-common)
              ("C-p" . company-select-previous-or-abort)
              ("C-n" . company-select-next-or-abort)
-             ("C-d" . company-show-doc-buffer)
              ("C-h" . nil))
 
-  (use-package helm-company
+  (bind-keys :map company-search-map
+             ("C-n" . company-select-next)
+             ("C-p" . company-select-previous))
+
+  (use-package company-quickhelp
     :config
+    (company-quickhelp-mode 1)
+    (setq company-quickhelp-delay nil)
     (bind-keys :map company-active-map
-               ("C-s" . helm-company))))
+               ("C-d" . company-quickhelp-manual-begin)))
+
+  ;; (use-package helm-company
+  ;;   :config
+  ;;   (bind-keys :map company-active-map
+  ;;              ("C-s" . helm-company)))
+  )

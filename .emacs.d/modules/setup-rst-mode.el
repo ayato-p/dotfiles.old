@@ -9,5 +9,6 @@
                     ("\\.rest$" . rst-mode)) auto-mode-alist))
     (setq frame-background-mode 'dark)
     (add-hook 'rst-mode-hook '(lambda()
-                                (setq indent-tabs-mode nil)
-                                ))))
+                                (auto-complete-mode)
+                                (company-mode -1)
+                                (setq indent-tabs-mode nil)))))
