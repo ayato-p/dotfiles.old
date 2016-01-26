@@ -105,9 +105,6 @@ zplug "zsh-users/zsh-completions"
 
 zplug load
 
-# Start vmware-user
-start-vmware-user
-
 # tmux
 if [ -z $TMUX ] ; then
     if [ -z `tmux ls 2> /dev/null` ] ; then
