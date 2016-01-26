@@ -54,7 +54,7 @@ mkdir ~/lib
 # install some useful tools
 #------------------------------------------------------
 sudo apt-get install -y xdotool xbindkeys
-sudo apt-get install -y ssh tmux zsh rxvt-unicode-256color stumpwme
+sudo apt-get install -y ssh tmux zsh rxvt-unicode-256color stumpwm
 sudo apt-get install -y git silversearcher-ag
 sudo apt-get install -y curl tree nkf ntpdate imagemagick xclip
 sudo apt-get install -y build-essential openssl keychain
@@ -103,7 +103,7 @@ git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 cd ~/.rbenv && src/configure && make -C src && cd ~/
 # ndenv
 git clone https://github.com/riywo/ndenv ~/.ndenv
-git clone https://github.com/riywo/node-build.git $(ndenv root)/plugins/node-build
+git clone https://github.com/riywo/node-build.git ~/.ndenv/plugins/node-build
 # pyenv
 git clone https://github.com/yyuu/pyenv.git ~/.pyenv
 git clone https://github.com/yyuu/pyenv-pip-rehash.git ~/.pyenv/plugins/pyenv-pip-rehash
