@@ -73,6 +73,10 @@ sudo apt-get install -y mecab libmecab-dev mecab-ipadic-utf8 xz-utils # for meca
 # tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
+# xcape
+git clone https://github.com/alols/xcape.git
+cd xcape && make && sudo make install && cd ~/ && rm -rf xcape
+
 # zplug: zshell plugin manager
 curl -fLo ~/.zplug/zplug --create-dirs https://git.io/zplug
 

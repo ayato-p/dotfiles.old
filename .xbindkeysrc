@@ -69,8 +69,8 @@
 # End of xbindkeys configuration #
 ##################################
 
-"xdo-return"
-  Control + m
+# "xdo-return"
+#   Control + m
 
 "xdo-backspace"
   Control + h

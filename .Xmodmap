@@ -29,6 +29,6 @@ keycode 19 = parenright 0
 keycode 47 = colon semicolon
 
 ! backup keys
-keycode 250 = space NoSymbol space
+! keycode 250 = space NoSymbol space
 ! remap
-keycode  65 = Shift_L NoSymbol Shift_L
+! keycode  65 = Shift_L NoSymbol Shift_L
