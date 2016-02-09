@@ -1,0 +1,5 @@
+[user]
+	name = ayato_p
+	email = ayato.skycrawlers@gmail.com
+[core]
+	excludesfile = /home/ayato/.global_gitignore

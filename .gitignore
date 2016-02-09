@@ -1,4 +1,6 @@
 bin/lein
 bin/sassc
+.emacs.d/image-dired/
+.emacs.d/url/
 .emacs.d/recentf
 .emacs.d/.nrepl-*

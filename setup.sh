@@ -28,6 +28,8 @@ SYMLINK_LIST="
 .zshenv
 .stumpwmrc
 .psqlrc
+.gitconfig
+.global_gitignore
 bin
 "
 
