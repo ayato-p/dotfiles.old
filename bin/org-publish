@@ -1,0 +1,24 @@
+#!/bin/bash
+
+draft_file=$1
+ds=`date +"%Y/%m/%d"`
+
+if [ ! -d $ds ]; then
+    mkdir -p $ds
+fi
+
+new_file="$ds"/`echo $draft_file | sed -e 's/drafts\/\(.*\).org/\1/'`
+rst_file=$new_file.rst
+
+# create new rst file
+touch $rst_file
+pandoc -f org -t rst $draft_file | \
+    sed -e 's/code::/sourcecode::/g' \
+        -e '$a \\n\.\. author:: default' \
+        -e '$a \.\. categories::' \
+        -e '$a \.\. tags::' \
+        -e '$a \.\. comments::' \
+        > $rst_file
+
+# add new file path to master.rst
+sed -i '6a\ \ \ '"$new_file" master.rst

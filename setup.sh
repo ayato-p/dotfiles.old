@@ -57,12 +57,12 @@ sudo apt-get install -y xdotool xbindkeys
 sudo apt-get install -y ssh tmux zsh rxvt-unicode-256color stumpwm
 sudo apt-get install -y git silversearcher-ag
 sudo apt-get install -y curl tree nkf ntpdate imagemagick xclip
-sudo apt-get install -y build-essential openssl keychain
+sudo apt-get install -y build-essential openssl keychain gnupg-agent
 sudo apt-get install -y autoconf automake libcurl4-gnutls-dev
 sudo apt-get install -y emacs
 sudo apt-get install -y fonts-inconsolata fonts-takao-gothic
 sudo apt-get install -y openjdk-8-jdk # sbcl
-sudo apt-get install -y google-chrome-stable
+sudo apt-get install -y google-chrome-stable pandoc
 sudo apt-get install -y libskk-dev skkdic skkdic-extra
 sudo apt-get install -y ibus ibus-skk skksearch skktools
 sudo apt-get install -y libssl-dev libreadline6-dev # for ruby build
