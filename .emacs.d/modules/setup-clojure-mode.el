@@ -30,6 +30,7 @@
       :config (progn
                 (setq nrepl-log-messages t)
                 (setq nrepl-hide-special-buffers t)
+                (setq cider-repl-display-help-banner nil)
                 (setq cider-repl-history-file (locate-user-emacs-file ".nrepl-history"))
                 (setq cider-eval-result-prefix "➫ ")
 

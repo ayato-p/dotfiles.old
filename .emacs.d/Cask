@@ -69,6 +69,8 @@
 (depends-on "helm-company")
 (depends-on "company-quickhelp")
 (depends-on "edit-server")
+(depends-on "emojify")
+(depends-on "emoji-cheat-sheet-plus")
 ;; (depends-on "bm")
 
 ;; Highlight
@@ -92,6 +94,9 @@
 ;; for Lisp
 (depends-on "paredit")
 
+;; for scheme
+(depends-on "geiser")
+
 ;; for Clojure
 ;; (depends-on "inf-clojure")
 (depends-on "cider")
@@ -103,6 +108,9 @@
 (depends-on "midje-mode")
 (depends-on "cider-eval-sexp-fu")
 ;; (depends-on "kibit-mode")
+
+;;; for SQL
+(depends-on "sql-indent")
 
 ;; for JavaScript
 (depends-on "js2-mode")

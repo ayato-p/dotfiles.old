@@ -107,6 +107,21 @@
   :init
   (setq eww-search-prefix "https://www.google.co.jp/search?q="))
 
+(use-package emojify
+  :config
+  (add-hook 'after-init-hook #'global-emojify-mode))
+
+(use-package emoji-cheat-sheet-plus
+  :defer t
+  :init
+  (progn
+    ;; enabled emoji in buffer
+    (add-hook 'org-mode-hook 'emoji-cheat-sheet-plus-display-mode)
+    ;; (add-hook 'text-mode-hook 'emoji-cheat-sheet-plus-display-mode)
+    ;; insert emoji with helm
+    (bind-keys :map global-map
+               ("C-c C-e" . emoji-cheat-sheet-plus-insert))))
+
 (when window-system
   (load-theme 'zenburn t)
   ;; (load-theme 'hc-zenburn t)
@@ -226,9 +241,9 @@
      '(git-gutter:added-sign "☀")
      '(git-gutter:deleted-sign "☂"))))
 
-(prefer-coding-system 'utf-8-unix)
+(prefer-coding-system 'utf-8)
 (setq ruby-insert-encoding-magic-comment nil)
-(set-file-name-coding-system 'cp932)
+(set-file-name-coding-system 'utf-8)
 (setq locale-coding-system 'utf-8-unix)
 
 (use-package edit-server

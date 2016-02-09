@@ -25,6 +25,7 @@
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
+     (scheme . t)
      (clojure . t)))
 
   (use-package ob-clojure
