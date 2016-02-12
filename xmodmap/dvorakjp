@@ -1,0 +1,39 @@
+! ******************************************************************************
+! dvorakjp
+! ******************************************************************************
+
+keycode  20 = bracketleft braceleft bracketleft braceleft
+keycode  21 = bracketright braceright bracketright braceright
+keycode  24 = apostrophe quotedbl apostrophe quotedbl
+keycode  25 = comma less comma less
+keycode  26 = period greater period greater
+keycode  27 = p P p P
+keycode  28 = y Y y Y
+keycode  29 = f F f F
+keycode  30 = g G g G
+keycode  31 = c C c C
+keycode  32 = r R r R
+keycode  33 = l L l L
+keycode  34 = minus underscore minus underscore
+keycode  35 = equal plus equal plus
+keycode  38 = a A a A
+keycode  39 = o O o O
+keycode  40 = e E e E
+keycode  41 = u U u U
+keycode  42 = i I i I
+keycode  43 = d D d D
+keycode  44 = h H h H
+keycode  45 = t T t T
+keycode  46 = n N n N
+keycode  47 = s S s S
+keycode  48 = slash question slash question
+keycode  52 = colon semicolon colon semicolon
+keycode  53 = q Q q Q
+keycode  54 = j J j J
+keycode  55 = k K k K
+keycode  56 = x X x X
+keycode  57 = b B b B
+keycode  58 = m M m M
+keycode  59 = w W w W
+keycode  60 = v V v V
+keycode  61 = z Z z Z
