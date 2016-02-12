@@ -57,7 +57,7 @@ mkdir ~/lib
 #------------------------------------------------------
 sudo apt-get install -y xdotool xbindkeys
 sudo apt-get install -y ssh tmux zsh rxvt-unicode-256color stumpwm
-sudo apt-get install -y git silversearcher-ag
+sudo apt-get install -y git silversearcher-ag subversion
 sudo apt-get install -y curl tree nkf ntpdate imagemagick xclip
 sudo apt-get install -y build-essential openssl keychain gnupg-agent
 sudo apt-get install -y autoconf automake libcurl4-gnutls-dev

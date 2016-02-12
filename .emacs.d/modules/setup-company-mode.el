@@ -33,4 +33,14 @@
   ;;   :config
   ;;   (bind-keys :map company-active-map
   ;;              ("C-s" . helm-company)))
+
+  (defun my/toggle-company-ispell ()
+    (interactive)
+    (cond
+     ((memq 'company-ispell company-backends)
+      (setq company-backends (delete 'company-ispell company-backends))
+      (message "company-ispell disabled"))
+     (t
+      (add-to-list 'company-backends 'company-ispell)
+      (message "company-ispell enabled!"))))
   )

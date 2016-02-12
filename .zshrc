@@ -71,6 +71,9 @@ export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
 
+# for stack(haskell)
+export PATH=$HOME/.local/bin:$PATH
+
 export PATH=$HOME/.ndenv/bin:$PATH
 eval "$(ndenv init -)"
 

@@ -65,6 +65,7 @@
 (depends-on "slack")
 (depends-on "open-junk-file")
 (depends-on "org")
+(depends-on "ox-pandoc")
 (depends-on "company")
 (depends-on "helm-company")
 (depends-on "company-quickhelp")
@@ -87,6 +88,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; for Language
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(depends-on "helm-flyspell")
 
 ;; for web development
 (depends-on "web-mode")
