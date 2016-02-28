@@ -39,7 +39,13 @@
   (run-or-raise "urxvtc" '(:instance "urxvt")))
 
 (defcommand line () ()
- (run-or-raise "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=menkifleemblimdogmoihpfopnplikde" '(:class "LINE")))
+  (run-or-raise "/opt/google/chrome/google-chrome --profile-directory=Default --app-id=menkifleemblimdogmoihpfopnplikde" '(:class "LINE")))
+
+(defcommand record () ()
+  (run-or-raise "gtk-recordmydesktop" '(:class "gtk-recordmydesktop")))
+
+(defcommand player () ()
+  (run-or-raise "miro" '(:class "miro")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; keyboard shortcuts

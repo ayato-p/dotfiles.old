@@ -134,6 +134,12 @@ sudo usermod -aG docker ayato
 # urxvt
 wget -O .urxvt/ext/resize-font https://raw.githubusercontent.com/simmel/urxvt-resize-font/master/resize-font
 
+# install for screencast
+# sudo apt-get install gtk-recordmydesktop -y
+# sudo add-apt-repository ppa:pcf/miro-releases
+# sudo apt-get update -y && sudo apt-get upgrade -y
+# sudo apt-get install miro -y
+
 #------------------------------------------------------
 # for Emacs
 #------------------------------------------------------
