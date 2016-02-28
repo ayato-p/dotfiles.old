@@ -19,7 +19,8 @@
     (use-package helm-flyspell
       :config
       (bind-keys :map flyspell-mode-map
-                 ("C-;" . helm-flyspell-correct)))))
+                 ("C-M-i" . helm-flyspell-correct)
+                 ("C-;" . nil)))))
 
 (use-package ispell
   :config

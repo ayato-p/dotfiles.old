@@ -122,6 +122,19 @@
     (bind-keys :map global-map
                ("C-c C-e" . emoji-cheat-sheet-plus-insert))))
 
+(use-package image
+  :defer t
+  :config
+  (add-hook 'image-mode-hook
+            (lambda ()
+              (use-package image+
+                :config
+                (use-package smartrep
+                  :config
+                  (smartrep-define-key
+                      image-mode-map "C-x" '(("-" . 'imagex-sticky-zoom-out)
+                                             ("+" . 'imagex-sticky-zoom-in))))))))
+
 (when window-system
   (load-theme 'zenburn t)
   ;; (load-theme 'hc-zenburn t)
@@ -147,7 +160,7 @@
 (use-package hl-line
   :init
   (progn
-    (global-hl-line-mode 1)
+    (global-hl-line-mode -1)
     (set-face-background 'hl-line "#525252")))
 
 (use-package skk

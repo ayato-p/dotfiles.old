@@ -25,7 +25,8 @@
                 (setq cljr-populate-artifact-cache-on-startup nil)
                 (setq cljr-magic-requires t)
                 (setq cljr-favor-prefix-notation nil)
-                (setq cljr-warn-on-eval nil)))
+                (setq cljr-warn-on-eval nil)
+                (setq cljr-auto-clean-ns nil)))
     (use-package cider
       :config (progn
                 (setq nrepl-log-messages t)
@@ -33,6 +34,7 @@
                 (setq cider-repl-display-help-banner nil)
                 (setq cider-repl-history-file (locate-user-emacs-file ".nrepl-history"))
                 (setq cider-eval-result-prefix "➫ ")
+                (setq cider-connection-message-fn #'cider-random-tip)
 
                 (custom-set-faces
                  '(cider-result-overlay-face

@@ -7,7 +7,8 @@
              ("C-x v =" . git-gutter:popup-diff)
              ("C-:" . highlight-symbol-at-point)
              ("C-M-:" . highlight-symbol-remove-all)
-             ("C-x g" . magit-status)))
+             ("C-x g" . magit-status)
+             ("C-c t" . toggle-truncate-lines)))
 
 (use-package smartrep
   :config
@@ -70,7 +71,9 @@
                 (deactivate-input-method)))
 
     (bind-keys :map global-map
-               ("M-x" . helm-M-x))
+               ("M-x" . helm-M-x)
+               ("C-x r l" . helm-bookmarks))
+
     (use-package helm-ag
       :config
       (bind-keys :map global-map
@@ -79,21 +82,13 @@
       :config
       (custom-set-faces
        '(helm-ls-git-modified-not-staged-face ((t :foreground "#F0DFAF")))
-
        '(helm-ls-git-modified-and-staged-face ((t :foreground "#DFAF8F")))
-
        '(helm-ls-git-renamed-modified-face ((t :foreground "#DFAF8F")))
-
        '(helm-ls-git-untracked-face ((t :foreground "#DCA3A3")))
-
        '(helm-ls-git-added-copied-face ((t :foreground "#AFD8AF")))
-
        '(helm-ls-git-added-modified-face ((t :foreground "#8CD0D3")))
-
        '(helm-ls-git-deleted-not-staged-face ((t :foreground "#D0BF8F")))
-
        '(helm-ls-git-deleted-and-staged-face ((t :foreground "#DCDCCC")))
-
        '(helm-ls-git-conflict-face ((t :foreground "#DC8CC3"))))
       (bind-keys :map global-map
                  ("C-x C-f" . (lambda (arg)

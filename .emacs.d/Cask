@@ -66,12 +66,16 @@
 (depends-on "open-junk-file")
 (depends-on "org")
 (depends-on "ox-pandoc")
+(depends-on "org-tree-slide")
 (depends-on "company")
 (depends-on "helm-company")
 (depends-on "company-quickhelp")
 (depends-on "edit-server")
 (depends-on "emojify")
 (depends-on "emoji-cheat-sheet-plus")
+(depends-on "bm")
+(depends-on "image+")
+
 ;; (depends-on "bm")
 
 ;; Highlight

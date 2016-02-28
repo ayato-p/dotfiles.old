@@ -10,7 +10,7 @@
                               :with company-yasnippet))
 
   (bind-keys :map global-map
-             ("C-i" . company-complete))
+             ("C-i" . company-indent-or-complete-common))
 
   (bind-keys :map company-active-map
              ("C-i" . company-complete-common)

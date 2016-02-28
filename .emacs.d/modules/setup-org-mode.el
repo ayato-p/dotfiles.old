@@ -42,6 +42,16 @@
                   (while (re-search-forward "^\\.\\.\scode::" nil t)
                     (replace-match ".. sourcecode::")))))
 
+    (use-package org-tree-slide
+      :config
+      (progn
+        (bind-keys :map org-mode-map
+                   ("<f8>" . org-tree-slide-mode))
+        (bind-keys :map org-tree-slide-mode-map
+                   ("<right>" . org-tree-slide-move-next-tree)
+                   ("<left>" . org-tree-slide-move-previous-tree))
+        (org-tree-slide-simple-profile)))
+
     (use-package company
       :init
       (add-hook 'org-mode-hook #'company-mode)
