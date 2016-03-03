@@ -38,6 +38,7 @@
 ;; Search
 (depends-on "ag")
 (depends-on "helm-gtags")
+(depends-on "ace-jump-mode")
 (depends-on "ace-isearch")
 (depends-on "helm-swoop")
 (depends-on "anzu")
