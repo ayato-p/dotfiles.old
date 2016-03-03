@@ -102,18 +102,6 @@
       (rainbow-delimiters-mode 1))
 
     (add-hook 'clojure-mode-hook #'yas-minor-mode)
-    (add-hook 'clojure-mode-hook 'my/clojure-mode-hook)
-
-    (define-clojure-indent
-      (defroutes 'defun)
-      (GET 2)
-      (POST 2)
-      (PUT 2)
-      (DELETE 2)
-      (HEAD 2)
-      (ANY 2)
-      (context 2)
-      (let-test-data 1)
-      (for-all 1))))
+    (add-hook 'clojure-mode-hook 'my/clojure-mode-hook)))
 
 ;;; setup-clojure-mode.el ends here
