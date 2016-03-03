@@ -4,3 +4,7 @@ bin/sassc
 .emacs.d/url/
 .emacs.d/recentf
 .emacs.d/.nrepl-*
+.emacs.d/emojis
+.emacs.d/bookmarks
+.emacs.d/projectile-bookmarks.eld
+.emacs.d/user-custom.el
