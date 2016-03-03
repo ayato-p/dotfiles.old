@@ -29,11 +29,6 @@
     (bind-keys :map company-active-map
                ("C-d" . company-quickhelp-manual-begin)))
 
-  ;; (use-package helm-company
-  ;;   :config
-  ;;   (bind-keys :map company-active-map
-  ;;              ("C-s" . helm-company)))
-
   (defun my/toggle-company-ispell ()
     (interactive)
     (cond
