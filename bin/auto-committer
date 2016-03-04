@@ -1,0 +1,14 @@
+#!/bin/bash
+# required package: inotify-tools
+
+watch_dir=$1
+
+events=(-e CREATE -e MODIFY)
+while inotifywait ${events[@]} $watch_dir; do
+    modified=`git status -s | sed -e 's/^.\{3\}//g'`
+    # git status -s | sed -e 's/^.\{3\}//g' | sed -r -e ':loop;N;$!b loop;s/\n/, /g'
+    git add ${modified[@]}
+
+    commit_msg=`echo $modified | sed -e 's/ /, /g'`
+    git commit -m ":pencil: Modify $commit_msg"
+done
