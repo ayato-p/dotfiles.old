@@ -11,6 +11,7 @@ urxvtd -q -f -o &
 ibus-daemon -d -x &
 xbindkeys &
 xset r rate 170 30 &
+auto-committer /home/ayato/notebook &
 xcape -e "#62=Control_R|q"
 
 exec /usr/bin/stumpwm
