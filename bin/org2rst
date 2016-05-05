@@ -1,0 +1,8 @@
+#!/bin/bash
+
+input_file=$1
+output_file=$2
+
+pandoc -f org -t rst $input_file | \
+    sed -e 's/code::/sourcecode::/g' \
+        > $output_file
