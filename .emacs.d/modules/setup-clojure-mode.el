@@ -59,7 +59,7 @@
                 (defun my/cider-mode-hook ()
                   (paredit-mode 1)
                   (rainbow-delimiters-mode 1)
-                  (cider-turn-on-eldoc-mode)
+                  (eldoc-mode +1)
                   (ac-flyspell-workaround) ; ?
 
                   (ac-cider-setup))
@@ -95,11 +95,21 @@
     (bind-keys :map clojure-mode-map
                ("C-c j a l" . clojure-align))
 
+    (defvar my/clojure-prettify-alist '())
+    (add-to-list 'my/clojure-prettify-alist '(">=" . ?≧))
+    (add-to-list 'my/clojure-prettify-alist '(">=" . ?≦))
+
+    (setq clojure--prettify-symbols-alist
+          (append my/clojure-prettify-alist
+                  clojure--prettify-symbols-alist))
+
     (defun my/clojure-mode-hook ()
       (add-hook 'before-save-hook 'my/cleanup-buffer nil t)
       (clj-refactor-mode 1)
       (paredit-mode 1)
-      (rainbow-delimiters-mode 1))
+      (rainbow-delimiters-mode 1)
+      ;; (prettify-symbols-mode 1)
+      )
 
     (add-hook 'clojure-mode-hook #'yas-minor-mode)
     (add-hook 'clojure-mode-hook 'my/clojure-mode-hook)))
