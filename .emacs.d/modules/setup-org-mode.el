@@ -8,8 +8,10 @@
   :config
   (progn
 
+
     (setq org-directory "~/memo/junk")
-    (setq org-agenda-files (list org-directory))
+    (setq my/notebook-directory "~/notebook")
+    (setq org-agenda-files (list org-directory my/notebook-directory))
 
     (setq org-edit-src-content-indentation 0
           org-src-tab-acts-natively t
@@ -33,6 +35,16 @@
             ;;(?: "to rst." org-pandoc-export-to-rst)
             (?r "to rst and open." org-pandoc-export-to-rst-and-open)
             (?R "as rst." org-pandoc-export-as-rst)))
+
+    (setq org-capture-templates
+          '(("t" "Todo" entry (file+headline (concat my/notebook-directory "/todo.org") "Tasks")
+             "* TODO %?\n %i\n %a")
+            ("d" "Discussion" entry (file+headline (concat my/notebook-directory "/discussion.org") "Discussion")
+             "%[~/notebook/templates/discussion.txt]")
+            ("j" "Journal" entry (file+datetree (concat my/notebook-directory "/journal.org"))
+             "* %?\n %U\n %i\n %a")
+            ("n" "Note" entry (file+headline (concat my/notebook-directory "/notes.org") "Notes")
+             "* %?\n %U\n %i")))
 
     (with-eval-after-load 'ox
       (require 'ox-pandoc)
@@ -80,4 +92,5 @@
           (find-file (concat org-directory "/" of)))))
 
     (bind-keys :map global-map
-               ("C-x C-o" . my/org-list))))
+               ("C-x C-o" . my/org-list)
+               ("C-c c" . org-capture))))
