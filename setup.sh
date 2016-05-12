@@ -69,7 +69,7 @@ sudo apt-get install -y libskk-dev skkdic skkdic-extra
 sudo apt-get install -y ibus ibus-skk skksearch skktools
 sudo apt-get install -y libssl-dev libreadline6-dev # for ruby build
 sudo apt-get install -y libxml2-dev libxslt1-dev    # for tinkerer
-sudo apt-get install -y postgresql-9.4              # my favorite db
+sudo apt-get install -y postgresql-9.5              # my favorite db
 sudo apt-get install -y mecab libmecab-dev mecab-ipadic-utf8 xz-utils # for mecab
 
 # tmux plugin manager

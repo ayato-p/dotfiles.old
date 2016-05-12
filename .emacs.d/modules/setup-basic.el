@@ -144,6 +144,7 @@
                       image-mode-map "C-x" '(("-" . 'imagex-sticky-zoom-out)
                                              ("+" . 'imagex-sticky-zoom-in))))))))
 
+
 (when window-system
   (load-theme 'zenburn t)
   ;; (load-theme 'hc-zenburn t)
@@ -155,9 +156,9 @@
   (custom-set-faces
    '(e2wm:face-history-list-normal ((t (:foreground "LightGoldenrod1")))))
 
-  (setq default-frame-alist '((font . "Droid Sans Mono-8")))
-  (set-default-font "Droid Sans Mono-8")
-  (set-face-font 'variable-pitch "Droid Sans Mono-8")
+  (setq default-frame-alist '((font . "Dejavu Sans Mono-8")))
+  (set-default-font "Dejavu Sans Mono-8")
+  (set-face-font 'variable-pitch "Dejavu Sans Mono-8")
   (set-fontset-font (frame-parameter nil 'font)
                     'japanese-jisx0208
                     '("Takaoゴシック" . "unicode-bmp"))

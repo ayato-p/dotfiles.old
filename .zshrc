@@ -98,11 +98,26 @@ export FZF_DEFAULT_OPTS="--reverse --inline-info --bind=ctrl-k:kill-line"
 
 
 # zplug
-source ~/.zplug/zplug
+[[ -d ~/.zplug ]] || {
+  git clone https://github.com/b4b4r07/zplug ~/.zplug
+  source ~/.zplug/init.zsh && zplug update --self
+}
+
+source ~/.zplug/init.zsh
 
 zplug "b4b4r07/zplug"
-zplug "b4b4r07/enhancd", of:enhancd.sh
+zplug "b4b4r07/enhancd", use:enhancd.sh
 export ENHANCD_FILTER=fzf-tmux:fzf
+zplug "zsh-users/zsh-completions", depth:1
+
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    else
+        echo
+    fi
+fi
 
 zplug load
 
