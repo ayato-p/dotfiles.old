@@ -71,6 +71,7 @@ sudo apt-get install -y libssl-dev libreadline6-dev # for ruby build
 sudo apt-get install -y libxml2-dev libxslt1-dev    # for tinkerer
 sudo apt-get install -y postgresql-9.5              # my favorite db
 sudo apt-get install -y mecab libmecab-dev mecab-ipadic-utf8 xz-utils # for mecab
+sudo apt-get install -y inotify-tools
 
 # tmux plugin manager
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
