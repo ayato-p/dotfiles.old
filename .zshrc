@@ -56,9 +56,13 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # User definition
 
+alias gpg="gpg2"
 alias emacsd="emacs &"
 alias ekill='emacsclient -e "(kill-emacs)"'
 alias e="emacsclient -nw"
+
+# export http_proxy=http://localhost:8000
+# export https_proxy=http://localhost:8000
 
 export EDITOR='emacsclient -nw'
 export TERM=screen-256color
@@ -70,6 +74,13 @@ export PATH=$HOME/.cask/bin:$PATH
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
+
+# for Leiningen(Clojure)
+export LEIN_GPG=gpg2
+
+export PATH=$HOME/lib/jbake/bin:$PATH
+export PATH=$HOME/lib/redpen/bin:$PATH
+export LD_LIBRARY_PATH=$HOME/lib/hornetq
 
 # for stack(haskell)
 export PATH=$HOME/.local/bin:$PATH
@@ -131,3 +142,7 @@ if [ -z $TMUX ] ; then
 else
     kuromadoushi
 fi
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/ayato/.sdkman"
+[[ -s "/home/ayato/.sdkman/bin/sdkman-init.sh" ]] && source "/home/ayato/.sdkman/bin/sdkman-init.sh"

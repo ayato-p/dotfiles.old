@@ -8,13 +8,13 @@
 (use-package clojure-mode
   :config
   (progn
-    (use-package cider-eval-sexp-fu
-      :config
-      (progn
-        (setq eval-sexp-fu-flash-duration 1)
-        (custom-set-faces
-         '(eval-sexp-fu-flash
-           ((((class color)) (:background "#F0DFAF" :foreground "#3F3F3F")))))))
+    ;; (use-package cider-eval-sexp-fu
+    ;;     :config
+    ;;     (progn
+    ;;       (setq eval-sexp-fu-flash-duration 1)
+    ;;       (custom-set-faces
+    ;;        '(eval-sexp-fu-flash
+    ;;          ((((class color)) (:background "#F0DFAF" :foreground "#3F3F3F")))))))
     (use-package clojure-mode-extra-font-locking)
     (use-package midje-mode)
     (use-package clj-refactor
@@ -103,11 +103,38 @@
           (append my/clojure-prettify-alist
                   clojure--prettify-symbols-alist))
 
+    (defun my/clojure-mode-custom-indent ()
+      (put-clojure-indent 'fnk 'defun)
+      (put-clojure-indent 'defnk 'defun)
+      (put-clojure-indent 'for-map 1)
+      (put-clojure-indent 'instance 2)
+      (put-clojure-indent 'inline 1)
+      (put-clojure-indent 'letk 1)
+      (put-clojure-indent 'mlet 1)
+      (put-clojure-indent 'when-letk 1)
+      (put-clojure-indent 'go-loop 1)
+      (put-clojure-indent 'this-as 'defun)
+      (put-clojure-indent 'when-some '1)
+      (put-clojure-indent 'if-some '1)
+      (put-clojure-indent 'try+ 0)
+      (put 'specify 'clojure-backtracking-indent '((2)))
+      (put 'specify! 'clojure-backtracking-indent '((2)))
+      (put 'defcomponent 'clojure-backtracking-indent '((2)))
+      (put 'defcomponentk 'clojure-backtracking-indent '((2)))
+      (put 'defmixin 'clojure-backtracking-indent '((2)))
+      (put 'clojure.core/defrecord 'clojure-backtracking-indent '(4 4 (2)))
+      (put 's/defrecord 'clojure-backtracking-indent '(4 4 (2)))
+      (put 's/defrecord+ 'clojure-backtracking-indent '(4 4 (2)))
+      (put 'potemkin/deftype+ 'clojure-backtracking-indent '(4 4 (2)))
+      (put 'potemkin/defrecord+ 'clojure-backtracking-indent '(4 4 (2)))
+      )
+
     (defun my/clojure-mode-hook ()
       (add-hook 'before-save-hook 'my/cleanup-buffer nil t)
       (clj-refactor-mode 1)
       (paredit-mode 1)
       (rainbow-delimiters-mode 1)
+      (my/clojure-mode-custom-indent)
       ;; (prettify-symbols-mode 1)
       )
 

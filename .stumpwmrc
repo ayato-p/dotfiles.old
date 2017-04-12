@@ -28,7 +28,7 @@
 
 (defcommand chrome () ()
   "Start google-chrome or switch to it, if it is already running."
-  (run-or-raise "google-chrome-stable" '(:class "google-chrome")))
+  (run-or-raise "google-chrome" '(:class "google-chrome")))
 
 (defcommand firefox () ()
   "Start Firefox or switch to it, if it is already running."

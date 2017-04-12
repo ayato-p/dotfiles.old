@@ -44,10 +44,8 @@
 (depends-on "anzu")
 (depends-on "helm-ls-git")
 
-;; (depends-on "wgrep")
-;; (depends-on "wgrep-ag")
-
 ;; Misc
+(depends-on "column-marker")
 (depends-on "auto-complete")
 (depends-on "fuzzy" :git "https://github.com/auto-complete/fuzzy-el.git")
 (depends-on "ac-helm")
@@ -76,7 +74,7 @@
 (depends-on "emoji-cheat-sheet-plus")
 (depends-on "bm")
 (depends-on "image+")
-
+(depends-on "csv-mode")
 ;; (depends-on "bm")
 
 ;; Highlight
@@ -116,6 +114,10 @@
 (depends-on "midje-mode")
 (depends-on "cider-eval-sexp-fu")
 ;; (depends-on "kibit-mode")
+
+;; for Scala
+(depends-on "scala-mode")
+;; (depends-on "ensime")
 
 ;;; for SQL
 (depends-on "sql-indent")

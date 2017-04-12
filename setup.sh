@@ -59,7 +59,7 @@ sudo apt-get install -y xdotool xbindkeys
 sudo apt-get install -y ssh tmux zsh rxvt-unicode-256color stumpwm
 sudo apt-get install -y git silversearcher-ag subversion
 sudo apt-get install -y curl tree nkf ntpdate imagemagick xclip
-sudo apt-get install -y build-essential openssl keychain gnupg-agent
+sudo apt-get install -y build-essential openssl keychain gnupg2 gnupg-agent
 sudo apt-get install -y autoconf automake libcurl4-gnutls-dev
 sudo apt-get install -y emacs
 sudo apt-get install -y fonts-inconsolata fonts-takao-gothic
@@ -133,7 +133,8 @@ cd sassc && SASS_LIBSASS_PATH="~/lib/libsass"; make && cd $HOME && ln -s $HOME/l
 wget -qO- https://get.docker.com/ | sh
 sudo usermod -aG docker ayato
 # urxvt
-wget -O .urxvt/ext/resize-font https://raw.githubusercontent.com/simmel/urxvt-resize-font/master/resize-font
+# wget -O .urxvt/ext/resize-font https://raw.githubusercontent.com/simmel/urxvt-resize-font/master/resize-font
+curl --create-dirs -o .urxvt/ext/resize-font https://raw.githubusercontent.com/simmel/urxvt-resize-font/master/resize-font
 
 # install for screencast
 # sudo apt-get install gtk-recordmydesktop -y
