@@ -69,7 +69,6 @@ sudo apt-get install -y libskk-dev skkdic skkdic-extra
 sudo apt-get install -y ibus ibus-skk skksearch skktools
 sudo apt-get install -y libssl-dev libreadline6-dev # for ruby build
 sudo apt-get install -y libxml2-dev libxslt1-dev    # for tinkerer
-sudo apt-get install -y postgresql-9.5              # my favorite db
 sudo apt-get install -y mecab libmecab-dev mecab-ipadic-utf8 xz-utils # for mecab
 sudo apt-get install -y inotify-tools
 
@@ -81,7 +80,7 @@ git clone https://github.com/alols/xcape.git
 cd xcape && make && sudo make install && cd ~/ && rm -rf xcape
 
 # zplug: zshell plugin manager
-curl -fLo ~/.zplug/zplug --create-dirs https://git.io/zplug
+curl -sL --proto-redir -all,https https://zplug.sh/installer | zsh
 
 # language tools
 # zsh
@@ -129,9 +128,7 @@ cd lib
 git clone https://github.com/sass/sassc.git --branch 3.2.2 --depth 1
 git clone https://github.com/sass/libsass.git --branch 3.2.2 --depth 1
 cd sassc && SASS_LIBSASS_PATH="~/lib/libsass"; make && cd $HOME && ln -s $HOME/lib/sassc/bin/sassc $HOME/bin
-# docker
-wget -qO- https://get.docker.com/ | sh
-sudo usermod -aG docker ayato
+
 # urxvt
 # wget -O .urxvt/ext/resize-font https://raw.githubusercontent.com/simmel/urxvt-resize-font/master/resize-font
 curl --create-dirs -o .urxvt/ext/resize-font https://raw.githubusercontent.com/simmel/urxvt-resize-font/master/resize-font
