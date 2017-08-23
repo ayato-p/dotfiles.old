@@ -30,6 +30,7 @@ precmd () {
 # RPROMPT='${vcs_info_msg_0_}'
 
 # for Completion
+export fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit
 compinit
 
@@ -85,8 +86,8 @@ export LD_LIBRARY_PATH=$HOME/lib/hornetq
 # for stack(haskell)
 export PATH=$HOME/.local/bin:$PATH
 
-export PATH=$HOME/.ndenv/bin:$PATH
-eval "$(ndenv init -)"
+export PATH=$HOME/.nodenv/bin:$PATH
+eval "$(nodenv init -)"
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"

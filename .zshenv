@@ -15,8 +15,3 @@
 # [ -z "$HOSTNAME" ] && HOSTNAME=`uname -n`
 # [ -f $HOME/.keychain/$HOSTNAME-sh-gpg ] && \
 #     . $HOME/.keychain/$HOSTNAME-sh-gpg
-
-
-
-# Start vmware-user
-start-vmware-user

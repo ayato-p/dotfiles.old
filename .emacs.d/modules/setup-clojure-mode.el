@@ -35,6 +35,7 @@
                 (setq cider-repl-history-file (locate-user-emacs-file ".nrepl-history"))
                 (setq cider-eval-result-prefix "➫ ")
                 (setq cider-connection-message-fn #'cider-random-tip)
+                (cider-repl-toggle-pretty-printing)
 
                 (custom-set-faces
                  '(cider-result-overlay-face

@@ -537,7 +537,8 @@
                         :background "#313131")
     (setq-default tab-width 4 indent-tabs-mode nil)
 
-    (setq whitespace-line-column 100) ;; limit line length
+    ;; (setq whitespace-line-column 100) ;; limit line length
+    (setq whitespace-line-column 70) ;; for 執筆
     (add-hook 'prog-mode-hook 'whitespace-mode)))
 
 (use-package po-mode

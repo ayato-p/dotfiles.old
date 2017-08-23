@@ -1,4 +1,4 @@
 #!/bin/bash
-if type vmware-user-suid-wrapper > /dev/null; then
-  vmware-user-suid-wrapper
-fi
+# if type vmware-user-suid-wrapper > /dev/null; then
+#   vmware-user-suid-wrapper
+# fi
