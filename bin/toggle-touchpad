@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# Use: $0
+# Toggle automatically on/off the touchpad depending its state
+
+WDIR=$(readlink -f $(dirname $0))
+
+# Find the identifier of the touchpad
+TOUCHPAD_ID=$(xinput list \
+                  | grep -i touchpad \
+                  | grep -o "id=[0-9]*" \
+                  | cut -f 2 -d'=')
+
+TOUCHPAD_STATUS=$(xinput --list-props $TOUCHPAD_ID \
+                      | grep "Device Enabled" \
+                      | head -n 1 \
+                      | cut -f 2 -d ":")
+
+[ $TOUCHPAD_STATUS = "0" ] && NEW_STATUS="1" || NEW_STATUS="0"
+$WDIR/toggle-touchpad-manual $NEW_STATUS
