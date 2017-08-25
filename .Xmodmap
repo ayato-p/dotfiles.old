@@ -36,3 +36,7 @@ keycode 47 = colon semicolon
 ! keycode 250 = space NoSymbol space
 ! remap
 ! keycode  65 = Shift_L NoSymbol Shift_L
+
+remove LOCK = Caps_Lock
+keysym Caps_Lock = Control_L
+add Control = Control_L

@@ -72,5 +72,5 @@
 # "xdo-return"
 #   Control + m
 
-"xdo-backspace"
-  Control + h
+# "xdo-backspace"
+#   Control + h
