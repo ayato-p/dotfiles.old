@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+nmcli dev wifi list | grep '*' | awk 'NR==2' | awk '{print $2 " " $8}'
