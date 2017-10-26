@@ -44,7 +44,6 @@
 
 ;;; load your preferred theme
 (use-package zenburn-theme
-  :if window-system
   :config
   (load-theme 'zenburn t))
 
@@ -102,6 +101,7 @@
 
 ;;; yasnippet
 (use-package yasnippet
+  :diminish yas-minor-mode
   :bind (:map yas-minor-mode-map
               ("TAB" . nil)
               ("C-i" . nil)
@@ -111,6 +111,7 @@
 
 ;;; comapany-mode!
 (use-package company
+  :diminish company-mode
   :bind (:map company-mode-map
               ("C-i" . company-complete)
               ("TAB" . nil)
@@ -133,6 +134,7 @@
   :commands magit-status)
 
 (use-package git-gutter
+  :diminish git-gutter-mode
   :config
   (global-git-gutter-mode +1))
 
@@ -141,6 +143,10 @@
 
 (use-package subword
   :commands subword-mode)
+
+(use-package abbrev
+  :ensure nil
+  :diminish abbrev-mode)
 
 ;;; answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -258,13 +264,14 @@
   :commands (helm-projectile-find-file helm-projectile-switch-to-buffer)
   :init
   (mykie:set-keys nil
-                  "C-x C-f"
-                  :default (call-interactively 'find-file)
-                  :C-u helm-projectile-find-file
-                  :C-u*2! helm-ls-git-ls
-                  "C-x b"
-                  :default (call-interactively 'switch-to-buffer)
-                  :C-u helm-projectile-switch-to-buffer)
+    "C-x C-f"
+    :default (call-interactively 'find-file)
+    :C-u helm-projectile-find-file
+    :C-u*2! helm-ls-git-ls
+    "C-x b"
+    :default (call-interactively 'switch-to-buffer)
+    :C-u helm-projectile-switch-to-buffer
+    :C-u*2! helm-buffers-list)
   :config
   (use-package projectile
     :config
@@ -303,6 +310,7 @@
 ;;;
 
 (use-package paredit
+  :diminish paredit-mode
   :bind (:map paredit-mode-map
               ("C-h" . paredit-backward-delete))
   :config
@@ -342,7 +350,10 @@
 ;;;
 
 (use-package clojure-mode
-  :mode ("\\.clj\\'" "\\.cljs\\'" "\\.cljc\\'" "\\.cljx\\'")
+  :mode (("\\.clj\\'"  . clojure-mode)
+         ("\\.cljc\\'" . clojurec-mode)
+         ("\\.cljx\\'" . clojurex-mode)
+         ("\\.cljs\\'" . clojurescript-mode))
   :commands cider-jack-in
   :config
   (add-hook 'clojure-mode-hook #'yas-minor-mode)
@@ -356,15 +367,33 @@
   (use-package cider
     :diminish subword-mode git-gutter-mode
     :functions (cider-repl-toggle-pretty-printing)
+    :bind (:map cider-mode-map
+                ("C-x *" . my/zou-go))
     :config
     (add-hook 'cider-repl-mode-hook #'company-mode)
+    (add-hook 'cider-repl-mode-hook #'my/lisp-mode-hook)
+    (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
+    (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+
     (setq nrepl-log-messages t
+          cider-repl-display-help-banner nil
           cider-repl-display-in-current-window t
           cider-repl-use-clojure-font-lock t
           cider-save-file-on-load 'always-save
           cider-font-lock-dynamically '(macro core function var)
           cider-overlays-use-font-lock t)
-    (cider-repl-toggle-pretty-printing))
+    (cider-repl-toggle-pretty-printing)
+
+    (defun my/zou-go ()
+      (interactive)
+      (with-current-buffer (cider-current-connection "clj")
+        (if current-prefix-arg
+            (progn
+              (save-some-buffers)
+              (cider-interactive-eval
+               "(zou.framework.repl/reset)"))
+          (cider-interactive-eval
+           "(zou.framework.repl/go)")))))
 
   (use-package clj-refactor
     :diminish clj-refactor-mode
