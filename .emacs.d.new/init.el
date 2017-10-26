@@ -38,9 +38,9 @@
 (require 'diminish)
 (require 'bind-key)
 
-(setq use-package-always-ensure t)
-(setq use-package-always-pin "melpa-stable")
-(setq use-package-verbose t)
+(setq use-package-always-ensure t
+      use-package-always-pin "melpa-stable"
+      use-package-verbose t)
 
 ;;; load your preferred theme
 (use-package zenburn-theme
@@ -52,46 +52,6 @@
   :if (memq window-system '(mac ns x))
   :config
   (exec-path-from-shell-initialize))
-
-;;; global keymap
-(use-package bind-key
-  :config
-  (bind-keys :map global-map
-             ("C-h" . delete-backward-char)
-             ("C-;" . highlight-symbol)))
-
-(use-package hydra
-  :config
-  (defhydra hydra-git-commands (global-map "C-x g")
-    "Git"
-    ("g" magit-status "Show git status")
-    ("n" git-gutter:next-hunk "Next hunk")
-    ("p" git-gutter:previous-hunk "Previous hunk")
-    ("q" nil "quit"))
-
-  (defhydra hydra-highlight-symbol (global-map "C-c h")
-    "Highlight symbol"
-    ("n" highlight-symbol-next "Next symbol")
-    ("p" highlight-symbol-prev "Previous symbol")
-    ("r" highlight-symbol-query-replace "Replace")
-    ("q" nil "quit"))
-
-  (defhydra hydra-zoom (global-map "C-x")
-    "Zoom"
-    ("C-+" text-scale-increase "in")
-    ("C--" text-scale-decrease "out")
-    ("C-0" text-scale-adjust "adjust")
-    ("q" nil "quit"))
-
-  (defhydra hydra-window (global-map "C-x")
-    "Window"
-    ("o" other-window "other")
-    ("q" nil "quit")))
-
-(use-package mykie
-  :config
-  (setq mykie:use-major-mode-key-override t)
-  (mykie:initialize))
 
 ;;; happy (((()))) !!!
 (use-package paren
@@ -161,6 +121,7 @@
       truncate-partial-width-windows nil
       echo-keystrokes 0.1
       create-lockfiles nil
+      make-pointer-invisible t
       ;; disable to buckup funciton
       backup-inhibited t
       delete-auto-save-files t
@@ -245,6 +206,51 @@
     output))
 
 (defun my/basic-mode-hook ())
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
+;;;
+;;; key-bindings
+;;;
+
+;;; global keymap
+(use-package bind-key
+  :config
+  (bind-keys :map global-map
+             ("C-h" . delete-backward-char)
+             ("C-;" . highlight-symbol)))
+
+(use-package hydra
+  :config
+  (defhydra hydra-git-commands (global-map "C-x g")
+    "Git"
+    ("g" magit-status "Show git status")
+    ("n" git-gutter:next-hunk "Next hunk")
+    ("p" git-gutter:previous-hunk "Previous hunk")
+    ("q" nil "quit"))
+
+  (defhydra hydra-highlight-symbol (global-map "C-c h")
+    "Highlight symbol"
+    ("n" highlight-symbol-next "Next symbol")
+    ("p" highlight-symbol-prev "Previous symbol")
+    ("r" highlight-symbol-query-replace "Replace")
+    ("q" nil "quit"))
+
+  (defhydra hydra-zoom (global-map "C-x")
+    "Zoom"
+    ("C-+" text-scale-increase "in")
+    ("C--" text-scale-decrease "out")
+    ("C-0" text-scale-adjust "adjust")
+    ("q" nil "quit"))
+
+  (defhydra hydra-window (global-map "C-x")
+    "Window"
+    ("o" other-window "other")
+    ("q" nil "quit")))
+
+(use-package mykie
+  :config
+  (setq mykie:use-major-mode-key-override t)
+  (mykie:initialize))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
