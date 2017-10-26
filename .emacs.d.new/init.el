@@ -58,7 +58,8 @@
 (use-package bind-key
   :config
   (bind-keys :map global-map
-             ("C-h" . delete-backward-char)))
+             ("C-h" . delete-backward-char)
+             ("C-;" . highlight-symbol)))
 
 (use-package hydra
   :config
@@ -66,17 +67,27 @@
     "Git"
     ("g" magit-status "Show git status")
     ("n" git-gutter:next-hunk "Next hunk")
-    ("p" git-gutter:previous-hunk "Previous hunk"))
+    ("p" git-gutter:previous-hunk "Previous hunk")
+    ("q" nil "quit"))
+
+  (defhydra hydra-highlight-symbol (global-map "C-c h")
+    "Highlight symbol"
+    ("n" highlight-symbol-next "Next symbol")
+    ("p" highlight-symbol-prev "Previous symbol")
+    ("r" highlight-symbol-query-replace "Replace")
+    ("q" nil "quit"))
 
   (defhydra hydra-zoom (global-map "C-x")
     "Zoom"
     ("C-+" text-scale-increase "in")
     ("C--" text-scale-decrease "out")
-    ("C-0" text-scale-adjust "adjust"))
+    ("C-0" text-scale-adjust "adjust")
+    ("q" nil "quit"))
 
   (defhydra hydra-window (global-map "C-x")
     "Window"
-    ("o" other-window "other")))
+    ("o" other-window "other")
+    ("q" nil "quit")))
 
 (use-package mykie
   :config
@@ -124,6 +135,9 @@
 (use-package git-gutter
   :config
   (global-git-gutter-mode +1))
+
+(use-package highlight-symbol
+  :commands highlight-symbol)
 
 (use-package subword
   :commands subword-mode)
