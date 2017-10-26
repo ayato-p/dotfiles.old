@@ -108,6 +108,11 @@
   :ensure nil
   :diminish abbrev-mode)
 
+(use-package iflipb
+  :bind (:map global-map
+              ("C-." . iflipb-next-buffer)
+              ("C-," . iflipb-previous-buffer)))
+
 ;;; answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 
