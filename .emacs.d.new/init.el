@@ -303,12 +303,12 @@
   (mykie:set-keys nil
     "C-x C-f"
     :default (call-interactively 'find-file)
-    :C-u helm-projectile-find-file
-    :C-u*2! helm-ls-git-ls
+    :C-u helm-ls-git-ls
+    :C-u*2! helm-projectile-find-file
     "C-x b"
-    :default (call-interactively 'switch-to-buffer)
+    :default helm-buffers-list
     :C-u helm-projectile-switch-to-buffer
-    :C-u*2! helm-buffers-list)
+    :C-u*2! (call-interactively 'switch-to-buffer))
   :config
   (use-package projectile
     :config
@@ -317,6 +317,12 @@
 
 (use-package helm-ag
   :bind ("C-x C-g" . helm-do-ag-project-root))
+
+(use-package helm-swoop
+  :commands helm-swoop
+  :bind (("M-i" . helm-swoop)
+         :map isearch-mode-map
+         ("M-i" . helm-swoop)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
