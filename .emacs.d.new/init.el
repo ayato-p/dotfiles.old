@@ -17,7 +17,7 @@
 ;;;
 
 (require 'package)
-;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 ;; (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
 
@@ -161,6 +161,18 @@
 ;;; cleanup whitespace before file save
 (add-hook 'before-save-hook 'whitespace-cleanup)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
+;;;
+;;; Window setting
+;;;
+
+(use-package neotree
+  :bind (:map global-map
+              ("s-t" . neotree-toggle))
+  :config
+  (setq neo-show-hidden-files t
+        neo-create-file-auto-open t))
+
 ;;; modeline
 (setq display-time-string-forms
       '((format
@@ -209,8 +221,6 @@
     (when path
       (setq output (concat ".../" output)))
     output))
-
-(defun my/basic-mode-hook ())
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
@@ -387,7 +397,6 @@
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'company-mode)
   (add-hook 'clojure-mode-hook #'clj-refactor-mode)
-  (add-hook 'clojure-mode-hook #'my/basic-mode-hook)
   (add-hook 'clojure-mode-hook #'my/prog-mode-hook)
   (add-hook 'clojure-mode-hook #'my/lisp-mode-hook)
 
@@ -406,7 +415,7 @@
           cider-repl-display-help-banner nil
           cider-repl-display-in-current-window t
           cider-repl-use-clojure-font-lock t
-          cider-save-file-on-load 'always-save
+          cider-save-file-on-load t
           cider-font-lock-dynamically '(macro core function var)
           cider-overlays-use-font-lock t)
     (cider-repl-toggle-pretty-printing)
