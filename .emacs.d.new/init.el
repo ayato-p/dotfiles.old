@@ -72,18 +72,19 @@
 ;;; comapany-mode!
 (use-package company
   :diminish company-mode
-  :bind (:map company-mode-map
-              ("C-i" . company-complete)
-              ("TAB" . nil)
-              :map company-active-map
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous)
-              ("C-s" . company-search-words-regexp)
-              ("C-h" . nil)
-              :map company-search-map
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous)
-              ("C-h" . nil))
+  :bind (("C-i" . company-complete)
+         :map company-mode-map
+         ("C-i" . company-complete)
+         ("TAB" . nil)
+         :map company-active-map
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous)
+         ("C-s" . company-search-words-regexp)
+         ("C-h" . nil)
+         :map company-search-map
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous)
+         ("C-h" . nil))
   :config
   (setq company-idle-delay 0.1
         company-minimum-prefix-length 2
@@ -265,7 +266,17 @@
 (use-package mykie
   :config
   (setq mykie:use-major-mode-key-override t)
-  (mykie:initialize))
+  (mykie:initialize)
+
+  (mykie:set-keys nil
+    "C-x C-f"
+    :default (call-interactively 'find-file)
+    :C-u helm-ls-git-ls
+    :C-u*2! helm-projectile-find-file
+    "C-x b"
+    :default helm-buffers-list
+    :C-u helm-projectile-switch-to-buffer
+    :C-u*2! (call-interactively 'switch-to-buffer)))
 
 (use-package ace-jump-mode
   :config
@@ -299,21 +310,14 @@
 
 (use-package helm-projectile
   :commands (helm-projectile-find-file helm-projectile-switch-to-buffer)
-  :init
-  (mykie:set-keys nil
-    "C-x C-f"
-    :default (call-interactively 'find-file)
-    :C-u helm-ls-git-ls
-    :C-u*2! helm-projectile-find-file
-    "C-x b"
-    :default helm-buffers-list
-    :C-u helm-projectile-switch-to-buffer
-    :C-u*2! (call-interactively 'switch-to-buffer))
+
   :config
   (use-package projectile
     :config
-    (projectile-mode 1))
-  (use-package helm-ls-git))
+    (projectile-mode 1)))
+
+(use-package helm-ls-git
+  :commands helm-ls-git-ls)
 
 (use-package helm-ag
   :bind ("C-x C-g" . helm-do-ag-project-root))
@@ -397,49 +401,60 @@
          ("\\.cljc\\'" . clojurec-mode)
          ("\\.cljx\\'" . clojurex-mode)
          ("\\.cljs\\'" . clojurescript-mode))
-  :commands cider-jack-in
   :config
   (add-hook 'clojure-mode-hook #'yas-minor-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'company-mode)
   (add-hook 'clojure-mode-hook #'clj-refactor-mode)
+  (add-hook 'clojure-mode-hook #'cider-mode)
   (add-hook 'clojure-mode-hook #'my/prog-mode-hook)
-  (add-hook 'clojure-mode-hook #'my/lisp-mode-hook)
+  (add-hook 'clojure-mode-hook #'my/lisp-mode-hook))
 
-  (use-package cider
-    :diminish subword-mode git-gutter-mode
-    :functions (cider-repl-toggle-pretty-printing)
-    :bind (:map cider-mode-map
-                ("C-x *" . my/zou-go))
-    :config
-    (add-hook 'cider-repl-mode-hook #'company-mode)
-    (add-hook 'cider-repl-mode-hook #'my/lisp-mode-hook)
-    (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
-    (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
+(use-package cider
+  ;; :diminish cider-mode
+  :bind (:map cider-mode-map
+              ("C-x *" . my/zou-go))
+  :commands (cider-mode cider-jack-in)
+  :config
+  (add-hook 'cider-repl-mode-hook #'company-mode)
+  (add-hook 'cider-repl-mode-hook #'my/lisp-mode-hook)
+  (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
+  (add-hook 'cider-repl-mode-hook #'cider-company-enable-fuzzy-completion)
 
-    (setq nrepl-log-messages t
-          cider-repl-display-help-banner nil
-          cider-repl-display-in-current-window t
-          cider-repl-use-clojure-font-lock t
-          cider-save-file-on-load t
-          cider-font-lock-dynamically '(macro core function var)
-          cider-overlays-use-font-lock t)
-    (cider-repl-toggle-pretty-printing)
+  (setq nrepl-log-messages t
+        cider-repl-display-help-banner nil
+        cider-repl-display-in-current-window t
+        cider-repl-use-clojure-font-lock t
+        cider-repl-use-pretty-printing t
+        cider-save-file-on-load t
+        cider-font-lock-dynamically '(macro core function var)
+        cider-overlays-use-font-lock t)
 
-    (defun my/zou-go ()
-      (interactive)
-      (with-current-buffer (cider-current-connection "clj")
-        (if current-prefix-arg
-            (progn
-              (save-some-buffers)
-              (cider-interactive-eval
-               "(zou.framework.repl/reset)"))
-          (cider-interactive-eval
-           "(zou.framework.repl/go)")))))
+  (defun my/zou-go ()
+    (interactive)
+    (with-current-buffer (cider-current-connection "clj")
+      (if current-prefix-arg
+          (progn
+            (save-some-buffers)
+            (cider-interactive-eval
+             "(zou.framework.repl/reset)"))
+        (cider-interactive-eval
+         "(zou.framework.repl/go)")))))
 
-  (use-package clj-refactor
-    :diminish clj-refactor-mode
-    :config (cljr-add-keybindings-with-prefix "C-c j")))
+(use-package clj-refactor
+  :diminish clj-refactor-mode
+  :commands clj-refactor-mode
+  :config
+  (cljr-add-keybindings-with-prefix "C-c j"))
+
+(use-package inf-clojure
+  :commands (inf-clojure inf-clojure-minor-mode)
+  :bind (:map inf-clojure-mode-map
+              ("C-c C-z" . inf-clojure-switch-to-repl)
+              ("C-c C-k" . inf-clojure-load-file))
+  :config
+  (add-hook 'inf-clojure-mode-hook #'company-mode)
+  (add-hook 'inf-clojure-mode-hook #'my/lisp-mode-hook))
 
 (message "init.el loaded!!")
 
