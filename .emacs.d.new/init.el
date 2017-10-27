@@ -342,6 +342,87 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
+;;; org-mode
+;;;
+
+(use-package open-junk-file
+  :pin melpa
+  :bind ("C-x j" . open-junk-file)
+  :config
+  (setq open-junk-file-format "~/memo/junk/%Y-%m%d-%H%M%S."))
+
+(use-package org
+  :pin manual
+  :load-path "./elisp/org-mode/lisp/"
+  :mode (("\\.org$" . org-mode))
+  :config
+  (setq org-directory "~/memo/junk"
+        my/notebook-directory "~/notebook"
+        org-agenda-files (list org-directory my/notebook-directory))
+
+  (setq org-edit-src-content-indentation 0
+        org-src-tab-acts-natively t
+        org-src-fontify-natively t)
+
+  (setq org-confirm-babel-evaluate nil)
+
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline (concat my/notebook-directory "/todo.org") "Tasks")
+           "* TODO %?\n %i\n %a")
+          ("d" "Discussion" entry (file+headline (concat my/notebook-directory "/discussion.org") "Discussion")
+           "%[~/notebook/templates/discussion.txt]")
+          ("j" "Journal" entry (file+datetree (concat my/notebook-directory "/journal.org"))
+           "* %?\n %U\n %i\n %a")
+          ("n" "Note" entry (file+headline (concat my/notebook-directory "/notes.org") "Notes")
+           "* %?\n %U\n %i")))
+
+  ;; for org-babel
+  (require 'ob-clojure)
+  (setq org-babel-clojure-backend 'cider))
+
+
+(when (not (require 'ox-pandoc nil t))
+  (package-install 'ox-pandoc))
+
+(with-eval-after-load 'ox
+  (progn
+    (require 'ox-pandoc)
+    (setq org-pandoc-menu-entry
+          '(
+            ;;(?a "to asciidoc." org-pandoc-export-to-asciidoc)
+            (?a "to asciidoc and open." org-pandoc-export-to-asciidoc-and-open)
+            (?A "as asciidoc." org-pandoc-export-as-asciidoc)
+            ;;(?h "to html5." org-pandoc-export-to-html5)
+            (?h "to html5 and open." org-pandoc-export-to-html5-and-open)
+            (?H "as html5." org-pandoc-export-as-html5)
+            ;;(?g "to markdown_github." org-pandoc-export-to-markdown_github)
+            (?g "to markdown_github and open." org-pandoc-export-to-markdown_github-and-open)
+            (?G "as markdown_github." org-pandoc-export-as-markdown_github)
+            ;;(?v "to revealjs." org-pandoc-export-to-revealjs)
+            (?v "to revealjs and open." org-pandoc-export-to-revealjs-and-open)
+            (?V "as revealjs." org-pandoc-export-as-revealjs)
+            ;;(?: "to rst." org-pandoc-export-to-rst)
+            (?r "to rst and open." org-pandoc-export-to-rst-and-open)
+            (?R "as rst." org-pandoc-export-as-rst))))
+
+  ;; (add-hook 'org-pandoc-after-processing-rst-hook
+  ;;           (lambda (&optional _)
+  ;;             (interactive)
+  ;;             (while (re-search-forward "^\\.\\.\scode::" nil t)
+  ;;               (replace-match ".. sourcecode::"))))
+  )
+
+(use-package org-tree-slide
+  :bind (:map org-mode-map
+              ("<f8>" . org-tree-slide-mode)
+              :map org-tree-slide-mode-map
+              ("<right>" . org-tree-slide-move-next-tree)
+              ("<left>" . org-tree-slide-move-previous-tree))
+  :config
+  (org-tree-slide-simple-profile))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
+;;;
 ;;; Yaml
 ;;;
 
