@@ -71,10 +71,9 @@
 ;;; comapany-mode!
 (use-package company
   :diminish company-mode
-  :bind (("C-i" . company-complete)
+  :bind (("C-i" . company-indent-or-complete-common)
          :map company-mode-map
          ("C-i" . company-complete)
-         ("TAB" . nil)
          :map company-active-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous)
@@ -171,8 +170,7 @@
   (load-theme 'zenburn t))
 
 (use-package neotree
-  :bind (:map global-map
-              ("s-t" . neotree-toggle))
+  :commands neotree-toggle
   :config
   (setq neo-show-hidden-files t
         neo-create-file-auto-open t))
