@@ -43,10 +43,8 @@
       use-package-always-pin "melpa-stable"
       use-package-verbose t)
 
-;;; load your preferred theme
-(use-package zenburn-theme
-  :config
-  (load-theme 'zenburn t))
+;;; stop modify init.el from emacs
+(setq custom-file (locate-user-emacs-file "custom.el"))
 
 ;;; set up exec-path
 (use-package exec-path-from-shell
@@ -168,6 +166,10 @@
 ;;; Window setting
 ;;;
 
+(use-package zenburn-theme
+  :config
+  (load-theme 'zenburn t))
+
 (use-package neotree
   :bind (:map global-map
               ("s-t" . neotree-toggle))
@@ -203,13 +205,13 @@
    global-mode-string
    ))
 
-(setq-default
- header-line-format
- '(""
-   (:propertize (:eval (shorten-directory default-directory 30))
-                face mode-line-folder-face)
-   (:propertize "%b"
-                face mode-line-filename-face)))
+;; (setq-default
+;;  header-line-format
+;;  '(""
+;;    (:propertize (:eval (shorten-directory default-directory 30))
+;;                 face mode-line-folder-face)
+;;    (:propertize "%b"
+;;                 face mode-line-filename-face)))
 
 (defun shorten-directory (dir max-length)
   "Show up to `max-length' characters of a directory name `dir'."
@@ -395,13 +397,11 @@
     (package-install 'ox-pandoc))
   (require 'ox-pandoc))
 
-
 (use-package org-tree-slide
-  :bind (:map org-mode-map
-              ("<f8>" . org-tree-slide-mode)
-              :map org-tree-slide-mode-map
-              ("<right>" . org-tree-slide-move-next-tree)
-              ("<left>" . org-tree-slide-move-previous-tree))
+  :bind (("<f8>" . org-tree-slide-mode)
+         :map org-tree-slide-mode-map
+         ("<right>" . org-tree-slide-move-next-tree)
+         ("<left>" . org-tree-slide-move-previous-tree))
   :config
   (org-tree-slide-simple-profile))
 
@@ -442,7 +442,7 @@
 
 (defun my/lisp-mode-defaults ()
   (paredit-mode 1)
-  (rainbow-delimiters-mode 1)
+  ;; (rainbow-delimiters-mode 1)
   (eldoc-mode 1))
 
 (defun my/lisp-mode-hook ()
