@@ -177,6 +177,11 @@
   (setq neo-show-hidden-files t
         neo-create-file-auto-open t))
 
+(use-package centered-cursor-mode
+  :pin melpa
+  :config
+  (global-centered-cursor-mode 1))
+
 ;;; modeline
 (setq display-time-string-forms
       '((format
