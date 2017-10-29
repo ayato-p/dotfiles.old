@@ -245,6 +245,15 @@
 
 (use-package hydra
   :config
+  (defhydra hydra-goto (goto-map "")
+    "Goto"
+    ("o" occur "Occur")
+    ("g" goto-line "Goto line")
+    ("n" next-error "Next error")
+    ("p" previous-error "Previous Error")
+    ("m" set-mark-command "mark" :bind nil)
+    ("q" nil "quit"))
+
   (defhydra hydra-git-commands (global-map "C-x g")
     "Git"
     ("g" magit-status "Show git status")
