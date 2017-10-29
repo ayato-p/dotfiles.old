@@ -119,6 +119,19 @@
 (dolist (mode '(menu-bar-mode tool-bar-mode scroll-bar-mode))
   (when (fboundp mode) (funcall mode -1)))
 
+;;; save recent files
+(use-package recentf
+  :ensure nil
+  :diminish recentf-mode
+  :init
+  (setq recentf-max-saved-items 2000
+        recent-exclude '(".recentf" "recentf")
+        recentf-auto-cleanup 10
+        recentf-auto-cleanup-timer
+        (run-with-idle-timer 30 t 'recentf-save-list))
+  :config
+  (recentf-mode 1))
+
 ;;; some useful settings
 (setq visible-bell t
       font-lock-maximum-decoration t
@@ -285,13 +298,11 @@
 
   (mykie:set-keys nil
     "C-x C-f"
-    :default (call-interactively 'find-file)
-    :C-u helm-ls-git-ls
-    :C-u*2! helm-projectile-find-file
+    :default counsel-find-file
+    :C-u counsel-git
     "C-x b"
-    :default helm-buffers-list
-    :C-u helm-projectile-switch-to-buffer
-    :C-u*2! (call-interactively 'switch-to-buffer)))
+    :default ivy-switch-buffer
+    :C-u (call-interactively 'switch-to-buffer)))
 
 (use-package ace-jump-mode
   :config
@@ -311,37 +322,28 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
-;;; helm
+;;; ivy
 ;;;
 
-(use-package helm
-  :bind (("M-x" . helm-M-x)
-         :map helm-map
-         ("C-h" . nil))
-  :init
-  (setq helm-quick-update t
-        helm-buffers-fuzzy-matching t
-        helm-ff-transformer-show-only-basename nil))
 
-(use-package helm-projectile
-  :commands (helm-projectile-find-file helm-projectile-switch-to-buffer)
+(use-package counsel
+  :commands (counsel-find-file counsel-git ivy-switch-buffer)
+
+  :bind (("M-x" . counsel-M-x)
+         ("C-s" . swiper)
+         ("C-x C-g" . counsel-ag)
+         ("<f1> f" . counsel-describe-function)
+         ("<f1> v" . counsel-describe-variable)
+         ("<f1> l" . counsel-find-library)
+         ("<f2> i" . counsel-info-lookup-symbol)
+         ("<f2> u" . counsel-unicode-char))
 
   :config
-  (use-package projectile
-    :config
-    (projectile-mode 1)))
-
-(use-package helm-ls-git
-  :commands helm-ls-git-ls)
-
-(use-package helm-ag
-  :bind ("C-x C-g" . helm-do-ag-project-root))
-
-(use-package helm-swoop
-  :commands helm-swoop
-  :bind (("M-i" . helm-swoop)
-         :map isearch-mode-map
-         ("M-i" . helm-swoop)))
+  (setq ivy-use-virtual-buffers t
+        ivy-count-format "(%d/%d) ")
+  (setq ivy-re-builders-alist
+        '((read-file-name-internal . ivy--regex-ignore-order)
+          (t . ivy--regex-plus))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
