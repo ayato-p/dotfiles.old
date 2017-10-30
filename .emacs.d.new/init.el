@@ -52,6 +52,11 @@
   :config
   (exec-path-from-shell-initialize))
 
+(use-package uniquify
+  :ensure nil
+  :config
+  (setq uniquify-buffer-name-style 'post-forward-angle-brackets))
+
 ;;; happy (((()))) !!!
 (use-package paren
   :init
@@ -251,6 +256,7 @@
 (use-package bind-key
   :config
   (bind-keys :map global-map
+             ("s-q" . quoted-insert)
              ("C-h" . delete-backward-char)
              ("C-;" . highlight-symbol)))
 
