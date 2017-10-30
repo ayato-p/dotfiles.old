@@ -536,6 +536,7 @@
 
 (use-package cider
   ;; :diminish cider-mode
+  :pin melpa
   :bind (:map cider-mode-map
               ("C-x *" . my/zou-go))
   :commands (cider-mode cider-jack-in)
@@ -566,6 +567,7 @@
          "(zou.framework.repl/go)")))))
 
 (use-package clj-refactor
+  :pin melpa
   :diminish clj-refactor-mode
   :commands clj-refactor-mode
   :config
