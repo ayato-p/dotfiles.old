@@ -347,11 +347,25 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
-;;; programming languages
+;;; for programming modes
 ;;;
 
 (use-package aggressive-indent
   :commands aggressive-indent-mode)
+
+(use-package origami
+  :pin melpa
+  :commands origami-mode
+  :config
+  (mykie:set-keys origami-mode-map
+    "s-<tab>"
+    :default origami-toggle-node
+    :C-u origami-toggle-all-nodes)
+
+  (defun my/origami-mode-hook ()
+    (origami-close-all-nodes (current-buffer)))
+
+  (add-hook 'origami-mode-hook #'my/origami-mode-hook))
 
 (defun my/prog-mode-hook ()
   (aggressive-indent-mode 1)
@@ -457,7 +471,8 @@
 (defun my/lisp-mode-defaults ()
   (paredit-mode 1)
   ;; (rainbow-delimiters-mode 1)
-  (eldoc-mode 1))
+  (eldoc-mode 1)
+  (origami-mode 1))
 
 (defun my/lisp-mode-hook ()
   (my/lisp-mode-defaults))
