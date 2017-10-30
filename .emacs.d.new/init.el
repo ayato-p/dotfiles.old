@@ -57,6 +57,25 @@
   :config
   (setq uniquify-buffer-name-style 'post-forward-angle-brackets))
 
+(use-package undo-tree
+  :pin melpa
+  :config
+  (global-undo-tree-mode 1))
+
+(use-package bm
+  :config
+  (setq-default bm-buffer-persistence t)
+  (setq bm-cycle-all-buffers t
+        bm-repository-file (concat user-emacs-directory "bm-repository"))
+
+  (add-hook 'after-init-hook #'bm-repository-load)
+  (add-hook 'find-file-hooks #'bm-buffer-restore)
+  (add-hook 'after-revert-hook #'bm-buffer-restore)
+  (add-hook 'kill-buffer-hook #'bm-buffer-save)
+  (add-hook 'kill-emacs-hook #'(lambda nil
+                                 (bm-buffer-save-all)
+                                 (bm-repository-save))))
+
 ;;; happy (((()))) !!!
 (use-package paren
   :init
@@ -221,7 +240,7 @@
    (-3 . "%p")
    " / "
    mode-name
-   minor-mode-alist "%n" mode-line-process
+   ;; minor-mode-alist "%n" mode-line-process
    " / "
    global-mode-string
    ))
@@ -270,6 +289,12 @@
     ("p" previous-error "Previous Error")
     ("m" set-mark-command "mark" :bind nil)
     ("q" nil "quit"))
+
+  (defhydra hydra-bm (global-map "C-c b")
+    "Bookmark"
+    ("b" bm-toggle "toggle")
+    ("n" bm-next "Next bookmark")
+    ("p" bm-previous "Previous bookmark"))
 
   (defhydra hydra-git-commands (global-map "C-x g")
     "Git"
@@ -348,8 +373,7 @@
   (setq ivy-use-virtual-buffers t
         ivy-count-format "(%d/%d) ")
   (setq ivy-re-builders-alist
-        '((read-file-name-internal . ivy--regex-ignore-order)
-          (t . ivy--regex-plus))))
+        '((t . ivy--regex-ignore-order))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
