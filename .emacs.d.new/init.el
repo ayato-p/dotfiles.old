@@ -356,7 +356,25 @@
   (setq mykie:use-major-mode-key-override t)
   (mykie:initialize)
 
+  (defhydra hydra-rectangle (:exit t)
+    "Rectangle"
+    ("k" kill-rectangle "Kill")
+    ("d" delete-rectangle "Delete")
+    ("c" clear-rectangle "Clear")
+    ("M-w" copy-rectangle-as-kill "Copy Rectangle")
+    ("o" open-rectangle "Insert space")
+    ("N" rectangle-number-lines "Number")
+    ("t" string-rectangle "Replace")
+    ("T" string-insert-rectangle "Insert"))
+
+  (mykie:set-keys with-self-key
+    "r"
+    :region hydra-rectangle/body)
+
   (mykie:set-keys nil
+    "C-y"
+    :default yank
+    :C-u yank-rectangle
     "C-x C-f"
     :default counsel-find-file
     :C-u counsel-git
