@@ -212,28 +212,30 @@
 ;;; Window setting
 ;;;
 
+;; Font settings
+;;  Font width checker:
+;;    The both edges of two lines below should be aligned.
+;;    |あいうえおかきくけこさしすせそ🍺|
+;;    |''''''''''''''''''''''''''''''''|
 
-;;; temp
-(set-face-attribute 'default nil :family "gothic" :height (* 10 10) :weight 'light)
-;; (when window-system
-;;   (let* ((size 10)
-;;          (asciifont "Dejavu Sans Mono")
-;;          (jpfont "TakaoGothic")
-;;          (emojifont "Dejavu Sans Mono")
-;;          (fontspec (font-spec :family asciifont))
-;;          (jp-fontspec (font-spec :family jpfont))
-;;          (emoji-fontspec (font-spec :family emojifont)))
-;;     (set-face-attribute 'default nil :family asciifont :height (* size 10) :weight 'light)
-;;     (setq face-font-rescale-alist nil)
-;;     (add-to-list 'face-font-rescale-alist `(,jpfont . 1.0))
-;;     (add-to-list 'face-font-rescale-alist `(,emojifont . 0.95))
-;;     (set-fontset-font nil 'symbol emoji-fontspec nil)
-;;     (set-fontset-font nil 'japanese-jisx0213.2004-1 jp-fontspec)
-;;     (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
-;;     (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
-;;     (set-fontset-font nil '(#x0080 . #x024F) fontspec) ; 分音符付きラテン
-;;     (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
-;;     ))
+(let* ((size 8)
+       (asciifont "Dejavu Sans Mono")
+       (jpfont "TakaoGothic")
+       (emojifont "Dejavu Sans Mono")
+       (fontspec (font-spec :family asciifont))
+       (jp-fontspec (font-spec :family jpfont))
+       (emoji-fontspec (font-spec :family emojifont)))
+  (set-face-attribute 'default nil :family asciifont :height (* size 10) :weight 'light)
+  (setq face-font-rescale-alist nil)
+  (add-to-list 'face-font-rescale-alist `(,jpfont . 1.2))
+  (add-to-list 'face-font-rescale-alist `(,emojifont . 0.95))
+  (set-fontset-font nil 'symbol emoji-fontspec nil)
+  (set-fontset-font nil 'japanese-jisx0213.2004-1 jp-fontspec)
+  (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
+  (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
+  (set-fontset-font nil '(#x0080 . #x024F) fontspec) ; 分音符付きラテン
+  (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
+  )
 
 (use-package zenburn-theme
   :config
