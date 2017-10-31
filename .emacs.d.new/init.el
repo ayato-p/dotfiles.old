@@ -59,6 +59,7 @@
 
 (use-package undo-tree
   :pin melpa
+  :diminish undo-tree
   :config
   (global-undo-tree-mode 1))
 
@@ -144,6 +145,11 @@
   (when (fboundp mode) (funcall mode -1)))
 
 ;;; save recent files
+(defmacro with-suppressed-message ($rest body)
+  (declare (indent 0))
+  (let ((message-log-max nil))
+    `(with-temp-message (or (current-message) "") ,@body)))
+
 (use-package recentf
   :ensure nil
   :diminish recentf-mode
@@ -152,7 +158,8 @@
         recent-exclude '(".recentf" "recentf")
         recentf-auto-cleanup 10
         recentf-auto-cleanup-timer
-        (run-with-idle-timer 30 t 'recentf-save-list))
+        (run-with-idle-timer 30 t '(lambda ()
+                                     (with-suppressed-message (recentf-save-list)))))
   :config
   (recentf-mode 1))
 
@@ -202,6 +209,29 @@
 ;;; Window setting
 ;;;
 
+
+;;; temp
+(set-face-attribute 'default nil :family "gothic" :height (* 10 10) :weight 'light)
+;; (when window-system
+;;   (let* ((size 10)
+;;          (asciifont "Dejavu Sans Mono")
+;;          (jpfont "TakaoGothic")
+;;          (emojifont "Dejavu Sans Mono")
+;;          (fontspec (font-spec :family asciifont))
+;;          (jp-fontspec (font-spec :family jpfont))
+;;          (emoji-fontspec (font-spec :family emojifont)))
+;;     (set-face-attribute 'default nil :family asciifont :height (* size 10) :weight 'light)
+;;     (setq face-font-rescale-alist nil)
+;;     (add-to-list 'face-font-rescale-alist `(,jpfont . 1.0))
+;;     (add-to-list 'face-font-rescale-alist `(,emojifont . 0.95))
+;;     (set-fontset-font nil 'symbol emoji-fontspec nil)
+;;     (set-fontset-font nil 'japanese-jisx0213.2004-1 jp-fontspec)
+;;     (set-fontset-font nil 'japanese-jisx0213-2 jp-fontspec)
+;;     (set-fontset-font nil 'katakana-jisx0201 jp-fontspec) ; 半角カナ
+;;     (set-fontset-font nil '(#x0080 . #x024F) fontspec) ; 分音符付きラテン
+;;     (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
+;;     ))
+
 (use-package zenburn-theme
   :config
   (load-theme 'zenburn t))
@@ -214,8 +244,7 @@
 
 (use-package centered-cursor-mode
   :pin melpa
-  :config
-  (global-centered-cursor-mode 1))
+  :commands centered-cursor-mode)
 
 ;;; modeline
 (setq display-time-string-forms
@@ -240,18 +269,18 @@
    (-3 . "%p")
    " / "
    mode-name
-   ;; minor-mode-alist "%n" mode-line-process
+   minor-mode-alist "%n" mode-line-process
    " / "
    global-mode-string
    ))
 
-;; (setq-default
-;;  header-line-format
-;;  '(""
-;;    (:propertize (:eval (shorten-directory default-directory 30))
-;;                 face mode-line-folder-face)
-;;    (:propertize "%b"
-;;                 face mode-line-filename-face)))
+(setq-default
+ header-line-format
+ '(""
+   (:propertize (:eval (shorten-directory default-directory 30))
+                face mode-line-folder-face)
+   (:propertize "%b"
+                face mode-line-filename-face)))
 
 (defun shorten-directory (dir max-length)
   "Show up to `max-length' characters of a directory name `dir'."
@@ -390,12 +419,7 @@
   (mykie:set-keys origami-mode-map
     "s-<tab>"
     :default origami-toggle-node
-    :C-u origami-toggle-all-nodes)
-
-  (defun my/origami-mode-hook ()
-    (origami-close-all-nodes (current-buffer)))
-
-  (add-hook 'origami-mode-hook #'my/origami-mode-hook))
+    :C-u origami-toggle-all-nodes))
 
 (defun my/prog-mode-hook ()
   (aggressive-indent-mode 1)
