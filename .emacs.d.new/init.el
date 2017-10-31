@@ -451,6 +451,53 @@
     ("s" (funcall 'my/counsel-git "-s") "Stage")
     ("q" nil "quit")))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
+;;;
+;;; skk
+;;;
+
+(eval-when-compile
+  (unless (require 'skk nil t)
+    (package-install 'ddskk t)))
+
+(use-package skk
+  :ensure nil
+  :config
+  (setq-default skk-kutouten-type 'jp)
+  (setq default-input-method "japanese-skk"
+        skk-kuten-touten-alist (cons '(my-en "." . ",") skk-kuten-touten-alist)
+        skk-kakutei-when-unique-candidate nil
+        skk-egg-like-newline t
+        skk-isearch-mode-enable nil
+        skk-show-inline 'vertical
+        skk-cdb-large-jisyo "/usr/share/skk/SKK-JISYO.LL.cdb"
+        skk-auto-insert-paren nil)
+  (setq skk-sticky-key ":")
+
+  (add-to-list 'context-skk-programming-mode 'clojure-mode)
+
+  (add-hook 'skk-load-hook
+            (lambda ()
+              (require 'context-skk)))
+
+  (add-hook 'find-file-hook
+            (lambda ()
+              (skk-latin-mode t)))
+
+  ;; conflict skk && paredit
+  (defun paredit-newline/skk-kakutei (origfun &rest arglist)
+    (apply (cond ((not skk-mode) origfun)
+                 (t #'skk-kakutei))
+           arglist))
+
+  (advice-add 'paredit-newline :around #'paredit-newline/skk-kakutei)
+
+  (defun paredit-newline/skk-insert (origfun &rest arglist)
+    (apply (cond (skk-j-mode #'skk-insert)
+                 (t origfun))
+           arglist))
+
+  (advice-add 'cljr-slash :around #'paredit-newline/skk-insert))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
