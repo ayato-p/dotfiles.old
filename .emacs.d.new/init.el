@@ -1,3 +1,5 @@
+;; -*- lexical-binding: t -*-
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
 ;;; general
@@ -45,6 +47,7 @@
 
 ;;; stop modify init.el from emacs
 (setq custom-file (locate-user-emacs-file "custom.el"))
+(setq load-prefer-newer t)
 
 ;;; set up exec-path
 (use-package exec-path-from-shell
@@ -563,6 +566,8 @@
   :ensure nil
   :mode (("\\.lisp\\'" . lisp-mode)
          ("\\.el\\'" . emacs-lisp-mode))
+  :bind (:map emacs-lisp-mode-map
+              ("C-c C-m" . pp-macroexpand-last-sexp))
   :init
   (add-hook 'emacs-lisp-mode-hook 'my/prog-mode-hook)
   (add-hook 'emacs-lisp-mode-hook 'my/lisp-mode-hook))
