@@ -383,6 +383,7 @@
     "C-x C-f"
     :default counsel-find-file
     :C-u counsel-git
+    :C-u*2 hydra-my-counsel-git/body
     "C-x b"
     :default ivy-switch-buffer
     :C-u (call-interactively 'switch-to-buffer)))
@@ -410,11 +411,15 @@
 
 
 (use-package counsel
-  :commands (counsel-find-file counsel-git ivy-switch-buffer)
+  :commands (counsel-find-file
+             counsel-git
+             ivy-switch-buffer
+             hydra-my-counsel-git/body)
 
   :bind (("M-x" . counsel-M-x)
          ("C-s" . swiper)
          ("C-x C-g" . counsel-ag)
+         ("C-x C-r" . ivy-recentf)
          ("<f1> f" . counsel-describe-function)
          ("<f1> v" . counsel-describe-variable)
          ("<f1> l" . counsel-find-library)
@@ -425,7 +430,28 @@
   (setq ivy-use-virtual-buffers t
         ivy-count-format "(%d/%d) ")
   (setq ivy-re-builders-alist
-        '((t . ivy--regex-ignore-order))))
+        '((t . ivy--regex-ignore-order)))
+
+  (defun my/counsel-git (opt)
+    (let ((original counsel-git-cmd)
+          (tmpcmd (concat (substring counsel-git-cmd 0
+                                     (- (length counsel-git-cmd) 2))
+                          " " opt " --")))
+      (setq counsel-git-cmd tmpcmd)
+      (let* ((result (counsel-git)))
+        (setq counsel-git-cmd original)
+        result)))
+
+  (defhydra hydra-my-counsel-git (:exit t)
+    "My councel git"
+    ("c" (funcall 'my/counsel-git "-c") "Cached")
+    ("d" (funcall 'my/counsel-git "-d") "Deleted")
+    ("m" (funcall 'my/counsel-git "-m") "Modified")
+    ("o" (funcall 'my/counsel-git "-o") "Others")
+    ("s" (funcall 'my/counsel-git "-s") "Stage")
+    ("q" nil "quit")))
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
