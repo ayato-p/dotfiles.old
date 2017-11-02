@@ -105,14 +105,15 @@
 
 ;;; comapany-mode!
 (use-package company
-  :diminish company-mode
+  :diminish ""
   :bind (("C-i" . company-indent-or-complete-common)
          :map company-mode-map
          ("C-i" . company-complete)
          :map company-active-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous)
-         ("C-s" . company-search-words-regexp)
+         ("C-s" . company-search-candidates)
+         ("C-d" . company-quickhelp-manual-begin)
          ("C-h" . nil)
          :map company-search-map
          ("C-n" . company-select-next)
@@ -121,7 +122,27 @@
   :config
   (setq company-idle-delay 0.1
         company-minimum-prefix-length 2
-        company-selection-wrap-around t))
+        company-selection-wrap-around t)
+  (add-hook 'company-mode-hook 'company-statistics-mode)
+
+  (add-to-list 'company-backends
+               '(company-capf :with company-dabbrev-code
+                              :with company-yasnippet))
+  (add-hook 'emacs-lisp-mode
+            (lambda ()
+              (set (make-local-variable 'company-backends)
+                   '(company-elisp :with company-abbrev
+                                   :with company-yasnippet)))))
+
+(use-package company-quickhelp
+  :diminish ""
+  :bind (:map company-active-map
+              ("C-d" . company-quickhelp-manual-begin))
+  :config
+  (setq company-quickhelp-delay nil))
+
+(use-package company-statistics
+  :commands company-statics-mode)
 
 ;;; magit
 (use-package magit
