@@ -168,6 +168,9 @@
               ("C-." . iflipb-next-buffer)
               ("C-," . iflipb-previous-buffer)))
 
+(use-package visual-regexp
+  :bind (("C-M-%" . vr/query-replace)))
+
 ;;; answering just 'y' or 'n' will do
 (defalias 'yes-or-no-p 'y-or-n-p)
 
