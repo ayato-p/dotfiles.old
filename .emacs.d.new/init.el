@@ -68,17 +68,24 @@
 
 (use-package bm
   :config
+  (defface my/bm-face
+    '((t (:inherit highlight)))
+    "My bm highlight")
+
   (setq-default bm-buffer-persistence t)
   (setq bm-cycle-all-buffers t
+        bm-face 'my/bm-face
+        bm-persistent-face 'my/bm-face
+        bm-highlight-style 'bm-highlight-line-and-fringe
         bm-repository-file (concat user-emacs-directory "bm-repository"))
 
   (add-hook 'after-init-hook #'bm-repository-load)
   (add-hook 'find-file-hooks #'bm-buffer-restore)
   (add-hook 'after-revert-hook #'bm-buffer-restore)
   (add-hook 'kill-buffer-hook #'bm-buffer-save)
-  (add-hook 'kill-emacs-hook #'(lambda nil
-                                 (bm-buffer-save-all)
-                                 (bm-repository-save))))
+  (add-hook 'kill-emacs-hook '(lambda nil
+                                (bm-buffer-save-all)
+                                (bm-repository-save))))
 
 ;;; happy (((()))) !!!
 (use-package paren
