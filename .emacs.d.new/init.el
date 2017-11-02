@@ -412,7 +412,7 @@
     :default yank
     :C-u yank-rectangle
     "C-x C-f"
-    :default counsel-find-file
+    :default my/find-file
     :C-u counsel-git
     :C-u*2 hydra-my-counsel-git/body
     "C-x b"
@@ -445,32 +445,34 @@
   :commands (counsel-find-file
              counsel-git
              ivy-switch-buffer
-             hydra-my-counsel-git/body)
+             hydra-my-counsel-git/body
+             my/find-file)
 
   :bind (("M-x" . counsel-M-x)
          ("C-s" . swiper)
+         ("C-r" . swiper)
          ("C-x C-g" . counsel-ag)
          ("C-x C-r" . ivy-recentf)
          ("<f1> f" . counsel-describe-function)
          ("<f1> v" . counsel-describe-variable)
          ("<f1> l" . counsel-find-library)
          ("<f2> i" . counsel-info-lookup-symbol)
-         ("<f2> u" . counsel-unicode-char))
+         ("<f2> u" . counsel-unicode-char)
+         :map swiper-map
+         ("C-r" . ivy-previous-line))
 
   :config
   (setq ivy-use-virtual-buffers t
+        ivy-height 20
         ivy-count-format "(%d/%d) ")
   (setq ivy-re-builders-alist
         '((t . ivy--regex-ignore-order)))
 
   (defun my/counsel-git (opt)
-    (let ((original counsel-git-cmd)
-          (tmpcmd (concat (substring counsel-git-cmd 0
-                                     (- (length counsel-git-cmd) 2))
-                          " " opt " --")))
-      (setq counsel-git-cmd tmpcmd)
+    (let* ((original counsel-git-cmd)
+           (tmpcmd (mapconcat #'identity `("git" "ls-files" ,opt "--full-name" "--") " "))
+           (counsel-git-cmd tmpcmd))
       (let* ((result (counsel-git)))
-        (setq counsel-git-cmd original)
         result)))
 
   (defhydra hydra-my-counsel-git (:exit t)
@@ -480,7 +482,40 @@
     ("m" (funcall 'my/counsel-git "-m") "Modified")
     ("o" (funcall 'my/counsel-git "-o") "Others")
     ("s" (funcall 'my/counsel-git "-s") "Stage")
-    ("q" nil "quit")))
+    ("q" nil "quit"))
+
+
+  (defvar my/--ivy-current-buffer "")
+
+  (defun my/ivy-insert-current-directory ()
+    (interactive)
+    (insert my/--ivy-current-buffer))
+
+  (defvar my/find-file-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "C-s") 'my/ivy-insert-current-directory)
+      map))
+
+  (defun my/find-file (&optional initial-input)
+    (interactive)
+    (let* ((current-directory (file-name-directory (or buffer-file-name default-directory)))
+           (default-directory (expand-file-name (or (locate-dominating-file default-directory ".git")
+                                                    current-directory)))
+           (find-dir-cmd "find . -not -path '*\/.git*'")
+           (cands (split-string
+                   (shell-command-to-string find-dir-cmd)
+                   "\n"
+                   t)))
+      (setq my/--ivy-current-buffer
+            (replace-regexp-in-string default-directory "" (expand-file-name current-directory)))
+      (ivy-read "Choose: " cands
+                :initial-input initial-input
+                :action (lambda (x)
+                          (let ((expanded-name (expand-file-name x)))
+                            (if (file-directory-p expanded-name)
+                                (counsel-find-file (concat expanded-name "/"))
+                              (find-file expanded-name))))
+                :keymap my/find-file-map))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
