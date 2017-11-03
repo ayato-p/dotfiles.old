@@ -89,7 +89,8 @@
 ;;; happy (((()))) !!!
 (use-package paren
   :init
-  (setq show-paren-style 'parenthesis)
+  (setq show-paren-style 'parenthesis
+        show-paren-delay 0)
   (show-paren-mode 1))
 
 ;;; yasnippet
@@ -98,9 +99,7 @@
   :bind (:map yas-minor-mode-map
               ("TAB" . nil)
               ("C-i" . nil)
-              ("C-o" . yas-expand))
-  :config
-  (yas-global-mode 1))
+              ("C-o" . yas-expand)))
 
 ;;; comapany-mode!
 (use-package company
@@ -122,16 +121,17 @@
   (setq company-idle-delay 0.1
         company-minimum-prefix-length 2
         company-selection-wrap-around t)
+
+  (setq company-frontends
+        '(company-pseudo-tooltip-unless-just-one-frontend
+          company-preview-frontend
+          company-echo-metadata-frontend))
+
   (add-hook 'company-mode-hook 'company-statistics-mode)
 
   (add-to-list 'company-backends
                '(company-capf :with company-dabbrev-code
-                              :with company-yasnippet))
-  (add-hook 'emacs-lisp-mode
-            (lambda ()
-              (set (make-local-variable 'company-backends)
-                   '(company-elisp :with company-abbrev
-                                   :with company-yasnippet)))))
+                              :with company-yasnippet)))
 
 (use-package company-quickhelp
   :diminish ""
@@ -365,6 +365,7 @@
     ("g" magit-status "Show git status")
     ("n" git-gutter:next-hunk "Next hunk")
     ("p" git-gutter:previous-hunk "Previous hunk")
+    ("d" git-gutter:popup-diff "Popup diff")
     ("q" nil "quit"))
 
   (defhydra hydra-highlight-symbol (global-map "C-c h")
@@ -719,7 +720,12 @@
               ("C-c C-m" . pp-macroexpand-last-sexp))
   :init
   (add-hook 'emacs-lisp-mode-hook 'my/prog-mode-hook)
-  (add-hook 'emacs-lisp-mode-hook 'my/lisp-mode-hook))
+  (add-hook 'emacs-lisp-mode-hook 'my/lisp-mode-hook)
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda ()
+              (set (make-local-variable 'company-backends)
+                   '(company-elisp :with company-abbrev
+                                   :with company-yasnippet)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
