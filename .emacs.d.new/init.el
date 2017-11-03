@@ -44,9 +44,8 @@
 (setq use-package-always-ensure t
       use-package-always-pin "melpa-stable"
       use-package-verbose t)
+;;; -------------------------------------------------------------------------------------
 
-;;; stop modify init.el from emacs
-(setq custom-file (locate-user-emacs-file "custom.el"))
 (setq load-prefer-newer t)
 
 ;;; set up exec-path
@@ -789,9 +788,8 @@
   (add-hook 'inf-clojure-mode-hook #'company-mode)
   (add-hook 'inf-clojure-mode-hook #'my/lisp-mode-hook))
 
-(message "init.el loaded!!")
+;;; stop modify init.el from emacs
+(setq custom-file (locate-user-emacs-file "custom.el"))
+(load custom-file)
 
-(add-hook 'after-init-hook
-          (lambda ()
-            (message "init time: %.3f sec"
-                     (float-time (time-subtract after-init-time before-init-time)))))
+(message "init.el loaded!!")
