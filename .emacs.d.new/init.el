@@ -422,8 +422,7 @@
     :C-u yank-rectangle
     "C-x C-f"
     :default my/find-file
-    :C-u counsel-git
-    :C-u*2 hydra-my-counsel-git/body
+    :C-u ivy-git-ls
     "C-x b"
     :default ivy-switch-buffer
     :C-u (call-interactively 'switch-to-buffer)))
@@ -477,23 +476,6 @@
   (setq ivy-re-builders-alist
         '((t . ivy--regex-ignore-order)))
 
-  (defun my/counsel-git (opt)
-    (let* ((original counsel-git-cmd)
-           (tmpcmd (mapconcat #'identity `("git" "ls-files" ,opt "--full-name" "--") " "))
-           (counsel-git-cmd tmpcmd))
-      (let* ((result (counsel-git)))
-        result)))
-
-  (defhydra hydra-my-counsel-git (:exit t)
-    "My councel git"
-    ("c" (funcall 'my/counsel-git "-c") "Cached")
-    ("d" (funcall 'my/counsel-git "-d") "Deleted")
-    ("m" (funcall 'my/counsel-git "-m") "Modified")
-    ("o" (funcall 'my/counsel-git "-o") "Others")
-    ("s" (funcall 'my/counsel-git "-s") "Stage")
-    ("q" nil "quit"))
-
-
   (defvar my/--ivy-current-buffer "")
 
   (defun my/ivy-insert-current-directory ()
@@ -525,6 +507,11 @@
                                 (counsel-find-file (concat expanded-name "/"))
                               (find-file expanded-name))))
                 :keymap my/find-file-map))))
+
+(use-package ivy-git-ls
+  :ensure nil
+  :load-path "myext"
+  :commands ivy-git-ls)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
