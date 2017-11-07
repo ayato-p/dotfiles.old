@@ -249,7 +249,7 @@
 ;;    |''''''''''''''''''''''''''''''''|
 
 (when window-system
-  (let* ((size 14)
+  (let* ((size 10)
          (asciifont "Dejavu Sans Mono")
          (jpfont "TakaoGothic")
          (emojifont "Dejavu Sans Mono")
@@ -341,6 +341,26 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
+;;; Utility function
+;;;
+
+(defun my/delete-current-line ()
+  (interactive)
+  (beginning-of-line)
+  (kill-line))
+
+(defun my/find-file-right (filename)
+  (let ((new-buffer (find-file-noselect (expand-file-name filename)))
+        (new-window (split-window-right)))
+    (set-window-buffer new-window new-buffer)))
+
+(defun my/find-file-below (filename)
+  (let ((new-buffer (find-file-noselect (expand-file-name filename)))
+        (new-window (split-window-below)))
+    (set-window-buffer new-window new-buffer)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
+;;;
 ;;; key-bindings
 ;;;
 
@@ -348,6 +368,7 @@
 (use-package bind-key
   :config
   (bind-keys :map global-map
+             ("C-'" . my/delete-current-line)
              ("s-q" . quoted-insert)
              ("C-h" . delete-backward-char)
              ("C-;" . highlight-symbol)))
@@ -470,6 +491,7 @@
          ("C-r" . ivy-previous-line))
 
   :config
+  (require 'ivy)
   (setq ivy-use-virtual-buffers t
         ivy-height 20
         ivy-count-format "(%d/%d) ")
@@ -506,7 +528,26 @@
                             (if (file-directory-p expanded-name)
                                 (counsel-find-file (concat expanded-name "/"))
                               (find-file expanded-name))))
-                :keymap my/find-file-map))))
+                :caller 'my/find-file
+                :keymap my/find-file-map)))
+
+  (ivy-set-actions
+   'my/find-file
+   '(("@"
+      my/find-file-below
+      "find file below")
+     ("#"
+      my/find-file-right
+      "find file right")))
+
+  (ivy-set-actions
+   'ivy-git-ls
+   '(("@"
+      my/find-file-below
+      "find file below")
+     ("#"
+      my/find-file-right
+      "find file right"))))
 
 (use-package ivy-git-ls
   :ensure nil
@@ -662,9 +703,15 @@
 ;;;
 
 (use-package scss-mode
-  :mode ("\\.scss\\'")
+  :mode (("\\.scss\\'" . scss-mode)
+         ("\\.css\\'" . css-mode))
   :config
-  (setq scss-compile-at-save nil))
+  (setq scss-compile-at-save nil)
+  (add-hook 'scss-mode-hook
+            (lambda ()
+              (set (make-local-variable 'company-backends)
+                   '(company-css :with company-abbrev
+                                 :with company-yasnippet)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
