@@ -163,9 +163,68 @@
   :diminish abbrev-mode)
 
 (use-package iflipb
-  :bind (:map global-map
-              ("C-." . iflipb-next-buffer)
-              ("C-," . iflipb-previous-buffer)))
+  :commands iflipb-interesting-buffers
+  ;; :bind (:map global-map
+  ;;             ("C-." . iflipb-previous-buffer)
+  ;;             ("C-," . iflipb-next-buffer))
+  )
+
+(use-package tabbar
+  :pin melpa
+  :commands tabbar-mode
+  :bind (("C-." . tabbar-forward)
+         ("C-," . tabbar-backward))
+
+  :init
+  (add-hook 'find-file-hook #'tabbar-mode)
+
+  :config
+  (tabbar-mwheel-mode -1)
+
+  (dolist (btn '(tabbar-buffer-home-button
+                 tabbar-scroll-left-button
+                 tabbar-scroll-right-button))
+    (set btn (cons (cons "" nil)
+                   (cons "" nil))))
+
+  (setq tabbar-buffer-groups-function nil
+        tabbar-use-images nil
+        tabbar-home-button nil
+        tabbar-cycle-scope nil
+        tabbar-buffer-list-function #'iflipb-interesting-buffers)
+
+  (set-face-attribute
+   'tabbar-default nil
+   :background "brightblack"
+   :foreground "white"
+   :box nil)
+
+  (set-face-attribute
+   'tabbar-unselected nil
+   :inherit 'tabbar-default
+   :box nil)
+
+  (set-face-attribute
+   'tabbar-selected nil
+   :background "white"
+   :foreground "black"
+   :box nil)
+
+  (set-face-attribute
+   'tabbar-modified nil
+   :foreground "white"
+   :box nil)
+
+  (set-face-attribute
+   'tabbar-selected-modified nil
+   :background "white"
+   :foreground "black"
+   :box nil)
+
+  (when window-system
+    (set-face-attribute
+     'tabbar-separator nil
+     :height 1.5)))
 
 (use-package visual-regexp
   :bind (("C-M-%" . vr/query-replace)))
@@ -318,13 +377,13 @@
    global-mode-string
    ))
 
-(setq-default
- header-line-format
- '(""
-   (:propertize (:eval (shorten-directory default-directory 30))
-                face mode-line-folder-face)
-   (:propertize "%b"
-                face mode-line-filename-face)))
+;; (setq-default
+;;  header-line-format
+;;  '(""
+;;    (:propertize (:eval (shorten-directory default-directory 30))
+;;                 face mode-line-folder-face)
+;;    (:propertize "%b"
+;;                 face mode-line-filename-face)))
 
 (defun shorten-directory (dir max-length)
   "Show up to `max-length' characters of a directory name `dir'."
@@ -538,8 +597,14 @@
       "find file below")
      ("#"
       my/find-file-right
-      "find file right")))
+      "find file right"))))
 
+(use-package ivy-git-ls
+  :ensure nil
+  :load-path "myext"
+  :commands ivy-git-ls
+
+  :config
   (ivy-set-actions
    'ivy-git-ls
    '(("@"
@@ -548,11 +613,6 @@
      ("#"
       my/find-file-right
       "find file right"))))
-
-(use-package ivy-git-ls
-  :ensure nil
-  :load-path "myext"
-  :commands ivy-git-ls)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
