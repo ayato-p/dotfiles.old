@@ -327,17 +327,17 @@
     (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
     ))
 
-;; disable bold style for all faces
-(add-hook 'after-init-hook
-          (lambda ()
-            (mapc
-             (lambda (face)
-               (set-face-attribute face nil :bold nil :weight 'normal))
-             (face-list))))
-
-(use-package zenburn-theme
+(use-package hc-zenburn-theme
+  :pin melpa
   :config
-  (load-theme 'zenburn t))
+  (load-theme 'hc-zenburn t))
+
+(use-package leuven-theme
+  :pin melpa
+  :defer t
+  ;; :config
+  ;; (load-theme 'leuven t)
+  )
 
 (use-package neotree
   :commands neotree-toggle
@@ -731,12 +731,7 @@
      'org-babel-load-languages
      '((emacs-lisp . t)
        (scheme . t)
-       (clojure . t))))
-
-  ;;; bit tricky, i don't know why i can't use `use-package` for ox-pandoc
-  (when (not (require 'ox-pandoc nil t))
-    (package-install 'ox-pandoc))
-  (require 'ox-pandoc))
+       (clojure . t)))))
 
 (use-package org-tree-slide
   :bind (("<f8>" . org-tree-slide-mode)
