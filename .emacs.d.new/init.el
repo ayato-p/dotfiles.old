@@ -162,6 +162,8 @@
   :ensure nil
   :diminish abbrev-mode)
 
+(use-package shut-up)
+
 (use-package iflipb
   :commands iflipb-interesting-buffers
   ;; :bind (:map global-map
@@ -248,10 +250,9 @@
   :init
   (setq recentf-max-saved-items 2000
         recent-exclude '(".recentf" "recentf")
-        recentf-auto-cleanup 10
+        recentf-auto-cleanup 300
         recentf-auto-cleanup-timer
-        (run-with-idle-timer 30 t '(lambda ()
-                                     (with-suppressed-message (recentf-save-list)))))
+        (run-with-idle-timer 30 t '(lambda () (shut-up (recentf-save-list)))))
   :config
   (recentf-mode 1))
 
