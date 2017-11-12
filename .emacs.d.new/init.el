@@ -328,17 +328,15 @@
     (set-fontset-font nil '(#x0370 . #x03FF) fontspec) ; ギリシャ文字
     ))
 
-(use-package hc-zenburn-theme
-  :pin melpa
-  :config
-  (load-theme 'hc-zenburn t))
+;; (use-package hc-zenburn-theme
+;;   :pin melpa
+;;   :config
+;;   (load-theme 'hc-zenburn t))
 
 (use-package leuven-theme
   :pin melpa
-  :defer t
-  ;; :config
-  ;; (load-theme 'leuven t)
-  )
+  :config
+  (load-theme 'leuven t))
 
 (use-package neotree
   :commands neotree-toggle
@@ -740,7 +738,35 @@
          ("<right>" . org-tree-slide-move-next-tree)
          ("<left>" . org-tree-slide-move-previous-tree))
   :config
-  (org-tree-slide-simple-profile))
+
+  (use-package org-bullets
+    :config
+    (add-hook 'org-tree-slide-mode-play-hook #'(lambda () (org-bullets-mode 1)))
+    (add-hook 'org-tree-slide-mode-stop-hook #'(lambda () (org-bullets-mode -1))))
+  (use-package hide-lines
+    :config
+    (defvar my/org-src-block-faces nil)
+    (defun my/show-headers ()
+      (setq org-src-block-faces 'my/org-src-block-faces)
+      (hide-lines-show-all))
+
+    (defun my/hide-headers ()
+      (setq my/org-src-block-faces 'org-src-block-faces)
+      (hide-lines-matching "#\\+BEGIN_SRC")
+      (hide-lines-matching "#\\+END_SRC"))
+
+    (add-hook 'org-tree-slide-mode-play-hook 'my/hide-headers)
+    (add-hook 'org-tree-slide-mode-stop-hook 'my/show-headers)
+
+    (defun advice/org-edit-src-code ()
+      (interactive)
+      (my/show-headers))
+    (advice-add 'org-edit-src-code :before #'advice/org-edit-src-code)
+
+    (defun advice/org-edit-src-exit ()
+      (interactive)
+      (my/hide-headers))
+    (advice-add 'org-edit-src-exit :after #'advice/org-edit-src-exit)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
