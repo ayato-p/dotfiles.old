@@ -164,6 +164,10 @@
 
 (use-package shut-up)
 
+(use-package restclient
+  :pin melpa
+  :commands restclient-mode)
+
 (use-package iflipb
   :commands iflipb-interesting-buffers
   ;; :bind (:map global-map
@@ -320,10 +324,10 @@
 ;;   (load-theme 'hc-zenburn t))
 
 
-;; (use-package leuven-theme
-;;   :pin melpa
-;;   :config
-;;   (load-theme 'leuven t))
+(use-package leuven-theme
+  :pin melpa
+  :config
+  (load-theme 'leuven t))
 
 (use-package neotree
   :commands neotree-toggle
@@ -862,6 +866,8 @@
   ;; :diminish cider-mode
   :pin melpa
   :bind (:map cider-mode-map
+              ("C-x *" . my/zou-go)
+              :map cider-repl-mode-map
               ("C-x *" . my/zou-go))
   :commands (cider-mode cider-jack-in)
   :config
@@ -875,6 +881,7 @@
         cider-repl-display-in-current-window t
         cider-repl-use-clojure-font-lock t
         cider-repl-use-pretty-printing t
+        cider-repl-result-prefix ";;=> "
         cider-save-file-on-load t
         cider-font-lock-dynamically '(macro core function var)
         cider-overlays-use-font-lock t)
