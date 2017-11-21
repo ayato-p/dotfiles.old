@@ -420,7 +420,6 @@
 (use-package bind-key
   :config
   (bind-keys :map global-map
-             ("<f1>" . help)
              ("C-'" . my/delete-current-line)
              ("s-q" . quoted-insert)
              ("C-h" . delete-backward-char)
@@ -878,6 +877,10 @@
               ("C-x *" . my/zou-go)
               ("C-x @" . my/split-window-below-and-switch-to-repl)
               ("C-x #" . my/split-window-right-and-switch-to-repl)
+              ("C-c C-s" . cider-browse-spec)
+              ("C-c s" . cider-browse-spec)
+              ("C-c C-S" . cider-browse-spec-all)
+              ("C-c S" . cider-browse-spec-all)
               :map cider-repl-mode-map
               ("C-x *" . my/zou-go))
   :commands (cider-mode cider-jack-in)
