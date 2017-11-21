@@ -118,7 +118,7 @@
          ("C-p" . company-select-previous)
          ("C-h" . nil))
   :config
-  (setq company-idle-delay 0.1
+  (setq company-idle-delay 0
         company-minimum-prefix-length 2
         company-selection-wrap-around t)
 
@@ -318,16 +318,19 @@
         moom-ja-font "TakaoGothic")
   (moom-set-font-size-input 10))
 
+(use-package zenburn-theme
+  :config
+  (load-theme 'zenburn t))
+
 ;; (use-package hc-zenburn-theme
 ;;   :pin melpa
 ;;   :config
 ;;   (load-theme 'hc-zenburn t))
 
-
-(use-package leuven-theme
-  :pin melpa
-  :config
-  (load-theme 'leuven t))
+;; (use-package leuven-theme
+;;   :pin melpa
+;;   :config
+;;   (load-theme 'leuven t))
 
 (use-package neotree
   :commands neotree-toggle
@@ -417,6 +420,7 @@
 (use-package bind-key
   :config
   (bind-keys :map global-map
+             ("<f1>" . help)
              ("C-'" . my/delete-current-line)
              ("s-q" . quoted-insert)
              ("C-h" . delete-backward-char)
@@ -839,9 +843,9 @@
   (add-hook 'emacs-lisp-mode-hook 'my/lisp-mode-hook)
   (add-hook 'emacs-lisp-mode-hook
             (lambda ()
-              (set (make-local-variable 'company-backends)
-                   '(company-elisp :with company-abbrev
-                                   :with company-yasnippet)))))
+              (setq-local company-backends
+                          '((company-elisp :with company-abbrev
+                                           :with company-yasnippet))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
@@ -860,17 +864,46 @@
   (add-hook 'clojure-mode-hook #'clj-refactor-mode)
   (add-hook 'clojure-mode-hook #'cider-mode)
   (add-hook 'clojure-mode-hook #'my/prog-mode-hook)
-  (add-hook 'clojure-mode-hook #'my/lisp-mode-hook))
+  (add-hook 'clojure-mode-hook #'my/lisp-mode-hook)
+  (add-hook 'clojure-mode-hook
+            (lambda ()
+              (setq-local company-backends
+                          '((company-capf :with company-dabbrev-code
+                                          :with company-yasnippet))))))
 
 (use-package cider
   ;; :diminish cider-mode
   :pin melpa
   :bind (:map cider-mode-map
               ("C-x *" . my/zou-go)
+              ("C-x @" . my/split-window-below-and-switch-to-repl)
+              ("C-x #" . my/split-window-right-and-switch-to-repl)
               :map cider-repl-mode-map
               ("C-x *" . my/zou-go))
   :commands (cider-mode cider-jack-in)
   :config
+  (use-package dash
+    :config
+
+    (defun my/find-cider-repl-buffer ()
+      (-first
+       (lambda (b)
+         (with-current-buffer b
+           (derived-mode-p 'cider-repl-mode)))
+       (buffer-list))))
+
+  (defun my/split-window-below-and-switch-to-repl ()
+    (interactive)
+    (let* ((window (split-window-below))
+           (buffer (my/find-cider-repl-buffer)))
+      (set-window-buffer window buffer)))
+
+  (defun my/split-window-right-and-switch-to-repl ()
+    (interactive)
+    (let* ((window (split-window-right))
+           (buffer (my/find-cider-repl-buffer)))
+      (set-window-buffer window buffer)))
+
   (add-hook 'cider-repl-mode-hook #'company-mode)
   (add-hook 'cider-repl-mode-hook #'my/lisp-mode-hook)
   (add-hook 'cider-mode-hook #'cider-company-enable-fuzzy-completion)
