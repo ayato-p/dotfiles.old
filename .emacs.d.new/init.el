@@ -922,6 +922,38 @@
         cider-font-lock-dynamically '(macro core function var)
         cider-overlays-use-font-lock t)
 
+  (use-package ivy
+    :config
+    (use-package mykie
+      :config
+      (require 'dash)
+
+      (defun my/ivy-find-var-in-current-ns ()
+        (interactive)
+        (let* ((ns (cider-current-ns))
+               (sexp (concat "(->> (ns-interns '" ns ")
+                                   vals
+                                   (map meta)
+                                   (keep (comp seq (juxt :line :name)))
+                                   (sort-by first))"))
+               (candidate (->> (my/cider-eval sexp :list)
+                               (-map (lambda (l)
+                                       (let ((n (car l))
+                                             (fname (symbol-name (cadr l))))
+                                         (propertize fname
+                                                     'value n
+                                                     'display (concat (number-to-string n)
+                                                                      " "
+                                                                      fname))))))))
+          (ivy-read "Find Var" candidate
+                    :action (lambda (matched)
+                              (goto-line (get-text-property 0 'value matched))))))
+
+      (mykie:set-keys cider-mode-map
+        "C-s"
+        :default swiper
+        :C-u my/ivy-find-var-in-current-ns)))
+
   (defun my/zou-go ()
     (interactive)
     (with-current-buffer (cider-current-connection "clj")
@@ -932,6 +964,20 @@
              "(zou.framework.repl/reset)"))
         (cider-interactive-eval
          "(zou.framework.repl/go)")))))
+
+(use-package clomacs
+  :pin melpa
+  :commands my/cider-eval
+  :config
+  (defun my/cider-eval (sexp &optional return-type return-value)
+    (let* ((return-type (or return-type :string))
+           (return-value (or return-value :value))
+           (connection (cider-current-connection)))
+      (clomacs-get-result
+       (nrepl-sync-request:eval
+        sexp
+        connection)
+       return-value return-type nil))))
 
 (use-package clj-refactor
   :pin melpa
