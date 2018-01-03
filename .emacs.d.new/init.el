@@ -38,8 +38,8 @@
 ;;; enable use-package
 (eval-when-compile
   (require 'use-package))
-(require 'diminish)
-(require 'bind-key)
+(use-package diminish)
+(use-package bind-key)
 
 (setq use-package-always-ensure t
       use-package-always-pin "melpa-stable"
@@ -85,6 +85,10 @@
   (add-hook 'kill-emacs-hook '(lambda nil
                                 (bm-buffer-save-all)
                                 (bm-repository-save))))
+
+(use-package beacon
+  :config
+  (beacon-mode))
 
 ;;; happy (((()))) !!!
 (use-package paren
@@ -316,7 +320,7 @@
 
   (setq moom-ascii-font "Dejavu Sans Mono"
         moom-ja-font "TakaoGothic")
-  (moom-set-font-size-input 10))
+  (moom-set-font-size-input 11))
 
 (use-package zenburn-theme
   :config
@@ -423,7 +427,8 @@
              ("C-'" . my/delete-current-line)
              ("s-q" . quoted-insert)
              ("C-h" . delete-backward-char)
-             ("C-;" . highlight-symbol)))
+             ("C-;" . highlight-symbol)
+             ("C-x t" . toggle-truncate-lines)))
 
 (use-package hydra
   :config
@@ -710,15 +715,15 @@
           ("n" "Note" entry (file+headline (concat my/notebook-directory "/notes.org") "Notes")
            "* %?\n %U\n %i")))
 
-  (use-package ob-clojure
-    :ensure org-plus-contrib
-    :config
-    (setq org-babel-clojure-backend 'cider))
-
-  (use-package org-babel
+  (use-package ob
     :ensure org-plus-contrib
     :config
     (setq org-confirm-babel-evaluate nil)
+
+    (use-package ob-clojure
+      :ensure org-plus-contrib
+      :config
+      (setq org-babel-clojure-backend 'cider))
 
     (org-babel-do-load-languages
      'org-babel-load-languages
@@ -762,6 +767,17 @@
       (my/hide-headers))
     (advice-add 'org-edit-src-exit :after #'advice/org-edit-src-exit)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
+;;;
+;;; XML
+;;;
+
+(use-package nxml-mode
+  :ensure nil
+  :config
+  (setq nxml-child-indent 2
+        nxml-attribute-indent 2
+        nxml-slash-auto-complete-flag t))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
 ;;; Yaml
