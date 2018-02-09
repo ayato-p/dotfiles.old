@@ -34,7 +34,7 @@
   :group 'ivy-git-ls)
 
 (defface ivy-git-ls/added-face
-  '((t :foreground "blue"))
+  '((t :foreground "yellow"))
   "Added face"
   :group 'ivy-git-ls)
 
@@ -81,27 +81,28 @@
 (defun ivy-git-ls/git-status-transformer (source)
   (-map 'ivy-git-ls/git-status-transformer* source))
 
-(defun ivy-git-ls/git-status ()
-  (let ((default-directory (vc-git-root buffer-file-name)))
+(defun ivy-git-ls/git-status (git-root-dir)
+  (let ((default-directory git-root-dir))
     (-> (shell-command-to-string "git status --porcelain")
         (split-string "\n" t)
         (ivy-git-ls/git-status-transformer))))
 
-(defun ivy-git-ls/git-ls-files ()
-  (let ((default-directory (vc-git-root buffer-file-name)))
+(defun ivy-git-ls/git-ls-files (git-root-dir)
+  (let ((default-directory git-root-dir))
     (-> (shell-command-to-string ivy-git-ls/git-ls-files-cmd)
         (split-string "\n" t))))
 
 ;;;###autoload
 (defun ivy-git-ls ()
   (interactive)
-  (let ((candidates (append (ivy-git-ls/git-status)
-                            (ivy-git-ls/git-ls-files))))
-    (if (and buffer-file-name (vc-git-root buffer-file-name))
+  (let* ((git-root-dir (or (and buffer-file-name (vc-git-root buffer-file-name))
+                           (vc-git-root default-directory)))
+         (candidates (append (ivy-git-ls/git-status git-root-dir)
+                             (ivy-git-ls/git-ls-files git-root-dir))))
+    (if (stringp git-root-dir)
         (ivy-read "Find file: " candidates
                   :action (lambda (matched)
-                            (->> (vc-git-root buffer-file-name)
-                                 (expand-file-name matched)
+                            (->> (expand-file-name matched git-root-dir)
                                  (find-file)))
                   :caller 'ivy-git-ls)
       (message "Not a git repository..."))))

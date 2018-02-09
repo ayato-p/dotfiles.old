@@ -310,21 +310,32 @@
 ;;; Window setting
 ;;;
 
+
+(use-package frame-fns
+  :ensure nil
+  :load-path "elisp/frame-fns")
+
+(use-package frame-cmds
+  :ensure nil
+  :load-path "elisp/frame-cmds")
+
 (use-package moom
   :ensure nil
   :load-path "elisp/moom"
   :config
-  (use-package frame-cmds
-    :pin melpa
-    :defer t)
-
   (setq moom-ascii-font "Dejavu Sans Mono"
         moom-ja-font "TakaoGothic")
-  (moom-set-font-size-input 11))
+  (moom-set-font-size-input 12))
 
 (use-package zenburn-theme
   :config
   (load-theme 'zenburn t))
+
+(use-package golden-ratio
+  :config
+  (golden-ratio-mode 1)
+  (setq golden-ratio-exclude-modes '(org-mode)
+        golden-ratio-exclude-buffer-regexp '("\\.org")))
 
 ;; (use-package hc-zenburn-theme
 ;;   :pin melpa
@@ -415,6 +426,15 @@
         (new-window (split-window-below)))
     (set-window-buffer new-window new-buffer)))
 
+(defun my/copy-file-name-to-clipboard ()
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      default-directory
+                    (buffer-file-name))))
+    (when filename
+      (kill-new filename)
+      (message "Copied buffer file name '%s' to the clipboard." filename))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
 ;;; key-bindings
@@ -428,7 +448,8 @@
              ("s-q" . quoted-insert)
              ("C-h" . delete-backward-char)
              ("C-;" . highlight-symbol)
-             ("C-x t" . toggle-truncate-lines)))
+             ("C-x t" . toggle-truncate-lines)
+             ("M-#" . my/copy-file-name-to-clipboard)))
 
 (use-package hydra
   :config
@@ -472,38 +493,39 @@
   (defhydra hydra-window (global-map "C-x")
     "Window"
     ("o" other-window "other")
-    ("q" nil "quit")))
+    ("q" nil "quit"))
 
-(use-package mykie
-  :config
-  (setq mykie:use-major-mode-key-override t)
-  (mykie:initialize)
+  (use-package mykie
+    :config
+    (setq mykie:use-major-mode-key-override t)
+    (mykie:initialize)
 
-  (defhydra hydra-rectangle (:exit t)
-    "Rectangle"
-    ("k" kill-rectangle "Kill")
-    ("d" delete-rectangle "Delete")
-    ("c" clear-rectangle "Clear")
-    ("M-w" copy-rectangle-as-kill "Copy Rectangle")
-    ("o" open-rectangle "Insert space")
-    ("N" rectangle-number-lines "Number")
-    ("t" string-rectangle "Replace")
-    ("T" string-insert-rectangle "Insert"))
+    (defhydra hydra-rectangle (:exit t)
+      "Rectangle"
+      ("k" kill-rectangle "Kill")
+      ("d" delete-rectangle "Delete")
+      ("c" clear-rectangle "Clear")
+      ("M-w" copy-rectangle-as-kill "Copy Rectangle")
+      ("o" open-rectangle "Insert space")
+      ("N" rectangle-number-lines "Number")
+      ("t" string-rectangle "Replace")
+      ("T" string-insert-rectangle "Insert"))
 
-  (mykie:set-keys with-self-key
-    "r"
-    :region hydra-rectangle/body)
+    (mykie:set-keys with-self-key
+      "r"
+      :region hydra-rectangle/body)
 
-  (mykie:set-keys nil
-    "C-y"
-    :default yank
-    :C-u yank-rectangle
-    "C-x C-f"
-    :default my/find-file
-    :C-u ivy-git-ls
-    "C-x b"
-    :default ivy-switch-buffer
-    :C-u (call-interactively 'switch-to-buffer)))
+    (mykie:set-keys nil
+      "C-y"
+      :default yank
+      :C-u yank-rectangle
+      :C-u*2 counsel-yank-pop
+      "C-x C-f"
+      :default my/find-file
+      :C-u ivy-git-ls
+      "C-x b"
+      :default ivy-switch-buffer
+      :C-u (call-interactively 'switch-to-buffer))))
 
 (use-package ace-jump-mode
   :config
@@ -689,13 +711,15 @@
 
 (use-package open-junk-file
   :pin melpa
-  :bind ("C-x j" . open-junk-file)
+  :bind (("C-x j" . open-junk-file))
   :config
   (setq open-junk-file-format "~/memo/junk/%Y-%m%d-%H%M%S."))
 
 (use-package org
   :ensure org-plus-contrib
   :mode (("\\.org$" . org-mode))
+  :bind (:map org-mode-map
+              ("C-," . nil))
   :config
   (setq org-directory "~/memo/junk"
         my/notebook-directory "~/notebook"
@@ -884,7 +908,11 @@
             (lambda ()
               (setq-local company-backends
                           '((company-capf :with company-dabbrev-code
-                                          :with company-yasnippet))))))
+                                          :with company-yasnippet)))))
+  (put-clojure-indent 'go-loop-sub 3))
+
+(use-package spiral
+  :pin melpa)
 
 (use-package cider
   ;; :diminish cider-mode
@@ -981,19 +1009,19 @@
         (cider-interactive-eval
          "(zou.framework.repl/go)")))))
 
-(use-package clomacs
-  :pin melpa
-  :commands my/cider-eval
-  :config
-  (defun my/cider-eval (sexp &optional return-type return-value)
-    (let* ((return-type (or return-type :string))
-           (return-value (or return-value :value))
-           (connection (cider-current-connection)))
-      (clomacs-get-result
-       (nrepl-sync-request:eval
-        sexp
-        connection)
-       return-value return-type nil))))
+;; (use-package clomacs
+;;   ;; :pin melpa
+;;   :commands my/cider-eval
+;;   :config
+;;   (defun my/cider-eval (sexp &optional return-type return-value)
+;;     (let* ((return-type (or return-type :string))
+;;            (return-value (or return-value :value))
+;;            (connection (cider-current-connection)))
+;;       (clomacs-get-result
+;;        (nrepl-sync-request:eval
+;;         sexp
+;;         connection)
+;;        return-value return-type nil))))
 
 (use-package clj-refactor
   :pin melpa
