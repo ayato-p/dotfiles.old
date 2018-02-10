@@ -43,7 +43,7 @@
   "Untracked face"
   :group 'ivy-git-ls)
 
-(defcustom ivy-git-ls/git-ls-files-cmd "git ls-files --full-name --"
+(defcustom ivy-git-ls/git-ls-files-cmd "git ls-files --full-name -- | sort"
   "git ls-files command"
   :type 'string
   :group 'ivy-git-ls)
