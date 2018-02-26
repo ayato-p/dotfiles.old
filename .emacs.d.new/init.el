@@ -149,7 +149,10 @@
 
 ;;; magit
 (use-package magit
-  :commands magit-status)
+  :requires (ivy)
+  :commands magit-status
+  :config
+  (setq magit-completing-read-function 'ivy-completing-read))
 
 (use-package git-gutter
   :diminish git-gutter-mode
@@ -411,6 +414,8 @@
 ;;; Utility function
 ;;;
 
+(use-package dash)
+
 (defun my/delete-current-line ()
   (interactive)
   (beginning-of-line)
@@ -548,8 +553,12 @@
 ;;; ivy
 ;;;
 
+(use-package ivy
+  :config
+  (setq completing-read-function 'ivy-completing-read))
 
 (use-package counsel
+  :requires ivy
   :commands (counsel-find-file
              counsel-git
              ivy-switch-buffer
@@ -570,7 +579,6 @@
          ("C-r" . ivy-previous-line))
 
   :config
-  (require 'ivy)
   (setq ivy-use-virtual-buffers t
         ivy-height 20
         ivy-count-format "(%d/%d) ")
@@ -915,6 +923,7 @@
   :pin melpa)
 
 (use-package cider
+  :requires (ivy mykie dash)
   ;; :diminish cider-mode
   :pin melpa
   :bind (:map cider-mode-map
@@ -929,15 +938,12 @@
               ("C-x *" . my/zou-go))
   :commands (cider-mode cider-jack-in)
   :config
-  (use-package dash
-    :config
-
-    (defun my/find-cider-repl-buffer ()
-      (-first
-       (lambda (b)
-         (with-current-buffer b
-           (derived-mode-p 'cider-repl-mode)))
-       (buffer-list))))
+  (defun my/find-cider-repl-buffer ()
+    (-first
+     (lambda (b)
+       (with-current-buffer b
+         (derived-mode-p 'cider-repl-mode)))
+     (buffer-list)))
 
   (defun my/split-window-below-and-switch-to-repl ()
     (interactive)
@@ -964,39 +970,34 @@
         cider-repl-result-prefix ";;=> "
         cider-save-file-on-load t
         cider-font-lock-dynamically '(macro core function var)
-        cider-overlays-use-font-lock t)
+        cider-overlays-use-font-lock t
+        cider-prompt-for-symbol nil)
 
-  (use-package ivy
-    :config
-    (use-package mykie
-      :config
-      (require 'dash)
-
-      (defun my/ivy-find-var-in-current-ns ()
-        (interactive)
-        (let* ((ns (cider-current-ns))
-               (sexp (concat "(->> (ns-interns '" ns ")
+  (defun my/ivy-find-var-in-current-ns ()
+    (interactive)
+    (let* ((ns (cider-current-ns))
+           (sexp (concat "(->> (ns-interns '" ns ")
                                    vals
                                    (map meta)
                                    (keep (comp seq (juxt :line :name)))
                                    (sort-by first))"))
-               (candidate (->> (my/cider-eval sexp :list)
-                               (-map (lambda (l)
-                                       (let ((n (car l))
-                                             (fname (symbol-name (cadr l))))
-                                         (propertize fname
-                                                     'value n
-                                                     'display (concat (number-to-string n)
-                                                                      " "
-                                                                      fname))))))))
-          (ivy-read "Find Var" candidate
-                    :action (lambda (matched)
-                              (goto-line (get-text-property 0 'value matched))))))
+           (candidate (->> (my/cider-eval sexp :list)
+                           (-map (lambda (l)
+                                   (let ((n (car l))
+                                         (fname (symbol-name (cadr l))))
+                                     (propertize fname
+                                                 'value n
+                                                 'display (concat (number-to-string n)
+                                                                  " "
+                                                                  fname))))))))
+      (ivy-read "Find Var" candidate
+                :action (lambda (matched)
+                          (goto-line (get-text-property 0 'value matched))))))
 
-      (mykie:set-keys cider-mode-map
-        "C-s"
-        :default swiper
-        :C-u my/ivy-find-var-in-current-ns)))
+  (mykie:set-keys cider-mode-map
+    "C-s"
+    :default swiper
+    :C-u my/ivy-find-var-in-current-ns)
 
   (defun my/zou-go ()
     (interactive)
