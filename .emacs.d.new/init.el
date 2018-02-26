@@ -498,39 +498,39 @@
   (defhydra hydra-window (global-map "C-x")
     "Window"
     ("o" other-window "other")
-    ("q" nil "quit"))
+    ("q" nil "quit")))
 
-  (use-package mykie
-    :config
-    (setq mykie:use-major-mode-key-override t)
-    (mykie:initialize)
+(use-package mykie
+  :config
+  (setq mykie:use-major-mode-key-override t)
+  (mykie:initialize)
 
-    (defhydra hydra-rectangle (:exit t)
-      "Rectangle"
-      ("k" kill-rectangle "Kill")
-      ("d" delete-rectangle "Delete")
-      ("c" clear-rectangle "Clear")
-      ("M-w" copy-rectangle-as-kill "Copy Rectangle")
-      ("o" open-rectangle "Insert space")
-      ("N" rectangle-number-lines "Number")
-      ("t" string-rectangle "Replace")
-      ("T" string-insert-rectangle "Insert"))
+  (defhydra hydra-rectangle (:exit t)
+    "Rectangle"
+    ("k" kill-rectangle "Kill")
+    ("d" delete-rectangle "Delete")
+    ("c" clear-rectangle "Clear")
+    ("M-w" copy-rectangle-as-kill "Copy Rectangle")
+    ("o" open-rectangle "Insert space")
+    ("N" rectangle-number-lines "Number")
+    ("t" string-rectangle "Replace")
+    ("T" string-insert-rectangle "Insert"))
 
-    (mykie:set-keys with-self-key
-      "r"
-      :region hydra-rectangle/body)
+  (mykie:set-keys with-self-key
+    "r"
+    :region hydra-rectangle/body)
 
-    (mykie:set-keys nil
-      "C-y"
-      :default yank
-      :C-u yank-rectangle
-      :C-u*2 counsel-yank-pop
-      "C-x C-f"
-      :default my/find-file
-      :C-u ivy-git-ls
-      "C-x b"
-      :default ivy-switch-buffer
-      :C-u (call-interactively 'switch-to-buffer))))
+  (mykie:set-keys nil
+    "C-y"
+    :default yank
+    :C-u yank-rectangle
+    :C-u*2 counsel-yank-pop
+    "C-x C-f"
+    :default my/find-file
+    :C-u ivy-git-ls
+    "C-x b"
+    :default ivy-switch-buffer
+    :C-u (call-interactively 'switch-to-buffer)))
 
 (use-package ace-jump-mode
   :config
@@ -601,7 +601,7 @@
     (let* ((current-directory (file-name-directory (or buffer-file-name default-directory)))
            (default-directory (expand-file-name (or (locate-dominating-file default-directory ".git")
                                                     current-directory)))
-           (find-dir-cmd "find . -not -path '*\/.git*'")
+           (find-dir-cmd "find . -not -path '*\/.git*' | sort")
            (cands (split-string
                    (shell-command-to-string find-dir-cmd)
                    "\n"
