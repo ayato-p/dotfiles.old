@@ -38,7 +38,7 @@
 ;;; enable use-package
 (eval-when-compile
   (require 'use-package))
-(use-package diminish)
+;; (use-package diminish)
 (use-package bind-key)
 
 (setq use-package-always-ensure t
@@ -61,7 +61,6 @@
 
 (use-package undo-tree
   :pin melpa
-  :diminish undo-tree
   :config
   (global-undo-tree-mode 1))
 
@@ -99,7 +98,6 @@
 
 ;;; yasnippet
 (use-package yasnippet
-  :diminish yas-minor-mode
   :bind (:map yas-minor-mode-map
               ("TAB" . nil)
               ("C-i" . nil)
@@ -107,7 +105,6 @@
 
 ;;; comapany-mode!
 (use-package company
-  :diminish ""
   :bind (("C-i" . company-indent-or-complete-common)
          :map company-mode-map
          ("C-i" . company-complete)
@@ -138,7 +135,6 @@
                               :with company-yasnippet)))
 
 (use-package company-quickhelp
-  :diminish ""
   :bind (:map company-active-map
               ("C-d" . company-quickhelp-manual-begin))
   :config
@@ -155,7 +151,6 @@
   (setq magit-completing-read-function 'ivy-completing-read))
 
 (use-package git-gutter
-  :diminish git-gutter-mode
   :config
   (global-git-gutter-mode +1))
 
@@ -166,8 +161,7 @@
   :commands subword-mode)
 
 (use-package abbrev
-  :ensure nil
-  :diminish abbrev-mode)
+  :ensure nil)
 
 (use-package shut-up)
 
@@ -257,7 +251,6 @@
 
 (use-package recentf
   :ensure nil
-  :diminish recentf-mode
   :init
   (setq recentf-max-saved-items 2000
         recent-exclude '(".recentf" "recentf")
@@ -281,6 +274,45 @@
       completion-ignore-case t
       read-file-name-completion-ignore-case t
       inhibit-startup-message t)
+
+(use-package iso-transl
+  :ensure nil
+  :defer 10
+  :config
+  (progn
+    ;; Add custom bindings to "C-x 8" map
+    (dolist (binding
+             '(;; >
+               (">"       . nil) ; First unbind ">" from the map
+               (">="      . [?≥]) ; greater than or equal to
+               (">>"      . [?≫]) ; much greater than
+               (">\""     . [?»]) ; right-pointing double angle quotation mark
+               (">'"      . [?›]) ; single right-pointing angle quotation mark
+               (">h"      . [?☛]) ; black right pointing index
+               ;; <
+               ("<"       . nil) ; First unbind "<" from the map
+               ("<="      . [?≤]) ; less than or equal to
+               ("<<"      . [?≪]) ; much less than
+               ("<\""     . [?«]) ; left-pointing double angle quotation mark
+               ("<'"      . [?‹]) ; single left-pointing angle quotation mark
+               ("<h"      . [?☚]) ; black left pointing index
+               ;; "
+               ("\"`"     . [?“]) ; left double quotation mark
+               ("\"'"     . [?”]) ; right double quotation mark
+               ;; arrows
+               ("<right>" . [?→]) ; rightwards arrow
+               ("<left>"  . [?←]) ; leftwards arrow
+               ("<up>"    . [?↑]) ; upwards arrow
+               ("<down>"  . [?↓]) ; downwards arrow
+               ;; misc
+               ("r"       . [?▯]) ; white vertical rectangle
+               ("R"       . [?▮]) ; black vertical rectangle
+               ("*r"      . [?₹]) ; indian rupee sign
+               ("e"       . [?↵]) ; downwards arrow with corner leftwards
+               ("E"       . [?⏎]) ; return symbol
+               ("1/3"     . [?⅓]) ; fraction one third
+               ("0"       . [?​]))) ; zero width space
+      (define-key iso-transl-ctl-x-8-map (kbd (car binding)) (cdr binding)))))
 
 ;; show me empty lines after buffer end
 (set-default 'indicate-empty-lines t)
@@ -325,6 +357,7 @@
 (use-package moom
   :ensure nil
   :load-path "elisp/moom"
+  :if (memq window-system '(mac ns x))
   :config
   (setq moom-ascii-font "Dejavu Sans Mono"
         moom-ja-font "TakaoGothic")
@@ -500,6 +533,8 @@
     ("o" other-window "other")
     ("q" nil "quit")))
 
+(use-package avy)
+
 (use-package mykie
   :config
   (setq mykie:use-major-mode-key-override t)
@@ -530,32 +565,37 @@
     :C-u ivy-git-ls
     "C-x b"
     :default ivy-switch-buffer
-    :C-u (call-interactively 'switch-to-buffer)))
+    :C-u (call-interactively 'switch-to-buffer)
+    "C-*"
+    :default avy-goto-char
+    ))
 
-(use-package ace-jump-mode
-  :config
-  (defun add-keys-to-ace-jump-mode (prefix c &optional mode)
-    (define-key global-map
-      (read-kbd-macro (concat prefix (string c)))
-      `(lambda ()
-         (interactive)
-         (funcall (if (eq ',mode 'word)
-                      #'ace-jump-word-mode
-                    #'ace-jump-char-mode) ,c))))
+;; (use-package ace-jump-mode
+;;   :config
+;;   (defun add-keys-to-ace-jump-mode (prefix c &optional mode)
+;;     (define-key global-map
+;;       (read-kbd-macro (concat prefix (string c)))
+;;       `(lambda ()
+;;          (interactive)
+;;          (funcall (if (eq ',mode 'word)
+;;                       #'ace-jump-word-mode
+;;                     #'ace-jump-char-mode) ,c))))
 
-  (loop for c from ?0 to ?9 do (add-keys-to-ace-jump-mode "H-" c))
-  (loop for c from ?a to ?z do (add-keys-to-ace-jump-mode "H-" c))
-  (loop for c from ?0 to ?9 do (add-keys-to-ace-jump-mode "H-M-" c 'word))
-  (loop for c from ?a to ?z do (add-keys-to-ace-jump-mode "H-M-" c 'word)))
+;;   (loop for c from ?0 to ?9 do (add-keys-to-ace-jump-mode "H-" c))
+;;   (loop for c from ?a to ?z do (add-keys-to-ace-jump-mode "H-" c))
+;;   (loop for c from ?0 to ?9 do (add-keys-to-ace-jump-mode "H-M-" c 'word))
+;;   (loop for c from ?a to ?z do (add-keys-to-ace-jump-mode "H-M-" c 'word)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
-;;;
+
 ;;; ivy
 ;;;
 
 (use-package ivy
   :config
   (setq completing-read-function 'ivy-completing-read))
+
+(use-package swiper)
 
 (use-package counsel
   :requires ivy
@@ -852,7 +892,6 @@
 ;;;
 
 (use-package paredit
-  :diminish paredit-mode
   :bind (:map paredit-mode-map
               ("C-h" . paredit-backward-delete))
   :config
@@ -924,7 +963,6 @@
 
 (use-package cider
   :requires (ivy mykie dash)
-  ;; :diminish cider-mode
   :pin melpa
   :bind (:map cider-mode-map
               ("C-x *" . my/zou-go)
@@ -1026,7 +1064,6 @@
 
 (use-package clj-refactor
   :pin melpa
-  :diminish clj-refactor-mode
   :commands clj-refactor-mode
   :config
   (cljr-add-keybindings-with-prefix "C-c j"))
