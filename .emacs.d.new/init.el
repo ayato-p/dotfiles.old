@@ -363,6 +363,11 @@
         moom-ja-font "TakaoGothic")
   (moom-set-font-size-input 12))
 
+(use-package ace-window
+  :bind (("C-x o" . ace-window))
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g)))
+
 (use-package zenburn-theme
   :config
   (load-theme 'zenburn t))
@@ -530,7 +535,10 @@
 
   (defhydra hydra-window (global-map "C-x")
     "Window"
-    ("o" other-window "other")
+    ;; ("o" ace-window "other")
+    ("^" enlarge-window "taller")
+    ("{" shrink-window-horizontally "narrower")
+    ("}" enlarge-window-horizontally "wider")
     ("q" nil "quit")))
 
 (use-package avy)
