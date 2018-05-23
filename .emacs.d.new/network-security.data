@@ -1,0 +1,4 @@
+(
+ (:id "sha1:56852a5456d1b09e1eb11c0ca39d8fbce6480106" :fingerprint "sha1:be:2a:41:0b:7d:8b:81:66:54:a4:4f:f2:45:3a:89:86:e9:39:9f:a1" :host "127.0.0.1:8080" :conditions (:self-signed :no-host-match :unknown-ca :invalid))
+ (:id "sha1:955af05f3130ac5c70952a34a9aa710c9fbf812b" :fingerprint "sha1:82:aa:50:31:fc:d2:fe:d6:ec:0f:2e:5a:82:d3:ba:8d:d6:c4:7c:c3" :host "127.0.0.1:3000" :conditions (:self-signed :no-host-match :unknown-ca :invalid))
+)

@@ -8,6 +8,7 @@ export GTK_IM_MODULE="xim"
 export QT_IM_MODULE="xim"
 
 urxvtd -q -f -o &
+emacs --daemon &
 ibus-daemon -d -x &
 xbindkeys &
 xset r rate 170 30 &

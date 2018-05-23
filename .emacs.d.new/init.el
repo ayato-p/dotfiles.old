@@ -342,6 +342,21 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;
+;;; project setting
+;;;
+
+(use-package projectile
+  :config
+  (setq my/projectile-init-filename ".projectile-init.el")
+  (defun my/projectile-initialize ()
+    (interactive)
+    (let* ((init-filename (concat (projectile-project-root) my/projectile-init-filename)))
+      (if (file-exists-p init-filename)
+          (load-file init-filename)
+        (message "%s does not exists" my/projectile-init-filename)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
+;;;
 ;;; Window setting
 ;;;
 
@@ -446,6 +461,24 @@
     (when path
       (setq output (concat ".../" output)))
     output))
+
+(defun my/split-window-horizontally-n (num-wins)
+  (interactive "p")
+  (dotimes (i (- num-wins 1))
+    (split-window-horizontally))
+  (balance-windows))
+
+(defun my/ensure-split-window-horizontally-n (num-wins)
+  (interactive "p")
+  (print (number-to-string num-wins))
+  (if (or (= (length (window-list)) num-wins)
+          (<= num-wins 0))
+      (balance-windows)
+    (if (< (length (window-list)) num-wins)
+        (my/split-window-horizontally-n (+ (- num-wins (length (window-list))) 1))
+      (progn
+        (delete-window)
+        (my/ensure-split-window-horizontally-n (- num-wins 1))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:;;;;;;;;;;;;
 ;;;

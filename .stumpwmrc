@@ -1,5 +1,6 @@
 ;; ref: http://www.mygooglest.com/fni/stumpwm.html
 (in-package :stumpwm)
+(load-module "wifi")
 
 (run-shell-command "rm .xsession-errors")
 
@@ -30,7 +31,7 @@
   "Wrap a call to the run-ra-raise command but before toggle off the touchpad"
   `(progn
      (run-shell-command "touchpad-off")
-     (stumpwm::banish)
+     ;; (stumpwm::banish)
      (run-or-raise ,command ,class)))
 
 (defmacro roraise-and-touchpad-on (command class)
@@ -49,8 +50,10 @@
   (stumpwm::banish))
 
 (defcommand screenshot (filename) ((:rest "Filename: "))
-  (run-shell-command
-   (roraise-and-touchpad-on nil "import ~a/screenshots/~a" (user-homedir-pathname) filename)))
+  (progn
+    (run-shell-command "touchpad-on")
+    (run-shell-command
+     (format nil "import ~a/screenshots/~a" (user-homedir-pathname) filename))))
 
 (defcommand chrome () ()
   "Start google-chrome or switch to it, if it is already running."

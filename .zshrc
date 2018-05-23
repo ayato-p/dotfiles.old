@@ -61,6 +61,7 @@ alias gpg="gpg2"
 alias emacsd="emacs &"
 alias ekill='emacsclient -e "(kill-emacs)"'
 alias e="emacsclient -nw"
+alias cdd="find . -maxdepth 1 -type d | fzf | cd"
 
 # export http_proxy=http://localhost:8000
 # export https_proxy=http://localhost:8000
