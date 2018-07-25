@@ -57,7 +57,7 @@
 
 (defcommand chrome () ()
   "Start google-chrome or switch to it, if it is already running."
-  (roraise-and-touchpad-on "google-chrome" '(:class "google-chrome")))
+  (roraise-and-touchpad-on "google-chrome" '(:class "Google-chrome")))
 
 (defcommand firefox () ()
   "Start Firefox or switch to it, if it is already running."

@@ -59,10 +59,10 @@
   :config
   (setq uniquify-buffer-name-style 'post-forward-angle-brackets))
 
-(use-package undo-tree
-  :pin melpa
-  :config
-  (global-undo-tree-mode 1))
+;; (use-package undo-tree
+;;   :pin melpa
+;;   :config
+;;   (global-undo-tree-mode 1))
 
 (use-package bm
   :config
@@ -374,9 +374,15 @@
   :load-path "elisp/moom"
   :if (memq window-system '(mac ns x))
   :config
-  (setq moom-ascii-font "Dejavu Sans Mono"
-        moom-ja-font "TakaoGothic")
-  (moom-set-font-size-input 12))
+  (setq moom-font-ascii "DejaVu Sans Mono"
+        moom-font-ja "Migu 2M")
+  (moom-mode 1)
+  (with-eval-after-load "moom-font"
+    (setq moom-font-ascii-scale 1.0)
+    (setq moom-font-ja-scale 1.2)
+    (moom-font-ascii "DejaVu Sans Mono")
+    (moom-font-ja "Migu 2M"))
+  (moom-font-resize 12))
 
 (use-package ace-window
   :bind (("C-x o" . ace-window))
@@ -561,9 +567,9 @@
 
   (defhydra hydra-zoom (global-map "C-x")
     "Zoom"
-    ("C-+" text-scale-increase "in")
-    ("C--" text-scale-decrease "out")
-    ("C-0" text-scale-adjust "adjust")
+    ("C-+" moom-font-increase "in")
+    ("C--" moom-font-decrease "out")
+    ("C-0" moom-font-size-reset "adjust")
     ("q" nil "quit"))
 
   (defhydra hydra-window (global-map "C-x")
@@ -572,9 +578,9 @@
     ("^" enlarge-window "taller")
     ("{" shrink-window-horizontally "narrower")
     ("}" enlarge-window-horizontally "wider")
-    ("q" nil "quit")))
+    ("q" nil "quit"))
 
-(use-package avy)
+  (use-package avy))
 
 (use-package mykie
   :config

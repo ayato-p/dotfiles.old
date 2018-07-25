@@ -57,7 +57,7 @@ sudo apt-get install -y curl tree nkf ntpdate imagemagick xclip
 sudo apt-get install -y build-essential openssl keychain gnupg2 gnupg-agent
 sudo apt-get install -y autoconf automake libcurl4-gnutls-dev
 sudo apt-get install -y emacs25-lucid
-sudo apt-get install -y fonts-inconsolata fonts-takao-gothic
+sudo apt-get install -y fonts-inconsolata fonts-takao-gothic fonts-migmix
 sudo apt-get install -y pandoc
 sudo apt-get install -y libskk-dev skkdic skkdic-extra
 sudo apt-get install -y ibus ibus-skk skksearch skktools
