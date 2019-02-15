@@ -1,7 +1,7 @@
 [user]
 	name = ayato_p
 	email = ayato.skycrawlers@gmail.com
-	signingkey = 110CB5B1
+	signingkey = 2C4B1626A4F18AB4
 [core]
 	excludesfile = /home/ayato/.global_gitignore
 	quotepath = false
@@ -11,3 +11,5 @@
 # 	log = diff-highlight | less
 # 	show = diff-highlight | less
 # 	diff = diff-highlight | less
+[gpg]
+	program = gpg

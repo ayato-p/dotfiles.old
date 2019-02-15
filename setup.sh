@@ -133,7 +133,7 @@ cd sassc && SASS_LIBSASS_PATH="~/lib/libsass"; make && cd $HOME && ln -s $HOME/l
 # urxvt
 # wget -O .urxvt/ext/resize-font https://raw.githubusercontent.com/simmel/urxvt-resize-font/master/resize-font
 curl --create-dirs -o .urxvt/ext/resize-font https://raw.githubusercontent.com/simmel/urxvt-resize-font/master/resize-font
-
+git clone https://aur.archlinux.org/urxvt-fullscreen.git ~/.urxvt/ext/fullscreen
 # install for screencast
 # sudo apt-get install gtk-recordmydesktop -y
 # sudo add-apt-repository ppa:pcf/miro-releases

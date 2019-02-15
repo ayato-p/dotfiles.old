@@ -33,7 +33,10 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(csv
+   '((javascript :variables
+                 js2-basic-offset 2
+                 js-indent-level 2)
+     csv
      sql
      yaml
      spacemacs-evil
@@ -54,6 +57,7 @@ This function should only modify configuration layer settings."
               cider-prompt-for-symbol nil
               company-backends-cider-mode-raw '((company-capf :with company-dabbrev-code))
               company-backends-cider-repl-mode-raw '((company-capf :with company-dabbrev-code))
+              cider-shadow-cljs-command "shadow-cljs"
               :packages
               (not cider-eval-sexp-fu helm-gtags parinfer))
 
@@ -589,11 +593,7 @@ This function is called at the very end of Spacemacs initialization."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (csv-mode yasnippet-snippets wgrep sql-indent ivy-hydra evil-surround evil-nerd-commenter evil-matchit editorconfig ddskk counsel swiper clj-refactor auto-compile cider company smartparens projectile helm helm-core ivy magit git-commit markdown-mode evil goto-chg async yaml-mode ws-butler writeroom-mode with-editor which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treepy string-inflection spinner smex smeargle sesman rainbow-delimiters queue pcre2el password-generator packed overseer origami open-junk-file neotree nameless multiple-cursors move-text moom mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum link-hint ivy-yasnippet ivy-xref inflections indent-guide hydra hungry-delete highlight-parentheses highlight-numbers highlight-indentation helm-make graphql gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flx-ido expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-numbers evil-mc evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu elisp-slime-nav edn dotenv-mode diminish company-statistics column-enforce-mode clojure-snippets clojure-mode clojure-cheatsheet clean-aindent-mode cdb ccc auto-yasnippet aggressive-indent ac-ispell)))
- '(safe-local-variable-values
-   (quote
-    ((cider-ns-refresh-after-fn . "integrant.repl/resume")
-     (cider-ns-refresh-before-fn . "integrant.repl/suspend")))))
+    (yasnippet-snippets ivy-hydra evil-visual-mark-mode evil-nerd-commenter evil-magit eval-sexp-fu editorconfig ddskk counsel swiper clj-refactor aggressive-indent sesman clojure-mode company smartparens goto-chg projectile helm helm-core ivy avy magit f dash visual-fill-column hydra yaml-mode ws-butler writeroom-mode which-key wgrep web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package string-inflection sql-indent smex smeargle rainbow-delimiters prettier-js pcre2el password-generator overseer origami open-junk-file neotree nameless move-text moom mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc ivy-yasnippet ivy-xref inflections indent-guide hungry-delete highlight-parentheses highlight-numbers highlight-indentation highlight helm-make gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit gh-md fuzzy flx-ido expand-region evil-visualstar evil-unimpaired evil-tutor evil-surround evil-numbers evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu elisp-slime-nav edn dotenv-mode diminish csv-mode company-tern company-statistics column-enforce-mode clojure-snippets clean-aindent-mode cider cdb ccc auto-yasnippet auto-compile ac-ispell))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

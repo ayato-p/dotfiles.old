@@ -17,8 +17,6 @@ promptinit
 
 PURE_PROMPT_SYMBOL="λ"
 
-prompt pure
-
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!%f"
 zstyle ':vcs_info:git:*' unstagedstr "%F{red}+%f"
@@ -30,6 +28,7 @@ precmd () {
 # RPROMPT='${vcs_info_msg_0_}'
 
 # for Completion
+[[ -d ~/.zsh/completion ]] || mkdir -p ~/.zsh/completion
 export fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit
 compinit
@@ -88,14 +87,14 @@ export LD_LIBRARY_PATH=$HOME/lib/hornetq
 export PATH=$HOME/.local/bin:$PATH
 
 export PATH=$HOME/.nodenv/bin:$PATH
-eval "$(nodenv init -)"
+[[ -n `command -v nodenv` ]] && eval "$(nodenv init -)"
 
 export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+[[ -n `command -v rbenv` ]] && eval "$(rbenv init -)"
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
+[[ -n `command -v pyenv` ]] && eval "$(pyenv init -)"
 
 export SASS_LIBSASS_PATH="$HOME/lib/libsass"
 
@@ -111,17 +110,29 @@ export FZF_DEFAULT_OPTS="--reverse --inline-info --bind=ctrl-k:kill-line"
 
 
 # zplug
-[[ -d ~/.zplug ]] || {
+export ZPLUG_HOME=$HOME/.zplug
+[[ -d $ZPLUG_HOME ]] || {
   git clone https://github.com/b4b4r07/zplug ~/.zplug
   source ~/.zplug/init.zsh && zplug update --self
 }
 
-source ~/.zplug/init.zsh
+source $ZPLUG_HOME/init.zsh
 
 zplug "b4b4r07/zplug"
+# zplug "junegunn/fzf-bin", as:command, from:gh-r, rename-to:fzf
+# zplug "junegunn/fzf", as:command, use:bin/fzf-tmux
 zplug "b4b4r07/enhancd", use:init.sh
 export ENHANCD_FILTER=fzf-tmux:fzf
 zplug "zsh-users/zsh-completions", depth:1
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+export PURE_THEME_DIR=$ZPLUG_HOME/repos/sindresorhus/pure
+
+[[ -f ~/.zsh/completion/prompt_pure_setup ]] || {
+    ln -s $PURE_THEME_DIR/pure.zsh ~/.zsh/completion/prompt_pure_setup
+}
+[[ -f ~/.zsh/completion/async ]] || {
+    ln -s $PURE_THEME_DIR/async.zsh ~/.zsh/completion/async
+}
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
@@ -148,3 +159,9 @@ fi
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/ayato/.sdkman"
 [[ -s "/home/ayato/.sdkman/bin/sdkman-init.sh" ]] && source "/home/ayato/.sdkman/bin/sdkman-init.sh"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/ayato-p/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/ayato-p/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/ayato-p/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/ayato-p/Downloads/google-cloud-sdk/completion.zsh.inc'; fi

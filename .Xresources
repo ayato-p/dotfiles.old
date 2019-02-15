@@ -36,8 +36,8 @@ URxvt.iso14755: false
 URxvt.iso14755_52: false
 
 ! extentions
-URxvt.perl-lib: .urxvt/ext
-URxvt.perl-ext-common: resize-font, xim-onthespot
+URxvt.perl-lib: ~/.urxvt/ext
+URxvt.perl-ext-common: resize-font,fullscreen
 
 URxvt.inputMethod: fcitx
 URxvt.preeditType: OnTheSpot
@@ -46,6 +46,8 @@ URxvt.resize-font.smaller: C-minus
 URxvt.resize-font.bigger: C-equal
 URxvt.resize-font.reset: C-0
 URxvt.resize-font.show: C-question
+
+URxvt.keysym.F11: perl:fullscreen:switch
 
 ! just disable xim on emacs
 Emacs*useXIM: false

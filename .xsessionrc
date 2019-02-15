@@ -2,18 +2,9 @@
 LANG=en_US.UTF-8
 export LANG
 
-# IME
-export XMODIFIERS=@im=ibus
-export GTK_IM_MODULE="xim"
-export QT_IM_MODULE="xim"
-
 xrdb -merge $HOME/.Xresources
 
 urxvtd -q -f -o &
 emacs --daemon &
-ibus-daemon -d -x &
 xbindkeys &
-xset r rate 170 30 &
-xcape -e "#62=Control_R|q"
-
-exec /usr/bin/stumpwm
+xset r rate 170 30
