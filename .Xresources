@@ -49,6 +49,4 @@ URxvt.resize-font.show: C-question
 
 URxvt.keysym.F11: perl:fullscreen:switch
 
-! just disable xim on emacs
 Emacs*useXIM: false
-Emacs24*useXIM: false

@@ -15,3 +15,7 @@
 # [ -z "$HOSTNAME" ] && HOSTNAME=`uname -n`
 # [ -f $HOME/.keychain/$HOSTNAME-sh-gpg ] && \
 #     . $HOME/.keychain/$HOSTNAME-sh-gpg
+# ssh-add -k ~/.ssh/keys/uzabase
+
+ssh-add -l | grep uzabase -q
+[ $? -ne 0 ] && ssh-add -k ~/.ssh/keys/uzabase

@@ -62,6 +62,25 @@ alias ekill='emacsclient -e "(kill-emacs)"'
 alias e="emacsclient -nw"
 alias cdd="find . -maxdepth 1 -type d | fzf | cd"
 
+
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    #alias fgrep='fgrep --color=auto'
+    #alias egrep='egrep --color=auto'
+fi
+
+# some more ls aliases
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+
+
+
 # export http_proxy=http://localhost:8000
 # export https_proxy=http://localhost:8000
 
@@ -71,10 +90,17 @@ export TERM=screen-256color
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/.cask/bin:$PATH
 
+source <(minikube completion zsh)
+source <(kubectl completion zsh)
+
 # Language tools
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$HOME/.cargo/bin
+
+# for Go lang
+export GOPATH=$HOME/opt/golang
+export PATH=$PATH:$GOPATH/language/go_1.13.3/bin:$GOPATH/bin
+export GO111MODULE=on
+
 
 # for Leiningen(Clojure)
 export LEIN_GPG=gpg2
@@ -94,7 +120,7 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-[[ -n `command -v pyenv` ]] && eval "$(pyenv init -)"
+[[ -n `command -v pyenv` ]] && eval "$(pyenv init -)" && eval "$(pyenv virtualenv-init -)"
 
 export SASS_LIBSASS_PATH="$HOME/lib/libsass"
 
@@ -103,6 +129,9 @@ export NO_AT_BRIDGE=1
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# po4a
+export PERLLIB="/home/ayato-p/opt/po4a-0.56/lib"
 
 # For fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -157,11 +186,14 @@ else
 fi
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/ayato/.sdkman"
-[[ -s "/home/ayato/.sdkman/bin/sdkman-init.sh" ]] && source "/home/ayato/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="/home/ayato-p/.sdkman"
+[[ -s "/home/ayato-p/.sdkman/bin/sdkman-init.sh" ]] && source "/home/ayato-p/.sdkman/bin/sdkman-init.sh"
+
+# opam configuration
+test -r /home/ayato-p/.opam/opam-init/init.zsh && . /home/ayato-p/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 # The next line updates PATH for the Google Cloud SDK.
-if [ -f '/home/ayato-p/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/home/ayato-p/Downloads/google-cloud-sdk/path.zsh.inc'; fi
+if [ -f '/home/ayato-p/opt/google-cloud-sdk-245/path.zsh.inc' ]; then . '/home/ayato-p/opt/google-cloud-sdk-245/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
-if [ -f '/home/ayato-p/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/ayato-p/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+if [ -f '/home/ayato-p/opt/google-cloud-sdk-245/completion.zsh.inc' ]; then . '/home/ayato-p/opt/google-cloud-sdk-245/completion.zsh.inc'; fi

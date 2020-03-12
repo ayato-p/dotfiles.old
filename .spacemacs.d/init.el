@@ -1,7 +1,7 @@
 ;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
-
+(setq package-check-signature nil)
 (defun dotspacemacs/layers ()
   "Layer configuration:
 This function should only modify configuration layer settings."
@@ -33,7 +33,15 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '((javascript :variables
+   '(html
+     lua
+     (go :variables
+         go-backend 'lsp
+         go-tab-width 4
+         go-format-before-save t)
+     rust
+     python
+     (javascript :variables
                  js2-basic-offset 2
                  js-indent-level 2)
      csv
@@ -50,7 +58,7 @@ This function should only modify configuration layer settings."
               cider-repl-display-in-current-window t
               cider-repl-use-clojure-font-lock t
               cider-repl-use-pretty-printing t
-              cider-repl-result-prefix ";;=> "
+              cider-repl-result-prefix ";; => "
               cider-save-file-on-load t
               cider-font-lock-dynamically '(macro core function var deprecated)
               cider-overlays-use-font-lock t
@@ -58,9 +66,11 @@ This function should only modify configuration layer settings."
               company-backends-cider-mode-raw '((company-capf :with company-dabbrev-code))
               company-backends-cider-repl-mode-raw '((company-capf :with company-dabbrev-code))
               cider-shadow-cljs-command "shadow-cljs"
+              cider-print-quota 1028
               :packages
               (not cider-eval-sexp-fu helm-gtags parinfer))
 
+     ocaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -80,12 +90,13 @@ This function should only modify configuration layer settings."
      markdown
      multiple-cursors
      neotree
+     floobits
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     ;; syntax-checking
+     syntax-checking
      ;; version-control
      )
 
@@ -333,7 +344,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup t
+   dotspacemacs-fullscreen-at-startup nil
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -342,7 +353,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup nil
+   dotspacemacs-maximized-at-startup t
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
@@ -494,8 +505,9 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-
   (set-language-environment "UTF-8")
+
+  (windmove-default-keybindings 'meta)
 
   (with-eval-after-load 'company
     (bind-keys :map company-active-map
@@ -523,7 +535,7 @@ before packages are loaded."
       (setq moom-font-ja-scale 1.2)
       (moom-font-ascii "DejaVu Sans Mono")
       (moom-font-ja "Migu 2M"))
-    (moom-font-resize 20)
+    (moom-font-resize 16)
 
     (progn
       (spacemacs|define-transient-state moom
@@ -577,7 +589,8 @@ before packages are loaded."
 
   (add-hook 'clojure-mode-hook #'spacemacs/toggle-aggressive-indent-on)
   (cljr-add-keybindings-with-prefix "C-c j")
-  )
+
+  (require 'opam-user-setup "~/.emacs.d/opam-user-setup.el"))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -591,9 +604,22 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(blink-cursor-mode nil)
+ '(column-number-mode t)
+ '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-    (yasnippet-snippets ivy-hydra evil-visual-mark-mode evil-nerd-commenter evil-magit eval-sexp-fu editorconfig ddskk counsel swiper clj-refactor aggressive-indent sesman clojure-mode company smartparens goto-chg projectile helm helm-core ivy avy magit f dash visual-fill-column hydra yaml-mode ws-butler writeroom-mode which-key wgrep web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package string-inflection sql-indent smex smeargle rainbow-delimiters prettier-js pcre2el password-generator overseer origami open-junk-file neotree nameless move-text moom mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc ivy-yasnippet ivy-xref inflections indent-guide hungry-delete highlight-parentheses highlight-numbers highlight-indentation highlight helm-make gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit gh-md fuzzy flx-ido expand-region evil-visualstar evil-unimpaired evil-tutor evil-surround evil-numbers evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu elisp-slime-nav edn dotenv-mode diminish csv-mode company-tern company-statistics column-enforce-mode clojure-snippets clean-aindent-mode cider cdb ccc auto-yasnippet auto-compile ac-ispell))))
+    (web-mode tagedit slim-mode scss-mode sass-mode pug-mode impatient-mode htmlize helm-css-scss haml-mode emmet-mode counsel-css company-web web-completion-data add-node-modules-path toml-mode racer pos-tip flycheck-rust cargo rust-mode yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms python lsp-mode ht live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags cython-mode counsel-gtags company-anaconda blacken anaconda-mode pythonic utop tuareg caml ocp-indent merlin dune floobits yasnippet-snippets ivy-hydra evil-visual-mark-mode evil-nerd-commenter evil-magit eval-sexp-fu editorconfig ddskk counsel swiper clj-refactor aggressive-indent sesman clojure-mode company smartparens goto-chg projectile helm helm-core ivy avy magit f dash visual-fill-column hydra yaml-mode ws-butler writeroom-mode which-key wgrep web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package string-inflection sql-indent smex smeargle rainbow-delimiters prettier-js pcre2el password-generator overseer origami open-junk-file neotree nameless move-text moom mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc ivy-yasnippet ivy-xref inflections indent-guide hungry-delete highlight-parentheses highlight-numbers highlight-indentation highlight helm-make gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-commit gh-md fuzzy flx-ido expand-region evil-visualstar evil-unimpaired evil-tutor evil-surround evil-numbers evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu elisp-slime-nav edn dotenv-mode diminish csv-mode company-tern company-statistics column-enforce-mode clojure-snippets clean-aindent-mode cider cdb ccc auto-yasnippet auto-compile ac-ispell)))
+ '(safe-local-variable-values
+   (quote
+    ((cider-auto-test-mode . t)
+     (cider-auto-test-mode . 1)
+     (org-src-window-setup quote current-window)
+     (cider-ns-refresh-after-fn . "integrant.repl/resume")
+     (cider-ns-refresh-before-fn . "integrant.repl/suspend")
+     (javascript-backend . tern)
+     (javascript-backend . lsp))))
+ '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

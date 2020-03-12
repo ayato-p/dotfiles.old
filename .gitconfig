@@ -1,6 +1,6 @@
 [user]
 	name = ayato_p
-	email = ayato.skycrawlers@gmail.com
+	email = ayato-p@panchromatic.org
 	signingkey = 2C4B1626A4F18AB4
 [core]
 	excludesfile = /home/ayato/.global_gitignore
